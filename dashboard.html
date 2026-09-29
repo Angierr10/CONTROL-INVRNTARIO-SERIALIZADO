@@ -8,84 +8,188 @@
 
 <style>
 
-body{
+*{
     margin:0;
-    font-family:Segoe UI,sans-serif;
-    background:#07152f;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
-.header{
+body{
+    display:flex;
+    background:#f4f6f9;
+}
+
+/* MENU */
+
+.sidebar{
+    width:260px;
+    height:100vh;
     background:#102b57;
     color:white;
-    padding:20px;
+    position:fixed;
+    left:0;
+    top:0;
+}
+
+.logo{
+    padding:25px;
     text-align:center;
-    font-size:28px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo h2{
+    color:#ffc107;
+}
+
+.menu{
+    padding-top:20px;
+}
+
+.menu a{
+    display:block;
+    padding:18px 25px;
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    background:#183f80;
+    padding-left:35px;
+}
+
+.menu a.active{
+    background:#ffc107;
+    color:#102b57;
     font-weight:bold;
 }
 
-.container{
+/* CONTENIDO */
+
+.main{
+    margin-left:260px;
+    width:100%;
     padding:30px;
 }
 
+.header{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:30px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.header h1{
+    color:#102b57;
+}
+
 .cards{
-    display:flex;
-    flex-wrap:wrap;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:20px;
 }
 
 .card{
     background:white;
-    width:220px;
-    padding:20px;
+    padding:25px;
     border-radius:20px;
-    text-align:center;
-    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
 }
 
-.numero{
+.card .icon{
+    font-size:35px;
+}
+
+.card .number{
     font-size:40px;
     font-weight:bold;
-    color:#ffb300;
-}
-
-.label{
     color:#102b57;
-    font-size:18px;
     margin-top:10px;
 }
 
+.card .text{
+    color:gray;
+    margin-top:5px;
+}
+
 </style>
-
 </head>
-
 <body>
 
-<div class="header">
-📦 CONTROL DE INVENTARIO OUTLET - GARANTÍAS
+<div class="sidebar">
+
+<div class="logo">
+<h2>📦 INVENTARIO</h2>
+<p>Outlet - Garantías</p>
 </div>
 
-<div class="container">
+<div class="menu">
+
+<a class="active" href="#">
+🏠 Dashboard
+</a>
+
+<a href="#">
+🔍 Buscar Serial
+</a>
+
+<a href="#">
+📥 Entradas
+</a>
+
+<a href="#">
+📤 Salidas
+</a>
+
+<a href="#">
+📋 Inventario
+</a>
+
+<a href="#">
+📊 Reportes
+</a>
+
+<a href="#">
+⚙️ Configuración
+</a>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+<h1>CONTROL DE INVENTARIO OUTLET - GARANTÍAS</h1>
+<p>Panel principal de gestión</p>
+</div>
 
 <div class="cards">
 
 <div class="card">
-<div class="numero">0</div>
-<div class="label">Total Inventario</div>
+<div class="icon">📦</div>
+<div class="number">0</div>
+<div class="text">Total Inventario</div>
 </div>
 
 <div class="card">
-<div class="numero">0</div>
-<div class="label">Disponibles</div>
+<div class="icon">✅</div>
+<div class="number">0</div>
+<div class="text">Disponibles</div>
 </div>
 
 <div class="card">
-<div class="numero">0</div>
-<div class="label">Salidas</div>
+<div class="icon">📤</div>
+<div class="number">0</div>
+<div class="text">Salidas</div>
 </div>
 
 <div class="card">
-<div class="numero">0</div>
-<div class="label">Ubicaciones</div>
+<div class="icon">📍</div>
+<div class="number">0</div>
+<div class="text">Ubicaciones</div>
 </div>
 
 </div>
