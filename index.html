@@ -4,66 +4,81 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Control Inventario Serializado</title>
+<title>CONTROL DE INVENTARIO OUTLET - GARANTÍAS</title>
 
 <style>
 
-body{
+*{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:linear-gradient(135deg,#07152f,#183a7a);
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    background:linear-gradient(135deg,#07152f,#183a7a);
 }
 
 .card{
+    width:550px;
+    height:550px;
+    border-radius:50%;
     background:white;
-width:500px;
-height:500px;
-border-radius:50%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
     text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    box-shadow:0 15px 40px rgba(0,0,0,0.35);
 }
 
 .badge{
-    background:#0f274d;
-    color:#ffbe0b;
-    display:inline-block;
-    padding:10px 20px;
-    border-radius:20px;
+    background:#102b57;
+    color:#ffc107;
+    padding:12px 30px;
+    border-radius:40px;
     font-weight:bold;
-    margin-bottom:20px;
+    margin-bottom:30px;
+    font-size:16px;
 }
 
 h1{
-    color:#0f274d;
+    color:#102b57;
+    font-size:42px;
+    margin-bottom:10px;
+    line-height:1.2;
+}
+
+h2{
+    color:#ffc107;
+    font-size:24px;
+    margin-bottom:20px;
 }
 
 p{
-    color:gray;
+    color:#555;
+    font-size:18px;
+    margin-bottom:35px;
 }
 
 button{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    background:#0f274d;
+    background:#102b57;
     color:white;
-    font-size:18px;
+    border:none;
+    padding:18px 40px;
+    font-size:20px;
+    border-radius:12px;
     cursor:pointer;
+    transition:0.3s;
 }
 
 button:hover{
-    background:#183a7a;
+    background:#1d4b95;
+    transform:scale(1.05);
 }
 
 </style>
@@ -73,15 +88,25 @@ button:hover{
 
 <div class="card">
 
-<div class="badge">
-CONTROL INVENTARIO OUTLET - GARANTIAS
-</div>
+    <div class="badge">
+        SISTEMA CORPORATIVO
+    </div>
 
-<h1>Acceso al Sistema</h1>
+    <h1>
+        CONTROL DE INVENTARIO
+    </h1>
 
-<p>Inventario Serializado </p>
+    <h2>
+        OUTLET - GARANTÍAS
+    </h2>
 
-<button>Entrar al Sistema</button>
+    <p>
+        Plataforma de Control Serializado
+    </p>
+
+    <button>
+        Entrar al Sistema
+    </button>
 
 </div>
 
