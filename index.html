@@ -9,83 +9,85 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI, Arial, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#07152f,#183a7a);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#07152f,#183a7a);
 }
 
 .card{
-    width:550px;
-    height:550px;
-    border-radius:50%;
-    background:white;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    padding:40px;
-    text-align:center;
-    box-shadow:0 20px 40px rgba(0,0,0,0.35);
+width:520px;
+height:520px;
+background:white;
+border-radius:50%;
+border:8px solid #ffc107;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+box-shadow:0 20px 50px rgba(0,0,0,0.35);
 }
 
 .icono{
-    font-size:70px;
-    margin-bottom:20px;
+font-size:65px;
+margin-bottom:15px;
 }
 
 .badge{
-    background:#0d2b5c;
-    color:#ffc107;
-    padding:12px 30px;
-    border-radius:40px;
-    font-weight:bold;
-    margin-bottom:25px;
+background:#102b57;
+color:#ffc107;
+padding:10px 25px;
+border-radius:50px;
+font-weight:bold;
+margin-bottom:25px;
 }
 
-h1{
-    color:#0d2b5c;
-    font-size:34px;
-    line-height:1.2;
+.titulo{
+color:#102b57;
+font-size:28px;
+font-weight:700;
+line-height:1.2;
+margin-bottom:10px;
 }
 
-h2{
-    color:#ff9800;
-    margin-top:10px;
-    margin-bottom:20px;
-    font-size:24px;
+.subtitulo{
+color:#f0a500;
+font-size:22px;
+font-weight:600;
+margin-bottom:20px;
 }
 
-p{
-    color:#666;
-    margin-bottom:35px;
-    font-size:17px;
+.descripcion{
+color:#666;
+font-size:16px;
+margin-bottom:35px;
 }
 
-.btn-ingresar{
-    border:none;
-    padding:18px 50px;
-    border-radius:50px;
-    background:linear-gradient(90deg,#ff9800,#ffc107);
-    color:#0d2b5c;
-    font-size:20px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-    box-shadow:0 8px 20px rgba(255,152,0,0.4);
+.btn{
+background:linear-gradient(90deg,#ffb300,#ffd54f);
+color:#102b57;
+padding:16px 40px;
+border:none;
+border-radius:60px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(255,193,7,0.4);
+transition:0.3s;
 }
 
-.btn-ingresar:hover{
-    transform:translateY(-3px);
-    box-shadow:0 12px 25px rgba(255,152,0,0.5);
+.btn:hover{
+transform:translateY(-3px);
 }
 
 </style>
@@ -95,27 +97,27 @@ p{
 
 <div class="card">
 
-    <div class="icono">📦</div>
+<div class="icono">📦</div>
 
-    <div class="badge">
-        SISTEMA CORPORATIVO
-    </div>
+<div class="badge">
+SISTEMA CORPORATIVO
+</div>
 
-    <h1>
-        CONTROL DE INVENTARIO
-    </h1>
+<div class="titulo">
+CONTROL DE INVENTARIO
+</div>
 
-    <h2>
-        OUTLET - GARANTÍAS
-    </h2>
+<div class="subtitulo">
+OUTLET - GARANTÍAS
+</div>
 
-    <p>
-        Plataforma de Gestión y Control Serializado
-    </p>
+<div class="descripcion">
+Plataforma de Gestión de Inventario Serializado
+</div>
 
-    <button class="btn-ingresar">
-        Ingresar
-    </button>
+<button class="btn">
+INGRESAR
+</button>
 
 </div>
 
