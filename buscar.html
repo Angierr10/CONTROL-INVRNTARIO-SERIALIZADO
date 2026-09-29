@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<title>Buscar Serial</title>
+
+<style>
+body{
+font-family:Segoe UI;
+background:#f4f6f9;
+padding:40px;
+}
+
+input{
+padding:15px;
+width:300px;
+font-size:18px;
+}
+
+button{
+padding:15px 20px;
+background:#102b57;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.resultado{
+margin-top:30px;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔍 Buscar Serial</h1>
+
+<input id="serial">
+
+<button onclick="buscar()">
+Buscar
+</button>
+
+<div id="resultado" class="resultado"></div>
+
+<script>
+
+const inventario = [
+
+{
+serial:"145Y5K3",
+material:"MONITOR DELL E1916HV",
+marca:"DELL",
+ubicacion:"R1-70-B-01"
+},
+
+{
+serial:"8CC125233D",
+material:"HP DESKTOP CORPORATIVO",
+marca:"HP",
+ubicacion:"R1-61-D-01"
+},
+
+{
+serial:"SV907Y8LV",
+material:"LENOVO DESKTOP CORPORATIVO",
+marca:"LENOVO",
+ubicacion:"R1-69-B-01"
+}
+
+];
+
+function buscar(){
+
+let valor =
+document.getElementById("serial")
+.value
+.trim()
+.toUpperCase();
+
+let equipo =
+inventario.find(
+x => x.serial.toUpperCase() === valor
+);
+
+if(equipo){
+
+document.getElementById("resultado").innerHTML = `
+
+<h2>Resultado encontrado</h2>
+
+<p><b>Serial:</b> ${equipo.serial}</p>
+
+<p><b>Material:</b> ${equipo.material}</p>
+
+<p><b>Marca:</b> ${equipo.marca}</p>
+
+<p><b>Ubicación:</b> ${equipo.ubicacion}</p>
+
+`;
+
+}else{
+
+document.getElementById("resultado").innerHTML =
+"<h3>Serial no encontrado</h3>";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
