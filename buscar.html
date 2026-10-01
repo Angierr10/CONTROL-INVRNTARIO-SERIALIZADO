@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buscar Serial</title>
 
 <style>
+
 body{
-    font-family:Segoe UI;
+    font-family:Segoe UI,sans-serif;
     background:#f4f6f9;
     padding:40px;
+}
+
+h1{
+    color:#102b57;
 }
 
 input{
@@ -34,6 +39,7 @@ button{
     border-radius:15px;
     box-shadow:0 0 10px rgba(0,0,0,.1);
 }
+
 </style>
 </head>
 
@@ -56,44 +62,50 @@ Esperando búsqueda...
 let inventario = [];
 
 fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
-.then(response => response.json())
-.then(data => {
+.then(function(response){
+    return response.json();
+})
+.then(function(data){
     inventario = data;
     console.log("Inventario cargado:", data.length);
 })
-.catch(error => {
-    console.error("Error cargando inventario:", error);
+.catch(function(error){
+    console.log(error);
 });
 
-function buscar() {
+function buscar(){
 
-    const valor = document
-        .getElementById("serial")
+    let valor =
+        document.getElementById("serial")
         .value
         .trim()
         .toUpperCase();
 
-    const equipo = inventario.find(item =>
-        String(item.serial).toUpperCase() === valor
-    );
+    let equipo =
+        inventario.find(function(item){
+            return String(item.serial)
+                .toUpperCase() === valor;
+        });
 
-    if (equipo) {
+    if(equipo){
 
-        document.getElementById("resultado").innerHTML = `
-            <h2>✅ Equipo encontrado</h2>
-            <p><b>Serial:</b> ${equipo.serial}</p>
-            <p><b>Material:</b> ${equipo.material}</p>
-            <p><b>Marca:</b> ${equipo.marca}</p>
-            <p><b>Ubicación:</b> ${equipo.ubicacion}</p>
-        `;
+        document.getElementById("resultado").innerHTML =
+        "<h2>✅ Equipo encontrado</h2>" +
+        "<p><b>Serial:</b> " + equipo.serial + "</p>" +
+        "<p><b>Material:</b> " + equipo.material + "</p>" +
+        "<p><b>Marca:</b> " + equipo.marca + "</p>" +
+        "<p><b>Ubicación:</b> " + equipo.ubicacion + "</p>";
 
-    } else {
+    }else{
 
-        document.getElementById("resultado").innerHTML = `
-            <h2>❌ Serial no encontrado</h2>
-        `;
+        document.getElementById("resultado").innerHTML =
+        "<h2>❌ Serial no encontrado</h2>";
 
     }
+
 }
 
 </script>
+
+</body>
+</html>
