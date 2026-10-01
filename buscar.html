@@ -8,94 +8,100 @@
 
 <style>
 body{
-font-family:Segoe UI;
-background:#f4f6f9;
-padding:40px;
+    font-family:Segoe UI;
+    background:#f4f6f9;
+    padding:40px;
 }
 
 input{
-padding:15px;
-width:300px;
-font-size:18px;
+    padding:15px;
+    width:400px;
+    font-size:18px;
 }
 
 button{
-padding:15px 20px;
-background:#102b57;
-color:white;
-border:none;
-cursor:pointer;
+    padding:15px 25px;
+    background:#102b57;
+    color:white;
+    border:none;
+    cursor:pointer;
 }
 
 .resultado{
-margin-top:30px;
-background:white;
-padding:20px;
-border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,.1);
+    margin-top:30px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
 }
 </style>
 </head>
 
 <body>
 
-<h1>🔍 Buscar Serial</h1>
+<h1>🔎 Buscar Serial</h1>
 
-<input id="serial">
+<input id="serial" placeholder="Ingrese Serial">
 
 <button onclick="buscar()">
 Buscar
 </button>
 
-<div id="resultado" class="resultado"></div>
+<div id="resultado" class="resultado">
+Esperando búsqueda...
+</div>
 
 <script>
- 
+
 let inventario = [];
- 
+
 fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
-tario.length);
+.then(response => response.json())
+.then(data => {
+    inventario = data;
+    console.log("Inventario cargado:", inventario.length);
 })
 .catch(error => {
-console.error("Error:", error);
+    console.error("Error cargando inventario:", error);
 });
- 
+
 function buscar(){
- 
-let valor =
-document.getElementById("serial")
-.value
-.trim()
-.toUpperCase();
- 
-let equipo =
-inventario.find(
-x => String(x.serial).toUpperCase() === valor
-);
- 
-if(equipo){
- 
-document.getElementById("resultado").innerHTML = `
- 
-<h2>✅ Equipo encontrado</h2>
- 
-<p><b>Serial:</b> ${equipo.serial}</p>
- 
-<p><b>Material:</b> ${equipo.material}</p>
- 
-<p><b>Marca:</b> ${equipo.marca}</p>
- 
-<p><b>Ubicación:</b> ${equipo.ubicacion}</p>
- 
-`;
- 
-}else{
- 
-document.getElementById("resultado").innerHTML =
-`<h2>❌ Serial no encontrado</h2>`;
- 
+
+    const valor = document
+        .getElementById("serial")
+        .value
+        .trim()
+        .toUpperCase();
+
+    const equipo = inventario.find(
+        x => String(x.serial).toUpperCase() === valor
+    );
+
+    if(equipo){
+
+        document.getElementById("resultado").innerHTML = `
+            <h2>✅ Equipo encontrado</h2>
+
+            <p><b>Serial:</b> ${equipo.serial}</p>
+
+            <p><b>Material:</b> ${equipo.material}</p>
+
+            <p><b>Marca:</b> ${equipo.marca}</p>
+
+            <p><b>Ubicación:</b> ${equipo.ubicacion}</p>
+        `;
+
+    } else {
+
+        document.getElementById("resultado").innerHTML = `
+            <h2>❌ Serial no encontrado</h2>
+        `;
+
+    }
+
 }
- 
-}
- 
+
 </script>
+
+</body>
+</html>
