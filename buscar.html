@@ -50,54 +50,52 @@ Buscar
 <div id="resultado" class="resultado"></div>
 
 <script>
-
+ 
 let inventario = [];
-
-fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qo:", inventario.length);
+ 
+fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
+tario.length);
 })
 .catch(error => {
-console.error(error);
+console.error("Error:", error);
 });
-
+ 
 function buscar(){
-
+ 
 let valor =
 document.getElementById("serial")
 .value
 .trim()
 .toUpperCase();
-
+ 
 let equipo =
 inventario.find(
-x => x.serial.toUpperCase() === valor
+x => String(x.serial).toUpperCase() === valor
 );
-
+ 
 if(equipo){
-
+ 
 document.getElementById("resultado").innerHTML = `
-
-<h2>Resultado encontrado</h2>
-
+ 
+<h2>✅ Equipo encontrado</h2>
+ 
 <p><b>Serial:</b> ${equipo.serial}</p>
-
+ 
 <p><b>Material:</b> ${equipo.material}</p>
-
+ 
 <p><b>Marca:</b> ${equipo.marca}</p>
-
+ 
 <p><b>Ubicación:</b> ${equipo.ubicacion}</p>
-
+ 
 `;
-
+ 
 }else{
-
+ 
 document.getElementById("resultado").innerHTML =
 `<h2>❌ Serial no encontrado</h2>`;
-
+ 
 }
-
+ 
 }
-
+ 
 </script>
-
-</body>
-</html>
