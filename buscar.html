@@ -53,28 +53,17 @@ Buscar
 
 const inventario = [
 
-{
-serial:"145Y5K3",
-material:"MONITOR DELL E1916HV",
-marca:"DELL",
-ubicacion:"R1-70-B-01"
-},
+let inventario = [];
 
-{
-serial:"8CC125233D",
-material:"HP DESKTOP CORPORATIVO",
-marca:"HP",
-ubicacion:"R1-61-D-01"
-},
-
-{
-serial:"SV907Y8LV",
-material:"LENOVO DESKTOP CORPORATIVO",
-marca:"LENOVO",
-ubicacion:"R1-69-B-01"
-}
-
-];
+fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
+.then(response => response.json())
+.then(data => {
+    inventario = data;
+    console.log("Inventario cargado", inventario);
+})
+.catch(error => {
+    console.error("Error cargando inventario", error);
+});
 
 function buscar(){
 
