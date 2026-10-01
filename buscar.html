@@ -24,14 +24,12 @@ body{
 .topbar{
     display:flex;
     justify-content:flex-end;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
 .home-btn{
-    
-    color:#102b57;
     text-decoration:none;
-    font-size:34px;
+    font-size:36px;
     transition:.3s;
 }
 
@@ -48,7 +46,7 @@ body{
 
 .subtitulo{
     color:#666;
-    margin-bottom:30px;
+    margin-bottom:35px;
     font-size:18px;
 }
 
@@ -93,8 +91,8 @@ button:hover{
 }
 
 .inicial{
-    color:#888;
     text-align:center;
+    color:#888;
     font-size:18px;
 }
 
@@ -123,7 +121,14 @@ button:hover{
     font-size:22px;
 }
 
+hr{
+    margin:20px 0;
+    border:none;
+    border-top:1px solid #ddd;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -174,21 +179,71 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
     return response.json();
 })
 .then(function(data){
+
     inventario = data;
-    console.log("Inventario cargado:", inventario.length);
+
+    console.log(
+        "Inventario cargado:",
+        inventario.length
+    );
+
 })
 .catch(function(error){
-    console.error(error);
+
+    console.error(
+        "Error cargando inventario:",
+        error
+    );
+
 });
 
 function buscar(){
 
-    let valor = document
-    .getElementById("serial")
+    let valor =
+    document.getElementById("serial")
     .value
     .trim()
     .toUpperCase();
 
     if(valor === ""){
 
-        document.getElementById("resultado").innerHTML
+        document.getElementById("resultado").innerHTML =
+        '<h2 class="error">⚠️ Ingrese un serial</h2>';
+
+        return;
+    }
+
+    let equipo =
+    inventario.find(function(item){
+
+        return String(item.serial)
+        .toUpperCase() === valor;
+
+    });
+
+    if(equipo){
+
+        document.getElementById("resultado").innerHTML =
+
+        '<h2 class="ok">✅ Equipo encontrado</h2>' +
+
+        '<hr>' +
+
+        '<div class="dato">' +
+        '<div class="etiqueta">🔢 SERIAL</div>' +
+        '<div class="valor">' + equipo.serial + '</div>' +
+        '</div>' +
+
+        '<div class="dato">' +
+        '<div class="etiqueta">📦 MATERIAL</div>' +
+        '<div class="valor">' + equipo.material + '</div>' +
+        '</div>' +
+
+        '<div class="dato">' +
+        '<div class="etiqueta">🏢 MARCA</div>' +
+        '<div class="valor">' + equipo.marca + '</div>' +
+        '</div>' +
+
+        '<div class="dato">' +
+        '<div class="etiqueta">📍 UBICACIÓN</div>' +
+        '<div class="valor
