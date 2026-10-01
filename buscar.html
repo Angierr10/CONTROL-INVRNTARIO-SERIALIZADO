@@ -51,15 +51,12 @@ Buscar
 
 <script>
 
-const inventario = [
-
 let inventario = [];
 
-fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
-  .then(response => response.json())
-  .then(data => {
-     inventario = data;
-alert("Inventario cargado: " + inventario.length);
+fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qo:", inventario.length);
+})
+.catch(error => {
+console.error(error);
 });
 
 function buscar(){
@@ -94,7 +91,7 @@ document.getElementById("resultado").innerHTML = `
 }else{
 
 document.getElementById("resultado").innerHTML =
-"<h3>Serial no encontrado</h3>";
+`<h2>❌ Serial no encontrado</h2>`;
 
 }
 
