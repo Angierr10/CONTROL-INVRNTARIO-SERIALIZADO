@@ -9,82 +9,114 @@
 
 <style>
 
-body{
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
     font-family:'Segoe UI',sans-serif;
+}
+
+body{
     background:#f4f6f9;
     padding:40px;
 }
 
 .volver{
     display:inline-block;
-    margin-bottom:20px;
-    text-decoration:none;
+    margin-bottom:25px;
     background:#102b57;
     color:white;
-    padding:12px 20px;
+    text-decoration:none;
+    padding:12px 22px;
     border-radius:30px;
-    font-weight:bold;
+    font-weight:600;
 }
 
 .volver:hover{
     background:#1b4286;
 }
 
-h1{
+.titulo{
     color:#102b57;
-    margin-bottom:25px;
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    color:#666;
+    margin-bottom:30px;
+    font-size:18px;
 }
 
 .buscador{
     display:flex;
-    gap:10px;
+    gap:15px;
+    margin-bottom:30px;
     flex-wrap:wrap;
 }
 
 input{
-    padding:15px;
-    width:400px;
+    width:500px;
+    max-width:100%;
+    padding:18px;
+    border:1px solid #dcdcdc;
+    border-radius:12px;
     font-size:18px;
-    border:1px solid #ccc;
-    border-radius:10px;
 }
 
 button{
-    padding:15px 25px;
+    padding:18px 30px;
+    border:none;
+    border-radius:12px;
     background:#102b57;
     color:white;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:16px;
+    font-size:18px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-    background:#1b4286;
+    background:#183f80;
 }
 
 .resultado{
-    margin-top:30px;
     background:white;
-    padding:25px;
-    border-radius:20px;
+    border-radius:25px;
+    padding:35px;
+    max-width:900px;
     box-shadow:0 10px 25px rgba(0,0,0,.08);
-    border-left:8px solid #102b57;
-    max-width:750px;
+    border-left:10px solid #102b57;
 }
 
 .inicial{
-    color:#888;
     text-align:center;
+    color:#888;
+    font-size:18px;
 }
 
 .ok{
     color:#198754;
+    margin-bottom:15px;
 }
 
 .error{
     color:#dc3545;
+}
+
+.dato{
+    margin-bottom:20px;
+}
+
+.etiqueta{
+    color:#102b57;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.valor{
+    color:#333;
+    font-size:20px;
 }
 
 </style>
@@ -96,14 +128,20 @@ dashboard.html
 ← Volver al Dashboard
 </a>
 
-<h1>🔎 Buscar Serial</h1>
+<div class="titulo">
+🔎 Buscar Serial
+</div>
+
+<div class="subtitulo">
+Consulta de inventario en tiempo real
+</div>
 
 <div class="buscador">
 
 <input
-    id="serial"
-    placeholder="Ingrese Serial"
-    onkeypress="if(event.key==='Enter'){buscar();}">
+id="serial"
+placeholder="Ingrese el serial"
+onkeypress="if(event.key==='Enter'){buscar();}">
 
 <button onclick="buscar()">
 Buscar
@@ -114,7 +152,7 @@ Buscar
 <div id="resultado" class="resultado">
 
 <div class="inicial">
-📦 Ingrese un serial para consultar
+📦 Ingrese un serial para iniciar la búsqueda
 </div>
 
 </div>
@@ -128,28 +166,16 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
     return response.json();
 })
 .then(function(data){
-
     inventario = data;
-
-    console.log(
-        "Inventario cargado:",
-        inventario.length
-    );
-
+    console.log("Inventario cargado:", inventario.length);
 })
 .catch(function(error){
-
-    console.error(
-        "Error cargando inventario:",
-        error
-    );
-
+    console.error(error);
 });
 
 function buscar(){
 
-    let valor =
-        document
+    let valor = document
         .getElementById("serial")
         .value
         .trim()
@@ -158,19 +184,17 @@ function buscar(){
     if(valor === ""){
 
         document.getElementById("resultado").innerHTML =
-
         '<h2 class="error">⚠️ Ingrese un serial</h2>';
 
         return;
     }
 
-    let equipo =
-        inventario.find(function(item){
+    let equipo = inventario.find(function(item){
 
-            return String(item.serial)
-                .toUpperCase() === valor;
+        return String(item.serial)
+        .toUpperCase() === valor;
 
-        });
+    });
 
     if(equipo){
 
@@ -178,30 +202,31 @@ function buscar(){
 
         '<h2 class="ok">✅ Equipo encontrado</h2>' +
 
-        '<hr>' +
+        '<hr style="margin:20px 0;">' +
 
-        '<p><b>🔢 Serial:</b> ' +
-        equipo.serial +
-        '</p>' +
+        '<div class="dato">' +
+        '<div class="etiqueta">🔢 Serial</div>' +
+        '<div class="valor">' + equipo.serial + '</div>' +
+        '</div>' +
 
-        '<p><b>📦 Material:</b> ' +
-        equipo.material +
-        '</p>' +
+        '<div class="dato">' +
+        '<div class="etiqueta">📦 Material</div>' +
+        '<div class="valor">' + equipo.material + '</div>' +
+        '</div>' +
 
-        '<p><b>🏢 Marca:</b> ' +
-        equipo.marca +
-        '</p>' +
+        '<div class="dato">' +
+        '<div class="etiqueta">🏢 Marca</div>' +
+        '<div class="valor">' + equipo.marca + '</div>' +
+        '</div>' +
 
-        '<p><b>📍 Ubicación:</b> ' +
-        equipo.ubicacion +
-        '</p>';
+        '<div class="dato">' +
+        '<div class="etiqueta">📍 Ubicación</div>' +
+        '<div class="valor">' + equipo.ubicacion + '</div>' +
+        '</div>';
 
-    }
-
-    else{
+    }else{
 
         document.getElementById("resultado").innerHTML =
-
         '<h2 class="error">❌ Serial no encontrado</h2>';
 
     }
