@@ -11,96 +11,127 @@
 *{
     margin:0;
     padding:0;
-   *box-sizing:border-box;
-    font-fa*ily:'Segoe UI',sans-serif;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
-body*
-    display:flex;
-    background:*f4f6f9;
+body{
+    background:#f4f6f9;
 }
 
 .sidebar{
-    width:260*x;
+    width:260px;
     height:100vh;
-    backgroun*:#102b57;
-    color:white;
-    pos*tion:fixed;
+    background:#102b57;
+    position:fixed;
     left:0;
-    top:0;*}
+    top:0;
+    color:white;
+}
 
 .logo{
-    padding:25px;
-    te*t-align:center;
-    border-bottom:*px solid rgba(255,255,255,0.1);
+    text-align:center;
+    padding:30px 20px;
+    border-bottom:1px solid rgba(255,255,255,.1);
 }
-*.logo h2{
+
+.logo h2{
     color:#ffc107;
+    margin-bottom:8px;
 }
 
-.m*nu{
-    padding-top:20px;
+.logo p{
+    color:#ddd;
 }
 
-.menu*a{
+.menu{
+    margin-top:20px;
+}
+
+.menu a{
     display:block;
-    padding:*8px 25px;
     color:white;
-    tex*-decoration:none;
+    text-decoration:none;
+    padding:18px 25px;
+    transition:0.3s;
 }
 
-.menu a:hover*
+.menu a:hover{
     background:#183f80;
 }
 
-.menu *.active{
+.menu a.active{
     background:#ffc107;
- *  color:#102b57;
-    font-weight:b*ld;
+    color:#102b57;
+    font-weight:bold;
 }
 
 .main{
-    margin-left:260p*;
-    width:100%;
-    padding:30px*
+    margin-left:260px;
+    padding:30px;
 }
 
 .header{
-    background:white;*    padding:20px;
-    border-radiu*:15px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
     margin-bottom:30px;
-   *box-shadow:0 5px 15px rgba(0,0,0,.*8);
 }
 
 .header h1{
-    color:#102b*7;
+    color:#102b57;
+    margin-bottom:8px;
+}
+
+.header p{
+    color:#666;
 }
 
 .cards{
     display:grid;
-  * grid-template-columns:repeat(auto*fit,minmax(250px,1fr));
-    gap:20*x;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
 }
 
 .card{
-    background:white;*    padding:25px;
-    border-radiu*:20px;
-    box-shadow:0 10px 20px *gba(0,0,0,.08);
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
 }
 
 .icon{
-    font*size:35px;
+    font-size:35px;
 }
 
 .number{
-    font-si*e:45px;
+    font-size:48px;
     font-weight:bold;
-    *olor:#102b57;
-    margin-top:10px;*}
+    color:#102b57;
+    margin-top:10px;
+}
 
 .text{
     color:#666;
-    marg*n-top:8px;
+    margin-top:10px;
+}
+
+.estado{
+    margin-top:30px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+}
+
+.estado h3{
+    color:#102b57;
+    margin-bottom:10px;
+}
+
+#estadoApi{
+    color:#666;
 }
 
 </style>
@@ -111,75 +142,85 @@ body*
 
 <div class="sidebar">
 
-<div class="logo">
-<h2>📦 INVENTARIO</h2>
-<p>Outlet - Garantías</p>
-</div>
+    <div class="logo">
+        <h2>📦 INVENTARIO</h2>
+        <p>Outlet - Garantías</p>
+    </div>
 
-<div class="menu">
+    <div class="menu">
 
-<a class="active" href="dashboard.html">
-🏠 Dashboard
-</a>
+        <a class="active" href="dashboard.html">
+            🏠 Dashboard
+        </a>
 
-<a href="buscar.html">
-🔍 Buscar Serial
-</a>
+        <a href="buscar.html">
+            🔎 Buscar Serial
+        </a>
 
-#
-📥 Entradas
-</a>
+        #
+            📥 Entradas
+        </a>
 
-#
-📤 Salidas
-</a>
+        #
+            📤 Salidas
+        </a>
 
-#
-📋 Inventario
-</a>
+        #
+            📋 Inventario
+        </a>
 
-#
-📊 Reportes
-</a>
+        #
+            📊 Reportes
+        </a>
 
-</div>
+    </div>
 
 </div>
 
 <div class="main">
 
-<div class="header">
-<h1>CONTROL DE INVENTARIO OUTLET - GARANTÍAS</h1>
-<p>Datos en tiempo real desde Google Sheets</p>
-</div>
+    <div class="header">
+        <h1>CONTROL DE INVENTARIO OUTLET - GARANTÍAS</h1>
+        <p>Información en tiempo real desde Google Sheets</p>
+    </div>
 
-<div class="cards">
+    <div class="cards">
 
-<div class="card">
-<div class="icon">📦</div>
-<div id="totalEquipos" class="number">0</div>
-<div class="text">Total Equipos</div>
-</div>
+        <div class="card">
+            <div class="icon">📦</div>
+            <div id="totalEquipos" class="number">0</div>
+            <div class="text">Total Equipos</div>
+        </div>
 
-<div class="card">
-<div class="icon">🏢</div>
-<div id="totalMarcas" class="number">0</div>
-<div class="text">Marcas</div>
-</div>
+        <div class="card">
+            <div class="icon">🏢</div>
+            <div id="totalMarcas" class="number">0</div>
+            <div class="text">Marcas</div>
+        </div>
 
-<div class="card">
-<div class="icon">📍</div>
-<div id="totalUbicaciones" class="number">0</div>
-<div class="text">Ubicaciones</div>
-</div>
+        <div class="card">
+            <div class="icon">📍</div>
+            <div id="totalUbicaciones" class="number">0</div>
+            <div class="text">Ubicaciones</div>
+        </div>
 
-<div class="card">
-<div class="icon">📋</div>
-<div id="totalMateriales" class="number">0</div>
-<div class="text">Materiales</div>
-</div>
+        <div class="card">
+            <div class="icon">📋</div>
+            <div id="totalMateriales" class="number">0</div>
+            <div class="text">Materiales</div>
+        </div>
 
-</div>
+    </div>
+
+    <div class="estado">
+
+        <h3>Estado del Sistema</h3>
+
+        <p id="estadoApi">
+            Conectando con Google Sheets...
+        </p>
+
+    </div>
 
 </div>
 
@@ -187,34 +228,42 @@ body*
 
 fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
 
-.then(response => response.json())
+.then(function(response){
+    return response.json();
+})
 
-.then(data => {
+.then(function(data){
 
-    document.getElementById("totalEquipos")
-        .innerText = data.length;
+    document.getElementById("estadoApi").innerHTML =
+    "✅ Datos cargados correctamente";
+
+    document.getElementById("totalEquipos").innerText =
+    data.length;
 
     let marcas =
-        [...new Set(data.map(x => x.marca))];
+    [...new Set(data.map(x => x.marca))];
 
-    document.getElementById("totalMarcas")
-        .innerText = marcas.length;
+    document.getElementById("totalMarcas").innerText =
+    marcas.length;
 
     let ubicaciones =
-        [...new Set(data.map(x => x.ubicacion))];
+    [...new Set(data.map(x => x.ubicacion))];
 
-    document.getElementById("totalUbicaciones")
-        .innerText = ubicaciones.length;
+    document.getElementById("totalUbicaciones").innerText =
+    ubicaciones.length;
 
     let materiales =
-        [...new Set(data.map(x => x.material))];
+    [...new Set(data.map(x => x.material))];
 
-    document.getElementById("totalMateriales")
-        .innerText = materiales.length;
+    document.getElementById("totalMateriales").innerText =
+    materiales.length;
 
 })
 
-.catch(error => {
+.catch(function(error){
+
+    document.getElementById("estadoApi").innerHTML =
+    "❌ Error conectando con Google Sheets";
 
     console.error(error);
 
