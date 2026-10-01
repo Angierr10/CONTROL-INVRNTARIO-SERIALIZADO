@@ -4,24 +4,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Buscar Serial</title>
 
 <style>
 
 body{
-    font-family:Segoe UI,sans-serif;
+    font-family:'Segoe UI',sans-serif;
     background:#f4f6f9;
     padding:40px;
 }
 
+.volver{
+    display:inline-block;
+    margin-bottom:20px;
+    text-decoration:none;
+    background:#102b57;
+    color:white;
+    padding:12px 20px;
+    border-radius:30px;
+    font-weight:bold;
+}
+
+.volver:hover{
+    background:#1b4286;
+}
+
 h1{
     color:#102b57;
+    margin-bottom:25px;
+}
+
+.buscador{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
 input{
     padding:15px;
     width:400px;
     font-size:18px;
+    border:1px solid #ccc;
+    border-radius:10px;
 }
 
 button{
@@ -29,15 +54,37 @@ button{
     background:#102b57;
     color:white;
     border:none;
+    border-radius:10px;
     cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#1b4286;
 }
 
 .resultado{
     margin-top:30px;
     background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 0 10px rgba(0,0,0,.1);
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border-left:8px solid #102b57;
+    max-width:750px;
+}
+
+.inicial{
+    color:#888;
+    text-align:center;
+}
+
+.ok{
+    color:#198754;
+}
+
+.error{
+    color:#dc3545;
 }
 
 </style>
@@ -45,16 +92,31 @@ button{
 
 <body>
 
+dashboard.html
+← Volver al Dashboard
+</a>
+
 <h1>🔎 Buscar Serial</h1>
 
-<input id="serial" placeholder="Ingrese Serial">
+<div class="buscador">
+
+<input
+    id="serial"
+    placeholder="Ingrese Serial"
+    onkeypress="if(event.key==='Enter'){buscar();}">
 
 <button onclick="buscar()">
 Buscar
 </button>
 
+</div>
+
 <div id="resultado" class="resultado">
-Esperando búsqueda...
+
+<div class="inicial">
+📦 Ingrese un serial para consultar
+</div>
+
 </div>
 
 <script>
@@ -66,40 +128,81 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
     return response.json();
 })
 .then(function(data){
+
     inventario = data;
-    console.log("Inventario cargado:", data.length);
+
+    console.log(
+        "Inventario cargado:",
+        inventario.length
+    );
+
 })
 .catch(function(error){
-    console.log(error);
+
+    console.error(
+        "Error cargando inventario:",
+        error
+    );
+
 });
 
 function buscar(){
 
     let valor =
-        document.getElementById("serial")
+        document
+        .getElementById("serial")
         .value
         .trim()
         .toUpperCase();
 
+    if(valor === ""){
+
+        document.getElementById("resultado").innerHTML =
+
+        '<h2 class="error">⚠️ Ingrese un serial</h2>';
+
+        return;
+    }
+
     let equipo =
         inventario.find(function(item){
+
             return String(item.serial)
                 .toUpperCase() === valor;
+
         });
 
     if(equipo){
 
         document.getElementById("resultado").innerHTML =
-        "<h2>✅ Equipo encontrado</h2>" +
-        "<p><b>Serial:</b> " + equipo.serial + "</p>" +
-        "<p><b>Material:</b> " + equipo.material + "</p>" +
-        "<p><b>Marca:</b> " + equipo.marca + "</p>" +
-        "<p><b>Ubicación:</b> " + equipo.ubicacion + "</p>";
 
-    }else{
+        '<h2 class="ok">✅ Equipo encontrado</h2>' +
+
+        '<hr>' +
+
+        '<p><b>🔢 Serial:</b> ' +
+        equipo.serial +
+        '</p>' +
+
+        '<p><b>📦 Material:</b> ' +
+        equipo.material +
+        '</p>' +
+
+        '<p><b>🏢 Marca:</b> ' +
+        equipo.marca +
+        '</p>' +
+
+        '<p><b>📍 Ubicación:</b> ' +
+        equipo.ubicacion +
+        '</p>';
+
+    }
+
+    else{
 
         document.getElementById("resultado").innerHTML =
-        "<h2>❌ Serial no encontrado</h2>";
+
+        '<h2 class="error">❌ Serial no encontrado</h2>';
 
     }
 
