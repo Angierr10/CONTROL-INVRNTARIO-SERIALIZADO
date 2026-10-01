@@ -56,14 +56,14 @@ const inventario = [
 let inventario = [];
 
 fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
-.then(response => response.json())
-.then(data => {
-    inventario = data;
-    console.log("Inventario cargado", inventario);
-})
-.catch(error => {
-    console.error("Error cargando inventario", error);
-});
+  .then(response => response.json())
+  .then(data => {
+      inventario = data;
+      console.log("Inventario cargado:", inventario.length);
+  })
+  .catch(error => {
+      console.error("Error:", error);
+  });
 
 function buscar(){
 
