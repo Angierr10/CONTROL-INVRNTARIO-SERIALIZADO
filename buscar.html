@@ -59,13 +59,13 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
 .then(response => response.json())
 .then(data => {
     inventario = data;
-    console.log("Inventario cargado:", inventario.length);
+    console.log("Inventario cargado:", data.length);
 })
 .catch(error => {
     console.error("Error cargando inventario:", error);
 });
 
-function buscar(){
+function buscar() {
 
     const valor = document
         .getElementById("serial")
@@ -73,21 +73,17 @@ function buscar(){
         .trim()
         .toUpperCase();
 
-    const equipo = inventario.find(
-        x => String(x.serial).toUpperCase() === valor
+    const equipo = inventario.find(item =>
+        String(item.serial).toUpperCase() === valor
     );
 
-    if(equipo){
+    if (equipo) {
 
         document.getElementById("resultado").innerHTML = `
             <h2>✅ Equipo encontrado</h2>
-
             <p><b>Serial:</b> ${equipo.serial}</p>
-
             <p><b>Material:</b> ${equipo.material}</p>
-
             <p><b>Marca:</b> ${equipo.marca}</p>
-
             <p><b>Ubicación:</b> ${equipo.ubicacion}</p>
         `;
 
@@ -98,10 +94,6 @@ function buscar(){
         `;
 
     }
-
 }
 
 </script>
-
-</body>
-</html>
