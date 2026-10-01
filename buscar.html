@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+fetch("...<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -21,26 +21,37 @@ body{
     padding:40px;
 }
 
-.volver{
-    display:inline-block;
+.topbar{
+    display:flex;
+    justify-content:flex-end;
     margin-bottom:25px;
-    background:#102b57;
-    color:white;
-    text-decoration:none;
-    padding:12px 22px;
-    border-radius:30px;
-    font-weight:600;
 }
 
-.volver:hover{
-    background:#1b4286;
+.home-btn{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#ffc107;
+    color:#102b57;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:28px;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    transition:.3s;
+}
+
+.home-btn:hover{
+    transform:scale(1.08);
 }
 
 .titulo{
     color:#102b57;
     font-size:42px;
     font-weight:700;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .subtitulo{
@@ -52,8 +63,8 @@ body{
 .buscador{
     display:flex;
     gap:15px;
-    margin-bottom:30px;
     flex-wrap:wrap;
+    margin-bottom:30px;
 }
 
 input{
@@ -90,8 +101,8 @@ button:hover{
 }
 
 .inicial{
-    text-align:center;
     color:#888;
+    text-align:center;
     font-size:18px;
 }
 
@@ -110,13 +121,14 @@ button:hover{
 
 .etiqueta{
     color:#102b57;
+    font-size:15px;
     font-weight:bold;
     margin-bottom:5px;
 }
 
 .valor{
     color:#333;
-    font-size:20px;
+    font-size:22px;
 }
 
 </style>
@@ -124,12 +136,16 @@ button:hover{
 
 <body>
 
-dashboard.html
-← Volver al Dashboard
+<div class="topbar">
+
+<a href="dashboard.html" class="home-btn">
+🏠
 </a>
 
+</div>
+
 <div class="titulo">
-🔎 Buscar Serial
+🔎 BUSCAR SERIAL
 </div>
 
 <div class="subtitulo">
@@ -176,64 +192,11 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
 function buscar(){
 
     let valor = document
-        .getElementById("serial")
-        .value
-        .trim()
-        .toUpperCase();
+    .getElementById("serial")
+    .value
+    .trim()
+    .toUpperCase();
 
     if(valor === ""){
 
-        document.getElementById("resultado").innerHTML =
-        '<h2 class="error">⚠️ Ingrese un serial</h2>';
-
-        return;
-    }
-
-    let equipo = inventario.find(function(item){
-
-        return String(item.serial)
-        .toUpperCase() === valor;
-
-    });
-
-    if(equipo){
-
-        document.getElementById("resultado").innerHTML =
-
-        '<h2 class="ok">✅ Equipo encontrado</h2>' +
-
-        '<hr style="margin:20px 0;">' +
-
-        '<div class="dato">' +
-        '<div class="etiqueta">🔢 Serial</div>' +
-        '<div class="valor">' + equipo.serial + '</div>' +
-        '</div>' +
-
-        '<div class="dato">' +
-        '<div class="etiqueta">📦 Material</div>' +
-        '<div class="valor">' + equipo.material + '</div>' +
-        '</div>' +
-
-        '<div class="dato">' +
-        '<div class="etiqueta">🏢 Marca</div>' +
-        '<div class="valor">' + equipo.marca + '</div>' +
-        '</div>' +
-
-        '<div class="dato">' +
-        '<div class="etiqueta">📍 Ubicación</div>' +
-        '<div class="valor">' + equipo.ubicacion + '</div>' +
-        '</div>';
-
-    }else{
-
-        document.getElementById("resultado").innerHTML =
-        '<h2 class="error">❌ Serial no encontrado</h2>';
-
-    }
-
-}
-
-</script>
-
-</body>
-</html>
+        document.getElementById("resultado").innerHTML
