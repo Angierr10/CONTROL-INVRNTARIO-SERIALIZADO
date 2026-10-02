@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Inventario</title>
+<title>Inventario General</title>
 
 <style>
 
@@ -18,202 +18,149 @@
 
 body{
     background:#f4f6f9;
+    padding:40px;
 }
 
-.sidebar{
-    width:260px;
-    height:100vh;
-    background:#102b57;
-    position:fixed;
-    left:0;
-    top:0;
-    color:white;
+.topbar{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:20px;
 }
 
-.logo{
-    text-align:center;
-    padding:30px 20px;
-    border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.logo h2{
-    color:#ffc107;
-}
-
-.logo p{
-    color:#ddd;
-    margin-top:8px;
-}
-
-.menu{
-    margin-top:20px;
-}
-
-.menu a{
-    display:block;
-    color:white;
+.home-btn{
     text-decoration:none;
-    padding:18px 25px;
+    font-size:36px;
+    transition:.3s;
 }
 
-.menu a:hover{
-    background:#183f80;
+.home-btn:hover{
+    transform:scale(1.15);
 }
 
-.menu .active{
-    background:#ffc107;
+.titulo{
     color:#102b57;
-    font-weight:bold;
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:8px;
 }
 
-.main{
-    margin-left:260px;
-    padding:30px;
+.subtitulo{
+    color:#666;
+    margin-bottom:30px;
+    font-size:18px;
 }
 
-.header{
+.buscador{
     background:white;
     padding:25px;
     border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
     margin-bottom:25px;
-}
-
-.header h1{
-    color:#102b57;
-}
-
-.header p{
-    color:#666;
-    margin-top:6px;
-}
-
-.search-box{
-    background:white;
-    padding:20px;
-    border-radius:20px;
     box-shadow:0 5px 15px rgba(0,0,0,.08);
-    margin-bottom:25px;
 }
 
-.search-box input{
+.buscador input{
     width:100%;
-    padding:15px;
+    padding:16px;
     border:1px solid #ddd;
     border-radius:12px;
     font-size:16px;
 }
 
 .contador{
-    margin-top:10px;
+    margin-top:15px;
     color:#666;
+    font-weight:600;
 }
 
-.cards{
+.inventario{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
     gap:20px;
 }
 
 .card{
     background:white;
-    padding:20px;
+    padding:25px;
     border-radius:20px;
     box-shadow:0 5px 15px rgba(0,0,0,.08);
     border-left:8px solid #102b57;
 }
 
 .serial{
-    font-size:22px;
-    font-weight:bold;
     color:#102b57;
+    font-size:24px;
+    font-weight:bold;
     margin-bottom:15px;
 }
 
 .info{
-    margin-bottom:10px;
+    margin-bottom:12px;
+    line-height:1.5;
 }
 
 .label{
-    font-weight:bold;
     color:#102b57;
+    font-weight:bold;
 }
 
 .estado{
+    display:inline-block;
+    margin-top:10px;
+    padding:8px 15px;
     background:#e8f5e9;
     color:#2e7d32;
-    padding:8px 12px;
-    display:inline-block;
     border-radius:20px;
-    margin-top:10px;
     font-size:14px;
 }
 
-</style>
+.vacio{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    color:#888;
+}
 
+</style>
 </head>
 
 <body>
 
-<div class="sidebar">
+<div class="topbar">
 
-    <div class="logo">
-        <h2>📦 INVENTARIO</h2>
-        <p>Outlet - Garantías</p>
-    </div>
-
-    <div class="menu">
-
-        <a href="dashboard.html">
-            🏠 Dashboard
-        </a>
-
-        <a href="buscar.html">
-            🔎 Buscar Serial
-        </a>
-
-        <a class="active" href="inventario.html">
-            📋 Inventario
-        </a>
-
-        #
-            📥 Ingresos
-        </a>
-
-        #
-            📤 Salidas
-        </a>
-
-        #
-            📊 Reportes
-        </a>
-
-    </div>
+<a href="dashboard.html" class="home-btn">
+🏠
+</a>
 
 </div>
 
-<div class="main">
+<div class="titulo">
+📋 INVENTARIO GENERAL
+</div>
 
-    <div class="header">
-        <h1>📋 INVENTARIO GENERAL</h1>
-        <p>Consulta completa de equipos registrados</p>
-    </div>
+<div class="subtitulo">
+Consulta completa del inventario conectado a Google Sheets
+</div>
 
-    <div class="search-box">
+<div class="buscador">
 
-        <input
-        type="text"
-        id="busqueda"
-        placeholder="Buscar por serial, material, marca o ubicación..."
-        onkeyup="filtrar()">
+<input
+type="text"
+id="buscar"
+placeholder="Buscar por serial, material, marca o ubicación..."
+onkeyup="filtrar()">
 
-        <div id="contador" class="contador">
-            Cargando registros...
-        </div>
+<div id="contador" class="contador">
+Cargando inventario...
+</div>
 
-    </div>
+</div>
 
-    <div id="inventario" class="cards"></div>
+<div id="inventario" class="inventario">
+
+<div class="vacio">
+Cargando información...
+</div>
 
 </div>
 
@@ -223,9 +170,11 @@ let inventario = [];
 
 fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
 
-.then(response => response.json())
+.then(function(response){
+    return response.json();
+})
 
-.then(data => {
+.then(function(data){
 
     inventario = data;
 
@@ -236,7 +185,7 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
 
 })
 
-.catch(error => {
+.catch(function(error){
 
     console.error(error);
 
@@ -249,7 +198,7 @@ function renderizar(datos){
 
     let html = "";
 
-    datos.forEach(item => {
+    datos.forEach(function(item){
 
         html += `
 
@@ -290,22 +239,22 @@ function renderizar(datos){
 
 function filtrar(){
 
-    let texto =
-    document.getElementById("busqueda")
-    .value
-    .toLowerCase();
+    let texto = document
+        .getElementById("buscar")
+        .value
+        .toLowerCase();
 
-    let resultado = inventario.filter(item =>
+    let resultado = inventario.filter(function(item){
 
-        String(item.serial).toLowerCase().includes(texto) ||
+        return String(item.serial).toLowerCase().includes(texto) ||
 
-        String(item.material).toLowerCase().includes(texto) ||
+               String(item.material).toLowerCase().includes(texto) ||
 
-        String(item.marca).toLowerCase().includes(texto) ||
+               String(item.marca).toLowerCase().includes(texto) ||
 
-        String(item.ubicacion).toLowerCase().includes(texto)
+               String(item.ubicacion).toLowerCase().includes(texto);
 
-    );
+    });
 
     document.getElementById("contador").innerHTML =
     "Resultados encontrados: " + resultado.length;
