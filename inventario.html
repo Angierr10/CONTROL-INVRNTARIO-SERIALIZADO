@@ -46,7 +46,7 @@ body{
 
 .subtitulo{
     color:#666;
-    margin-bottom:30px;
+    margin-bottom:25px;
     font-size:18px;
 }
 
@@ -60,7 +60,7 @@ body{
 
 .panel input{
     width:100%;
-    padding:15px;
+    padding:16px;
     border:1px solid #ddd;
     border-radius:12px;
     font-size:16px;
@@ -77,6 +77,7 @@ body{
     border-radius:20px;
     box-shadow:0 5px 15px rgba(0,0,0,.08);
     overflow:auto;
+    max-height:700px;
 }
 
 table{
@@ -87,16 +88,18 @@ table{
 thead{
     background:#102b57;
     color:white;
+    position:sticky;
+    top:0;
 }
 
 th{
     padding:18px;
     text-align:left;
-    font-size:15px;
+    white-space:nowrap;
 }
 
 td{
-    padding:15px;
+    padding:14px;
     border-bottom:1px solid #eee;
 }
 
@@ -105,17 +108,30 @@ tr:hover{
 }
 
 .serial{
-    font-weight:bold;
     color:#102b57;
+    font-weight:bold;
 }
 
 .estado{
-    background:#e8f5e9;
-    color:#2e7d32;
-    padding:5px 12px;
+    padding:6px 12px;
     border-radius:20px;
     font-size:13px;
     font-weight:bold;
+}
+
+.disponible{
+    background:#e8f5e9;
+    color:#2e7d32;
+}
+
+.garantia{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.salida{
+    background:#f8d7da;
+    color:#721c24;
 }
 
 </style>
@@ -145,11 +161,11 @@ Consulta completa del inventario conectado a Google Sheets
 <input
 type="text"
 id="buscar"
-placeholder="Buscar por serial, material, marca o ubicación..."
+placeholder="Buscar por material, descripción, serial, ubicación o marca..."
 onkeyup="filtrar()">
 
 <div id="contador" class="contador">
-Cargando inventario...
+Cargando registros...
 </div>
 
 </div>
@@ -161,11 +177,13 @@ Cargando inventario...
 <thead>
 
 <tr>
-<th>Serial</th>
 <th>Material</th>
+<th>Descripción</th>
 <th>Marca</th>
+<th>Serial</th>
 <th>Ubicación</th>
 <th>Estado</th>
+<th>Fecha Ingreso</th>
 </tr>
 
 </thead>
@@ -173,9 +191,7 @@ Cargando inventario...
 <tbody id="tablaInventario">
 
 <tr>
-<td colspan="5">
-Cargando registros...
-</td>
+<td colspan="7">Cargando datos...</td>
 </tr>
 
 </tbody>
@@ -199,7 +215,7 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
     inventario = data;
 
     document.getElementById("contador").innerHTML =
-    "Total registros: " + data.length;
+    "Mostrando " + data.length + " registros";
 
     renderizar(data);
 
@@ -220,31 +236,39 @@ function renderizar(datos){
 
     datos.forEach(function(item){
 
+        let claseEstado = "disponible";
+
+        if(item.estado){
+            if(item.estado.toLowerCase() === "garantia"){
+                claseEstado = "garantia";
+            }
+
+            if(item.estado.toLowerCase() === "salida"){
+                claseEstado = "salida";
+            }
+        }
+
         filas += `
 
         <tr>
 
-            <td class="serial">
-                ${item.serial}
-            </td>
+            <td>${item.material || ""}</td>
+
+            <td>${item.descripcion || ""}</td>
+
+            <td>${item.marca || ""}</td>
+
+            <td class="serial">${item.serial || ""}</td>
+
+            <td>${item.ubicacion || ""}</td>
 
             <td>
-                ${item.material}
-            </td>
-
-            <td>
-                ${item.marca}
-            </td>
-
-            <td>
-                ${item.ubicacion}
-            </td>
-
-            <td>
-                <span class="estado">
-                    Disponible
+                <span class="estado ${claseEstado}">
+                    ${item.estado || "Disponible"}
                 </span>
             </td>
+
+            <td>${item.fechaIngreso || ""}</td>
 
         </tr>
 
@@ -266,32 +290,38 @@ function filtrar(){
 
     let resultado = inventario.filter(function(item){
 
-        return String(item.serial)
-            .toLowerCase()
-            .includes(texto)
+        return String(item.material || "")
+        .toLowerCase()
+        .includes(texto)
 
-            ||
+        ||
 
-            String(item.material)
-            .toLowerCase()
-            .includes(texto)
+        String(item.descripcion || "")
+        .toLowerCase()
+        .includes(texto)
 
-            ||
+        ||
 
-            String(item.marca)
-            .toLowerCase()
-            .includes(texto)
+        String(item.serial || "")
+        .toLowerCase()
+        .includes(texto)
 
-            ||
+        ||
 
-            String(item.ubicacion)
-            .toLowerCase()
-            .includes(texto);
+        String(item.marca || "")
+        .toLowerCase()
+        .includes(texto)
+
+        ||
+
+        String(item.ubicacion || "")
+        .toLowerCase()
+        .includes(texto);
 
     });
 
     document.getElementById("contador").innerHTML =
-    "Resultados encontrados: " + resultado.length;
+    "Mostrando " + resultado.length + " registros";
 
     renderizar(resultado);
 
