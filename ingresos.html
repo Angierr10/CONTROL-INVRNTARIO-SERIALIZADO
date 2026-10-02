@@ -28,8 +28,8 @@ body{
 }
 
 .home-btn{
-    font-size:36px;
     text-decoration:none;
+    font-size:36px;
 }
 
 .home-btn:hover{
@@ -76,7 +76,7 @@ textarea{
     height:100px;
 }
 
-button{
+.boton-guardar{
     margin-top:25px;
     padding:15px 30px;
     border:none;
@@ -88,16 +88,14 @@ button{
     cursor:pointer;
 }
 
-button:hover{
+.boton-guardar:hover{
     background:#183f80;
 }
 
-.mensaje{
-    margin-top:20px;
-    font-weight:bold;
+.boton-guardar:disabled{
+    background:#9aa5b1;
+    cursor:not-allowed;
 }
-
-/* MODAL */
 
 .modal{
     display:none;
@@ -107,10 +105,8 @@ button:hover{
     width:100%;
     height:100%;
     background:rgba(0,0,0,.35);
-
     justify-content:center;
     align-items:center;
-
     z-index:9999;
 }
 
@@ -124,8 +120,15 @@ button:hover{
 }
 
 .modal-content h2{
-    color:#198754;
     margin-bottom:20px;
+}
+
+.modal-exito h2{
+    color:#198754;
+}
+
+.modal-warning h2{
+    color:#ff9800;
 }
 
 .modal-content button{
@@ -134,8 +137,13 @@ button:hover{
     border:none;
     padding:12px 25px;
     border-radius:10px;
-    cursor:pointer;
     font-weight:bold;
+    cursor:pointer;
+    margin:5px;
+}
+
+.btn-cancelar{
+    background:#6c757d !important;
 }
 
 </style>
@@ -144,7 +152,7 @@ button:hover{
 <body>
 
 <div class="topbar">
-    <a href="dashboard.html" class="home-btn">🏠</a>
+<a href="dashboard.html" class="home-btn">🏠</a>
 </div>
 
 <div class="titulo">
@@ -157,50 +165,82 @@ Registrar ingreso de equipos al inventario
 
 <div class="formulario">
 
-    <label>Material</label>
-    <input id="material">
+<label>Material</label>
+<input id="material">
 
-    <label>Descripción</label>
-    <input id="descripcion">
+<label>Descripción</label>
+<input id="descripcion">
 
-    <label>Marca</label>
-    <input id="marca">
+<label>Marca</label>
+<input id="marca">
 
-    <label>Serial</label>
-    <input id="serial">
+<label>Serial</label>
+<input id="serial">
 
-    <label>Ubicación</label>
-    <input id="ubicacion">
+<label>Ubicación</label>
+<input id="ubicacion">
 
-    <label>Fecha de Ingreso</label>
-    <input id="fecha" type="date">
+<label>Fecha de Ingreso</label>
+<input id="fecha" type="date">
 
-    <label>Usuario</label>
-    <input id="usuario">
+<label>Documento de Ingreso</label>
+<input id="documentoIngreso">
 
-    <label>Observación</label>
-    <textarea id="observacion"></textarea>
+<label>Usuario</label>
+<input id="usuario">
 
-    <button onclick="guardarIngreso()">
-        Registrar Ingreso
-    </button>
+<label>Observación</label>
+<textarea id="observacion"></textarea>
 
-    <div id="mensaje" class="mensaje"></div>
+<button
+id="btnGuardar"
+class="boton-guardar"
+onclick="guardarIngreso()">
+Registrar Ingreso
+</button>
 
 </div>
 
-<!-- MODAL -->
+<!-- MODAL EXITO -->
 
 <div id="modalExito" class="modal">
 
-    <div class="modal-content">
+    <div class="modal-content modal-exito">
 
         <h2>
-            ✅ Ingreso registrado correctamente
+            ✅ Registro realizado correctamente
         </h2>
 
-        <button onclick="cerrarModal()">
+        <button onclick="cerrarModalExito()">
             ACEPTAR
+        </button>
+
+    </div>
+
+</div>
+
+<!-- MODAL REINGRESO -->
+
+<div id="modalReingreso" class="modal">
+
+    <div class="modal-content modal-warning">
+
+        <h2>
+            ⚠️ El serial ya existe en inventario
+        </h2>
+
+        <p style="margin-bottom:20px;">
+            ¿Desea registrarlo como REINGRESO?
+        </p>
+
+        <button onclick="confirmarReingreso()">
+            CONFIRMAR
+        </button>
+
+        <button
+        class="btn-cancelar"
+        onclick="cancelarReingreso()">
+            CANCELAR
         </button>
 
     </div>
@@ -212,52 +252,73 @@ Registrar ingreso de equipos al inventario
 const API =
 "https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec";
 
+function obtenerDatos(){
+
+    return {
+
+        material:
+        document.getElementById("material").value,
+
+        descripcion:
+        document.getElementById("descripcion").value,
+
+        marca:
+        document.getElementById("marca").value,
+
+        serial:
+        document.getElementById("serial").value,
+
+        ubicacion:
+        document.getElementById("ubicacion").value,
+
+        fechaIngreso:
+        document.getElementById("fecha").value,
+
+        documentoIngreso:
+        document.getElementById("documentoIngreso").value,
+
+        usuario:
+        document.getElementById("usuario").value,
+
+        observacion:
+        document.getElementById("observacion").value
+
+    };
+
+}
+
 function guardarIngreso(){
 
-    const boton = document.querySelector("button");
+    const boton =
+    document.getElementById("btnGuardar");
 
     boton.disabled = true;
     boton.innerHTML = "Guardando...";
 
     fetch(API,{
-
         method:"POST",
-
-        body:JSON.stringify({
-
-            material:
-            document.getElementById("material").value,
-
-            descripcion:
-            document.getElementById("descripcion").value,
-
-            marca:
-            document.getElementById("marca").value,
-
-            serial:
-            document.getElementById("serial").value,
-
-            ubicacion:
-            document.getElementById("ubicacion").value,
-
-            fechaIngreso:
-            document.getElementById("fecha").value,
-
-            usuario:
-            document.getElementById("usuario").value,
-
-            observacion:
-            document.getElementById("observacion").value
-
-        })
-
+        body:JSON.stringify(obtenerDatos())
     })
 
-    .then(function(response){
-        return response.json();
-    })
+    .then(response => response.json())
 
-    .then(function(data){
+    .then(data => {
+
+        if(
+            data.success === false &&
+            data.tipo === "REINGRESO"
+        ){
+
+            document
+            .getElementById("modalReingreso")
+            .style.display = "flex";
+
+            boton.disabled = false;
+            boton.innerHTML =
+            "Registrar Ingreso";
+
+            return;
+        }
 
         document
         .getElementById("modalExito")
@@ -265,23 +326,57 @@ function guardarIngreso(){
 
     })
 
-    .catch(function(error){
-
-        document
-        .getElementById("mensaje")
-        .innerHTML =
-        "❌ Error registrando ingreso";
+    .catch(error => {
 
         console.error(error);
 
+        alert(
+        "Error registrando ingreso");
+
         boton.disabled = false;
-        boton.innerHTML = "Registrar Ingreso";
+        boton.innerHTML =
+        "Registrar Ingreso";
 
     });
 
 }
 
-function cerrarModal(){
+function confirmarReingreso(){
+
+    const datos = obtenerDatos();
+
+    datos.confirmarReingreso = true;
+
+    fetch(API,{
+        method:"POST",
+        body:JSON.stringify(datos)
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document
+        .getElementById("modalReingreso")
+        .style.display = "none";
+
+        document
+        .getElementById("modalExito")
+        .style.display = "flex";
+
+    });
+
+}
+
+function cancelarReingreso(){
+
+    document
+    .getElementById("modalReingreso")
+    .style.display = "none";
+
+}
+
+function cerrarModalExito(){
 
     document
     .getElementById("modalExito")
@@ -293,13 +388,16 @@ function cerrarModal(){
     document.getElementById("serial").value = "";
     document.getElementById("ubicacion").value = "";
     document.getElementById("fecha").value = "";
+    document.getElementById("documentoIngreso").value = "";
     document.getElementById("usuario").value = "";
     document.getElementById("observacion").value = "";
 
-    const boton = document.querySelector("button");
+    const boton =
+    document.getElementById("btnGuardar");
 
     boton.disabled = false;
-    boton.innerHTML = "Registrar Ingreso";
+    boton.innerHTML =
+    "Registrar Ingreso";
 
 }
 
