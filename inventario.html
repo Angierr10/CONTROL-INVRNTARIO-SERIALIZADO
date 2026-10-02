@@ -1,40 +1,152 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Inventario</title>
 
 <style>
 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
 body{
-font-family:Segoe UI;
-background:#f4f6f9;
-padding:30px;
+    background:#f4f6f9;
 }
 
-h1{
-color:#102b57;
+.sidebar{
+    width:260px;
+    height:100vh;
+    background:#102b57;
+    position:fixed;
+    left:0;
+    top:0;
+    color:white;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
+.logo{
+    text-align:center;
+    padding:30px 20px;
+    border-bottom:1px solid rgba(255,255,255,.1);
 }
 
-th{
-background:#102b57;
-color:white;
-padding:12px;
+.logo h2{
+    color:#ffc107;
 }
 
-td{
-padding:12px;
-border-bottom:1px solid #ddd;
+.logo p{
+    color:#ddd;
+    margin-top:8px;
 }
 
-tr:hover{
-background:#f3f3f3;
+.menu{
+    margin-top:20px;
+}
+
+.menu a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:18px 25px;
+}
+
+.menu a:hover{
+    background:#183f80;
+}
+
+.menu .active{
+    background:#ffc107;
+    color:#102b57;
+    font-weight:bold;
+}
+
+.main{
+    margin-left:260px;
+    padding:30px;
+}
+
+.header{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.header h1{
+    color:#102b57;
+}
+
+.header p{
+    color:#666;
+    margin-top:6px;
+}
+
+.search-box{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:16px;
+}
+
+.contador{
+    margin-top:10px;
+    color:#666;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    border-left:8px solid #102b57;
+}
+
+.serial{
+    font-size:22px;
+    font-weight:bold;
+    color:#102b57;
+    margin-bottom:15px;
+}
+
+.info{
+    margin-bottom:10px;
+}
+
+.label{
+    font-weight:bold;
+    color:#102b57;
+}
+
+.estado{
+    background:#e8f5e9;
+    color:#2e7d32;
+    padding:8px 12px;
+    display:inline-block;
+    border-radius:20px;
+    margin-top:10px;
+    font-size:14px;
 }
 
 </style>
@@ -43,39 +155,166 @@ background:#f3f3f3;
 
 <body>
 
-<h1>📋 Inventario</h1>
+<div class="sidebar">
 
-<table>
+    <div class="logo">
+        <h2>📦 INVENTARIO</h2>
+        <p>Outlet - Garantías</p>
+    </div>
 
-<tr>
-<th>Serial</th>
-<th>Material</th>
-<th>Marca</th>
-<th>Ubicación</th>
-</tr>
+    <div class="menu">
 
-<tr>
-<td>145Y5K3</td>
-<td>MONITOR DELL E1916HV</td>
-<td>DELL</td>
-<td>R1-70-B-01</td>
-</tr>
+        <a href="dashboard.html">
+            🏠 Dashboard
+        </a>
 
-<tr>
-<td>8CC125233D</td>
-<td>HP DESKTOP CORPORATIVO</td>
-<td>HP</td>
-<td>R1-61-D-01</td>
-</tr>
+        <a href="buscar.html">
+            🔎 Buscar Serial
+        </a>
 
-<tr>
-<td>SV907Y8LV</td>
-<td>LENOVO DESKTOP CORPORATIVO</td>
-<td>LENOVO</td>
-<td>R1-69-B-01</td>
-</tr>
+        <a class="active" href="inventario.html">
+            📋 Inventario
+        </a>
 
-</table>
+        #
+            📥 Ingresos
+        </a>
+
+        #
+            📤 Salidas
+        </a>
+
+        #
+            📊 Reportes
+        </a>
+
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="header">
+        <h1>📋 INVENTARIO GENERAL</h1>
+        <p>Consulta completa de equipos registrados</p>
+    </div>
+
+    <div class="search-box">
+
+        <input
+        type="text"
+        id="busqueda"
+        placeholder="Buscar por serial, material, marca o ubicación..."
+        onkeyup="filtrar()">
+
+        <div id="contador" class="contador">
+            Cargando registros...
+        </div>
+
+    </div>
+
+    <div id="inventario" class="cards"></div>
+
+</div>
+
+<script>
+
+let inventario = [];
+
+fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec")
+
+.then(response => response.json())
+
+.then(data => {
+
+    inventario = data;
+
+    document.getElementById("contador").innerHTML =
+    "Total registros: " + data.length;
+
+    renderizar(data);
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+    document.getElementById("contador").innerHTML =
+    "Error cargando inventario";
+
+});
+
+function renderizar(datos){
+
+    let html = "";
+
+    datos.forEach(item => {
+
+        html += `
+
+        <div class="card">
+
+            <div class="serial">
+                ${item.serial}
+            </div>
+
+            <div class="info">
+                <span class="label">📦 Material:</span><br>
+                ${item.material}
+            </div>
+
+            <div class="info">
+                <span class="label">🏢 Marca:</span><br>
+                ${item.marca}
+            </div>
+
+            <div class="info">
+                <span class="label">📍 Ubicación:</span><br>
+                ${item.ubicacion}
+            </div>
+
+            <div class="estado">
+                Disponible
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById("inventario").innerHTML = html;
+
+}
+
+function filtrar(){
+
+    let texto =
+    document.getElementById("busqueda")
+    .value
+    .toLowerCase();
+
+    let resultado = inventario.filter(item =>
+
+        String(item.serial).toLowerCase().includes(texto) ||
+
+        String(item.material).toLowerCase().includes(texto) ||
+
+        String(item.marca).toLowerCase().includes(texto) ||
+
+        String(item.ubicacion).toLowerCase().includes(texto)
+
+    );
+
+    document.getElementById("contador").innerHTML =
+    "Resultados encontrados: " + resultado.length;
+
+    renderizar(resultado);
+
+}
+
+</script>
 
 </body>
 </html>
