@@ -8,7 +8,7 @@
 
 <title>Registro de Salida</title>
 
-https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.jsscript>
+<https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.jsscript>
 
 <style>
 
@@ -296,7 +296,15 @@ fetch(API)
 .then(data => {
 
     inventario = data;
-
+    console.log("Inventario cargado:");
+console.log(data);
+ 
+alert(
+"Inventario cargado: " +
+data.length +
+" registros"
+);
+ 
 });
 
     function buscarSerial(){
