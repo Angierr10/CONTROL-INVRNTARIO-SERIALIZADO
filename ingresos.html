@@ -76,6 +76,11 @@ textarea{
     height:100px;
 }
 
+.campo-error{
+    border:2px solid #dc3545 !important;
+    background:#fff5f5;
+}
+
 .boton-guardar{
     margin-top:25px;
     padding:15px 30px;
@@ -123,14 +128,6 @@ textarea{
     margin-bottom:20px;
 }
 
-.modal-exito h2{
-    color:#198754;
-}
-
-.modal-warning h2{
-    color:#ff9800;
-}
-
 .modal-content button{
     background:#102b57;
     color:white;
@@ -147,6 +144,7 @@ textarea{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -165,28 +163,28 @@ Registrar ingreso de equipos al inventario
 
 <div class="formulario">
 
-<label>Material</label>
+<label>Material *</label>
 <input id="material">
 
-<label>Descripción</label>
+<label>Descripción *</label>
 <input id="descripcion">
 
-<label>Marca</label>
+<label>Marca *</label>
 <input id="marca">
 
-<label>Serial</label>
+<label>Serial *</label>
 <input id="serial">
 
-<label>Ubicación</label>
+<label>Ubicación *</label>
 <input id="ubicacion">
 
-<label>Fecha de Ingreso</label>
+<label>Fecha de Ingreso *</label>
 <input id="fecha" type="date">
 
 <label>Documento de Ingreso</label>
 <input id="documentoIngreso">
 
-<label>Usuario</label>
+<label>Usuario *</label>
 <input id="usuario">
 
 <label>Observación</label>
@@ -205,17 +203,17 @@ Registrar Ingreso
 
 <div id="modalExito" class="modal">
 
-    <div class="modal-content modal-exito">
+<div class="modal-content">
 
-        <h2>
-            ✅ Registro realizado correctamente
-        </h2>
+<h2 style="color:#198754;">
+✅ Registro realizado correctamente
+</h2>
 
-        <button onclick="cerrarModalExito()">
-            ACEPTAR
-        </button>
+<button onclick="cerrarModalExito()">
+ACEPTAR
+</button>
 
-    </div>
+</div>
 
 </div>
 
@@ -223,27 +221,51 @@ Registrar Ingreso
 
 <div id="modalReingreso" class="modal">
 
-    <div class="modal-content modal-warning">
+<div class="modal-content">
 
-        <h2>
-            ⚠️ El serial ya existe en inventario
-        </h2>
+<h2 style="color:#ff9800;">
+⚠️ Serial existente
+</h2>
 
-        <p style="margin-bottom:20px;">
-            ¿Desea registrarlo como REINGRESO?
-        </p>
+<p style="margin-bottom:20px;">
+El serial ya existe en inventario.
+<br><br>
+¿Desea registrarlo como REINGRESO?
+</p>
 
-        <button onclick="confirmarReingreso()">
-            CONFIRMAR
-        </button>
+<button onclick="confirmarReingreso()">
+CONFIRMAR
+</button>
 
-        <button
-        class="btn-cancelar"
-        onclick="cancelarReingreso()">
-            CANCELAR
-        </button>
+<button
+class="btn-cancelar"
+onclick="cancelarReingreso()">
+CANCELAR
+</button>
 
-    </div>
+</div>
+
+</div>
+
+<!-- MODAL ERROR -->
+
+<div id="modalError" class="modal">
+
+<div class="modal-content">
+
+<h2 style="color:#dc3545;">
+❌ Error
+</h2>
+
+<p id="textoError"
+style="margin-bottom:20px;">
+</p>
+
+<button onclick="cerrarModalError()">
+ACEPTAR
+</button>
+
+</div>
 
 </div>
 
@@ -254,154 +276,249 @@ const API =
 
 function obtenerDatos(){
 
-    return {
+return {
 
-        material:
-        document.getElementById("material").value,
+material:
+document.getElementById("material").value.trim(),
 
-        descripcion:
-        document.getElementById("descripcion").value,
+descripcion:
+document.getElementById("descripcion").value.trim(),
 
-        marca:
-        document.getElementById("marca").value,
+marca:
+document.getElementById("marca").value.trim(),
 
-        serial:
-        document.getElementById("serial").value,
+serial:
+document.getElementById("serial").value.trim().toUpperCase(),
 
-        ubicacion:
-        document.getElementById("ubicacion").value,
+ubicacion:
+document.getElementById("ubicacion").value.trim(),
 
-        fechaIngreso:
-        document.getElementById("fecha").value,
+fechaIngreso:
+document.getElementById("fecha").value,
 
-        documentoIngreso:
-        document.getElementById("documentoIngreso").value,
+documentoIngreso:
+document.getElementById("documentoIngreso").value.trim(),
 
-        usuario:
-        document.getElementById("usuario").value,
+usuario:
+document.getElementById("usuario").value.trim(),
 
-        observacion:
-        document.getElementById("observacion").value
+observacion:
+document.getElementById("observacion").value.trim()
 
-    };
+};
 
 }
 
 function guardarIngreso(){
 
-    const boton =
-    document.getElementById("btnGuardar");
+const campos = [
 
-    boton.disabled = true;
-    boton.innerHTML = "Guardando...";
+document.getElementById("material"),
+document.getElementById("descripcion"),
+document.getElementById("marca"),
+document.getElementById("serial"),
+document.getElementById("ubicacion"),
+document.getElementById("fecha"),
+document.getElementById("usuario")
 
-    fetch(API,{
-        method:"POST",
-        body:JSON.stringify(obtenerDatos())
-    })
+];
 
-    .then(response => response.json())
+campos.forEach(campo=>{
+campo.classList.remove("campo-error");
+});
 
-    .then(data => {
+let primerError = null;
 
-        if(
-            data.success === false &&
-            data.tipo === "REINGRESO"
-        ){
+campos.forEach(campo=>{
 
-            document
-            .getElementById("modalReingreso")
-            .style.display = "flex";
+if(campo.value.trim()===""){
 
-            boton.disabled = false;
-            boton.innerHTML =
-            "Registrar Ingreso";
+campo.classList.add("campo-error");
 
-            return;
-        }
+if(!primerError){
+primerError = campo;
+}
 
-        document
-        .getElementById("modalExito")
-        .style.display = "flex";
+}
 
-    })
+});
 
-    .catch(error => {
+if(primerError){
 
-        console.error(error);
+primerError.focus();
 
-        alert(
-        "Error registrando ingreso");
+mostrarError(
+"Debe completar todos los campos obligatorios."
+);
 
-        boton.disabled = false;
-        boton.innerHTML =
-        "Registrar Ingreso";
+return;
 
-    });
+}
+
+const boton =
+document.getElementById("btnGuardar");
+
+boton.disabled = true;
+boton.innerHTML = "Guardando...";
+
+fetch(API,{
+method:"POST",
+body:JSON.stringify(obtenerDatos())
+})
+
+.then(response=>response.json())
+
+.then(data=>{
+
+if(
+data.success === false &&
+data.tipo === "REINGRESO"
+){
+
+document
+.getElementById("modalReingreso")
+.style.display="flex";
+
+boton.disabled = false;
+boton.innerHTML =
+"Registrar Ingreso";
+
+return;
+
+}
+
+document
+.getElementById("modalExito")
+.style.display = "flex";
+
+})
+
+.catch(error=>{
+
+console.error(error);
+
+mostrarError(
+"No fue posible registrar el ingreso."
+);
+
+boton.disabled = false;
+boton.innerHTML =
+"Registrar Ingreso";
+
+});
 
 }
 
 function confirmarReingreso(){
 
-    const datos = obtenerDatos();
+const datos = obtenerDatos();
 
-    datos.confirmarReingreso = true;
+datos.confirmarReingreso = true;
 
-    fetch(API,{
-        method:"POST",
-        body:JSON.stringify(datos)
-    })
+fetch(API,{
+method:"POST",
+body:JSON.stringify(datos)
+})
 
-    .then(response => response.json())
+.then(response=>response.json())
 
-    .then(data => {
+.then(data=>{
 
-        document
-        .getElementById("modalReingreso")
-        .style.display = "none";
+document
+.getElementById("modalReingreso")
+.style.display="none";
 
-        document
-        .getElementById("modalExito")
-        .style.display = "flex";
+document
+.getElementById("modalExito")
+.style.display="flex";
 
-    });
+})
+
+.catch(error=>{
+
+console.error(error);
+
+document
+.getElementById("modalReingreso")
+.style.display="none";
+
+mostrarError(
+"No fue posible registrar el reingreso."
+);
+
+});
 
 }
 
 function cancelarReingreso(){
 
-    document
-    .getElementById("modalReingreso")
-    .style.display = "none";
+document
+.getElementById("modalReingreso")
+.style.display="none";
 
 }
 
 function cerrarModalExito(){
 
-    document
-    .getElementById("modalExito")
-    .style.display = "none";
+document
+.getElementById("modalExito")
+.style.display="none";
 
-    document.getElementById("material").value = "";
-    document.getElementById("descripcion").value = "";
-    document.getElementById("marca").value = "";
-    document.getElementById("serial").value = "";
-    document.getElementById("ubicacion").value = "";
-    document.getElementById("fecha").value = "";
-    document.getElementById("documentoIngreso").value = "";
-    document.getElementById("usuario").value = "";
-    document.getElementById("observacion").value = "";
+[
+"material",
+"descripcion",
+"marca",
+"serial",
+"ubicacion",
+"fecha",
+"documentoIngreso",
+"usuario",
+"observacion"
+].forEach(id=>{
 
-    const boton =
-    document.getElementById("btnGuardar");
+document.getElementById(id).value="";
 
-    boton.disabled = false;
-    boton.innerHTML =
-    "Registrar Ingreso";
+});
+
+document
+.querySelectorAll(".campo-error")
+.forEach(campo=>{
+
+campo.classList.remove("campo-error");
+
+});
+
+const boton =
+document.getElementById("btnGuardar");
+
+boton.disabled = false;
+boton.innerHTML =
+"Registrar Ingreso";
+
+}
+
+function mostrarError(mensaje){
+
+document
+.getElementById("textoError")
+.innerHTML = mensaje;
+
+document
+.getElementById("modalError")
+.style.display="flex";
+
+}
+
+function cerrarModalError(){
+
+document
+.getElementById("modalError")
+.style.display="none";
 
 }
 
 </script>
 
 </body>
+
 </html>
