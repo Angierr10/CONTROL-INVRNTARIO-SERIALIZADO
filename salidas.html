@@ -1,1 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registro de Salida</title>
+
+https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.jsscript>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:40px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:20px;
+}
+
+.home-btn{
+    text-decoration:none;
+    font-size:36px;
+}
+
+.home-btn:hover{
+    transform:scale(1.15);
+}
+
+.titulo{
+    font-size:42px;
+    font-weight:bold;
+    color:#102b57;
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    color:#666;
+    margin-bottom:25px;
+}
+
+.formulario{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    max-width:1000px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#102b57;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+input[readonly]{
+    background:#f5f5f5;
+}
+
+textarea{
+    height:100px;
+}
+
+.campo-error{
+    border:2px solid #dc3545 !important;
+    background:#fff5f5;
+}
+
+.boton{
+    margin-top:20px;
+    padding:15px 30px;
+    border:none;
+    border-radius:12px;
+    background:#102b57;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.boton:hover{
+    background:#183f80;
+}
+
+.boton:disabled{
+    background:#9aa5b1;
+}
+
+.card-datos{
+    background:#f8f9fc;
+    padding:20px;
+    border-radius:15px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.preview{
+    margin-top:15px;
+}
+
+.preview img{
+    max-width:300px;
+    border-radius:12px;
+    border:1px solid #ddd;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.4);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.modal-content{
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+    min-width:350px;
+}
+
+.modal-content button{
+    margin-top:20px;
+}
+
+.estado-ok{
+    color:#198754;
+}
+
+.estado-error{
+    color:#dc3545;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+<a href="dashboard.html" class="home-btn">🏠</a>
+</div>
+
+<div class="titulo">
+📤 REGISTRO DE SALIDA
+</div>
+
+<div class="subtitulo">
+Registrar despacho de equipos desde inventario
+</div>
+
+<div class="formulario">
+
+  <label>Serial *</label>
+
+<input
+id="serial"
+placeholder="Ingrese serial">
+
+<button
+class="boton"
+onclick="buscarSerial()">
+Buscar Serial
+</button>
+
+<div class="card-datos">
+
+<label>Material</label>
+<input id="material" readonly>
+
+<label>Descripción</label>
+<input id="descripcion" readonly>
+
+<label>Marca</label>
+<input id="marca" readonly>
+
+<label>Ubicación Actual</label>
+<input id="ubicacion" readonly>
+
+<label>Estado</label>
+<input id="estado" readonly>
+
+</div>
+
+<label>Factura *</label>
+<input id="factura">
+
+<label>Usuario *</label>
+<input id="usuario">
+
+<label>Observación *</label>
+<textarea id="observacion"></textarea>
+
+<label>📸 Evidencia Fotográfica *</label>
+
+<input
+type="file"
+id="foto"
+accept="image/*"
+onchange="mostrarPreview(event)">
+
+<div class="preview">
+
+<img
+id="previewFoto"
+style="display:none;">
+
+</div>
+
+<button
+id="btnSalida"
+class="boton"
+onclick="registrarSalida()">
+
+Registrar Salida
+
+</button>
+
+</div>
+
+  <div id="modalExito" class="modal">
+
+<div class="modal-content">
+
+<h2 class="estado-ok">
+✅ Salida registrada correctamente
+</h2>
+
+<button
+class="boton"
+onclick="cerrarModal()">
+ACEPTAR
+</button>
+
+</div>
+
+</div>
+
+<div id="modalError" class="modal">
+
+<div class="modal-content">
+
+<h2 class="estado-error">
+❌ Error
+</h2>
+
+<p id="textoError"></p>
+
+<button
+class="boton"
+onclick="cerrarModalError()">
+ACEPTAR
+</button>
+
+</div>
+
+</div>
+
+  <script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec";
+
+let inventario = [];
+let imagenBase64 = "";
+
+fetch(API)
+.then(response => response.json())
+.then(data => {
+
+    inventario = data;
+
+});
+
+    function buscarSerial(){
+
+    const serial =
+    document.getElementById("serial")
+    .value
+    .trim()
+    .toUpperCase();
+
+    const equipo =
+    inventario.find(item =>
+
+        String(item.serial)
+        .toUpperCase() === serial
+
+    );
+
+    if(!equipo){
+
+        mostrarError(
+        "El serial no existe en inventario."
+        );
+
+        return;
+    }
+
+    if(
+        String(equipo.estado)
+        .toUpperCase()
+        !== "DISPONIBLE"
+    ){
+
+        mostrarError(
+        "El serial no se encuentra disponible para salida."
+        );
+
+        return;
+    }
+
+    document.getElementById("material")
+    .value = equipo.material;
+
+    document.getElementById("descripcion")
+    .value = equipo.descripcion;
+
+    document.getElementById("marca")
+    .value = equipo.marca;
+
+    document.getElementById("ubicacion")
+    .value = equipo.ubicacion;
+
+    document.getElementById("estado")
+    .value = equipo.estado;
+
+}
+    function mostrarPreview(event){
+
+    const archivo =
+    event.target.files[0];
+
+    if(!archivo) return;
+
+    if(
+        archivo.size >
+        5 * 1024 * 1024
+    ){
+
+        mostrarError(
+        "La fotografía supera 5MB."
+        );
+
+        return;
+    }
+
+    const reader =
+    new FileReader();
+
+    reader.onload =
+    function(e){
+
+        imagenBase64 =
+        e.target.result;
+
+        const img =
+        document.getElementById(
+        "previewFoto"
+        );
+
+        img.src =
+        imagenBase64;
+
+        img.style.display =
+        "block";
+
+    };
+
+    reader.readAsDataURL(
+    archivo
+    );
+
+}
+    async function registrarSalida(){
+
+    const serial =
+    document.getElementById("serial");
+
+    const factura =
+    document.getElementById("factura");
+
+    const usuario =
+    document.getElementById("usuario");
+
+    const observacion =
+    document.getElementById("observacion");
+
+    const foto =
+    document.getElementById("foto");
+
+    const obligatorios = [
+        serial,
+        factura,
+        usuario,
+        observacion
+    ];
+
+    obligatorios.forEach(c =>
+        c.classList.remove("campo-error")
+    );
+
+    let error = false;
+
+    obligatorios.forEach(c => {
+
+        if(c.value.trim() === ""){
+
+            c.classList.add("campo-error");
+
+            error = true;
+
+        }
+
+    });
+
+    if(error){
+
+        mostrarError(
+        "Complete todos los campos obligatorios."
+        );
+
+        return;
+    }
+
+    if(foto.files.length === 0){
+
+        mostrarError(
+        "Debe adjuntar evidencia fotográfica."
+        );
+
+        return;
+    }
+
+    const boton =
+    document.getElementById("btnSalida");
+
+    boton.disabled = true;
+    boton.innerHTML = "Procesando...";
+
+    const datos = {
+
+        accion:"SALIDA",
+
+        serial:serial.value,
+
+        usuario:usuario.value,
+
+        observacion:
+        factura.value +
+        " | " +
+        observacion.value
+
+    };
+
+    try{
+
+        const respuesta =
+        await fetch(API,{
+
+            method:"POST",
+
+            body:
+            JSON.stringify(datos)
+
+        });
+
+        const resultado =
+        await respuesta.json();
+
+        if(!resultado.success){
+
+            mostrarError(
+            resultado.mensaje
+            );
+
+            boton.disabled = false;
+            boton.innerHTML =
+            "Registrar Salida";
+
+            return;
+
+        }
+
+        generarPDF();
+
+        document
+        .getElementById("modalExito")
+        .style.display = "flex";
+
+    }
+    catch(error){
+
+        mostrarError(
+        "No fue posible registrar la salida."
+        );
+
+    }
+
+}
+    function generarPDF(){
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf =
+    new jsPDF();
+
+    const factura =
+    document.getElementById("factura").value;
+
+    const serial =
+    document.getElementById("serial").value;
+
+    pdf.setFontSize(16);
+
+    pdf.text(
+    "SALIDA DE INVENTARIO",
+    20,
+    20
+    );
+
+    pdf.setFontSize(11);
+
+    pdf.text(
+    "Factura: " + factura,
+    20,
+    40
+    );
+
+    pdf.text(
+    "Serial: " + serial,
+    20,
+    50
+    );
+
+    pdf.text(
+    "Descripcion: " +
+    document.getElementById("descripcion").value,
+    20,
+    60
+    );
+
+    pdf.text(
+    "Estado: No Disponible",
+    20,
+    70
+    );
+
+    pdf.text(
+    "Foto de evidencia adjunta",
+    20,
+    80
+    );
+
+    if(imagenBase64){
+
+        pdf.addImage(
+            imagenBase64,
+            "JPEG",
+            20,
+            90,
+            80,
+            80
+        );
+
+    }
+
+    pdf.save(
+      factura +
+      "_" +
+      serial +
+      ".pdf"
+    );
+
+}
+
+function cerrarModal(){
+
+location.reload();
+
+}
+
+function mostrarError(mensaje){
+
+    document
+    .getElementById("textoError")
+    .innerHTML =
+    mensaje;
+
+    document
+    .getElementById("modalError")
+    .style.display =
+    "flex";
+
+}
+
+function cerrarModalError(){
+
+    document
+    .getElementById("modalError")
+    .style.display =
+    "none";
+
+}
+
+</script>
+
+</body>
+</html>
