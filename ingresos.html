@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Registro de Ingreso</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f4f6f9;
+padding:40px;
+}
+
+.topbar{
+display:flex;
+justify-content:flex-end;
+margin-bottom:20px;
+}
+
+.home-btn{
+font-size:36px;
+text-decoration:none;
+}
+
+.titulo{
+font-size:40px;
+font-weight:bold;
+color:#102b57;
+margin-bottom:10px;
+}
+
+.subtitulo{
+color:#666;
+margin-bottom:25px;
+}
+
+.formulario{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+max-width:900px;
+}
+
+label{
+display:block;
+margin-top:15px;
+margin-bottom:8px;
+font-weight:bold;
+color:#102b57;
+}
+
+input,
+textarea{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+textarea{
+height:100px;
+}
+
+button{
+margin-top:25px;
+padding:15px 30px;
+border:none;
+border-radius:12px;
+background:#102b57;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#183f80;
+}
+
+.mensaje{
+margin-top:20px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+<a href="dashboard.html" class="home-btn">🏠</a>
+</div>
+
+<div class="titulo">
+📥 REGISTRO DE INGRESO
+</div>
+
+<div class="subtitulo">
+Registrar ingreso de equipos al inventario
+</div>
+
+<div class="formulario">
+
+<label>Material</label>
+<input id="material">
+
+<label>Descripción</label>
+<input id="descripcion">
+
+<label>Marca</label>
+<input id="marca">
+
+<label>Serial</label>
+<input id="serial">
+
+<label>Ubicación</label>
+<input id="ubicacion">
+
+<label>Fecha de Ingreso</label>
+<input id="fecha" type="date">
+
+<label>Usuario</label>
+<input id="usuario">
+
+<label>Observación</label>
+<textarea id="observacion"></textarea>
+
+<button onclick="guardarIngreso()">
+Registrar Ingreso
+</button>
+
+<div id="mensaje" class="mensaje"></div>
+
+</div>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec";
+
+function guardarIngreso(){
+
+fetch(API,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+material:
+document.getElementById("material").value,
+
+descripcion:
+document.getElementById("descripcion").value,
+
+marca:
+document.getElementById("marca").value,
+
+serial:
+document.getElementById("serial").value,
+
+ubicacion:
+document.getElementById("ubicacion").value,
+
+fechaIngreso:
+document.getElementById("fecha").value,
+
+usuario:
+document.getElementById("usuario").value,
+
+observacion:
+document.getElementById("observacion").value
+
+})
+
+})
+
+.then(r=>r.json())
+
+.then(data=>{
+
+document.getElementById("mensaje").innerHTML =
+"✅ Ingreso registrado correctamente";
+
+})
+
+.catch(error=>{
+
+document.getElementById("mensaje").innerHTML =
+"❌ Error registrando ingreso";
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
