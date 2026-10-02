@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,87 +10,132 @@
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
 body{
-background:#f4f6f9;
-padding:40px;
+    background:#f4f6f9;
+    padding:40px;
 }
 
 .topbar{
-display:flex;
-justify-content:flex-end;
-margin-bottom:20px;
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:20px;
 }
 
 .home-btn{
-font-size:36px;
-text-decoration:none;
+    font-size:36px;
+    text-decoration:none;
+}
+
+.home-btn:hover{
+    transform:scale(1.15);
 }
 
 .titulo{
-font-size:40px;
-font-weight:bold;
-color:#102b57;
-margin-bottom:10px;
+    font-size:42px;
+    font-weight:bold;
+    color:#102b57;
+    margin-bottom:10px;
 }
 
 .subtitulo{
-color:#666;
-margin-bottom:25px;
+    color:#666;
+    margin-bottom:25px;
 }
 
 .formulario{
-background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-max-width:900px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    max-width:900px;
 }
 
 label{
-display:block;
-margin-top:15px;
-margin-bottom:8px;
-font-weight:bold;
-color:#102b57;
+    display:block;
+    margin-top:15px;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#102b57;
 }
 
 input,
 textarea{
-width:100%;
-padding:14px;
-border:1px solid #ddd;
-border-radius:10px;
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
 }
 
 textarea{
-height:100px;
+    height:100px;
 }
 
 button{
-margin-top:25px;
-padding:15px 30px;
-border:none;
-border-radius:12px;
-background:#102b57;
-color:white;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
+    margin-top:25px;
+    padding:15px 30px;
+    border:none;
+    border-radius:12px;
+    background:#102b57;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-background:#183f80;
+    background:#183f80;
 }
 
 .mensaje{
-margin-top:20px;
-font-weight:bold;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.35);
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+.modal-content{
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+    min-width:350px;
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.modal-content h2{
+    color:#198754;
+    margin-bottom:20px;
+}
+
+.modal-content button{
+    background:#102b57;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
 </style>
@@ -98,7 +144,7 @@ font-weight:bold;
 <body>
 
 <div class="topbar">
-<a href="dashboard.html" class="home-btn">🏠</a>
+    <a href="dashboard.html" class="home-btn">🏠</a>
 </div>
 
 <div class="titulo">
@@ -111,35 +157,53 @@ Registrar ingreso de equipos al inventario
 
 <div class="formulario">
 
-<label>Material</label>
-<input id="material">
+    <label>Material</label>
+    <input id="material">
 
-<label>Descripción</label>
-<input id="descripcion">
+    <label>Descripción</label>
+    <input id="descripcion">
 
-<label>Marca</label>
-<input id="marca">
+    <label>Marca</label>
+    <input id="marca">
 
-<label>Serial</label>
-<input id="serial">
+    <label>Serial</label>
+    <input id="serial">
 
-<label>Ubicación</label>
-<input id="ubicacion">
+    <label>Ubicación</label>
+    <input id="ubicacion">
 
-<label>Fecha de Ingreso</label>
-<input id="fecha" type="date">
+    <label>Fecha de Ingreso</label>
+    <input id="fecha" type="date">
 
-<label>Usuario</label>
-<input id="usuario">
+    <label>Usuario</label>
+    <input id="usuario">
 
-<label>Observación</label>
-<textarea id="observacion"></textarea>
+    <label>Observación</label>
+    <textarea id="observacion"></textarea>
 
-<button onclick="guardarIngreso()">
-Registrar Ingreso
-</button>
+    <button onclick="guardarIngreso()">
+        Registrar Ingreso
+    </button>
 
-<div id="mensaje" class="mensaje"></div>
+    <div id="mensaje" class="mensaje"></div>
+
+</div>
+
+<!-- MODAL -->
+
+<div id="modalExito" class="modal">
+
+    <div class="modal-content">
+
+        <h2>
+            ✅ Ingreso registrado correctamente
+        </h2>
+
+        <button onclick="cerrarModal()">
+            ACEPTAR
+        </button>
+
+    </div>
 
 </div>
 
@@ -150,55 +214,79 @@ const API =
 
 function guardarIngreso(){
 
-fetch(API,{
+    fetch(API,{
 
-method:"POST",
+        method:"POST",
 
-body:JSON.stringify({
+        body:JSON.stringify({
 
-material:
-document.getElementById("material").value,
+            material:
+            document.getElementById("material").value,
 
-descripcion:
-document.getElementById("descripcion").value,
+            descripcion:
+            document.getElementById("descripcion").value,
 
-marca:
-document.getElementById("marca").value,
+            marca:
+            document.getElementById("marca").value,
 
-serial:
-document.getElementById("serial").value,
+            serial:
+            document.getElementById("serial").value,
 
-ubicacion:
-document.getElementById("ubicacion").value,
+            ubicacion:
+            document.getElementById("ubicacion").value,
 
-fechaIngreso:
-document.getElementById("fecha").value,
+            fechaIngreso:
+            document.getElementById("fecha").value,
 
-usuario:
-document.getElementById("usuario").value,
+            usuario:
+            document.getElementById("usuario").value,
 
-observacion:
-document.getElementById("observacion").value
+            observacion:
+            document.getElementById("observacion").value
 
-})
+        })
 
-})
+    })
 
-.then(r=>r.json())
+    .then(function(response){
+        return response.json();
+    })
 
-.then(data=>{
+    .then(function(data){
 
-document.getElementById("mensaje").innerHTML =
-"✅ Ingreso registrado correctamente";
+        document
+        .getElementById("modalExito")
+        .style.display = "flex";
 
-})
+    })
 
-.catch(error=>{
+    .catch(function(error){
 
-document.getElementById("mensaje").innerHTML =
-"❌ Error registrando ingreso";
+        document
+        .getElementById("mensaje")
+        .innerHTML =
+        "❌ Error registrando ingreso";
 
-});
+        console.error(error);
+
+    });
+
+}
+
+function cerrarModal(){
+
+    document
+    .getElementById("modalExito")
+    .style.display = "none";
+
+    document.getElementById("material").value = "";
+    document.getElementById("descripcion").value = "";
+    document.getElementById("marca").value = "";
+    document.getElementById("serial").value = "";
+    document.getElementById("ubicacion").value = "";
+    document.getElementById("fecha").value = "";
+    document.getElementById("usuario").value = "";
+    document.getElementById("observacion").value = "";
 
 }
 
