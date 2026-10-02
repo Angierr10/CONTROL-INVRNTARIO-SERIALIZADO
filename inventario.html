@@ -50,78 +50,76 @@ body{
     font-size:18px;
 }
 
-.buscador{
+.panel{
     background:white;
     padding:25px;
     border-radius:20px;
-    margin-bottom:25px;
     box-shadow:0 5px 15px rgba(0,0,0,.08);
+    margin-bottom:25px;
 }
 
-.buscador input{
+.panel input{
     width:100%;
-    padding:16px;
+    padding:15px;
     border:1px solid #ddd;
     border-radius:12px;
     font-size:16px;
 }
 
 .contador{
-    margin-top:15px;
+    margin-top:12px;
     color:#666;
     font-weight:600;
 }
 
-.inventario{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-    gap:20px;
-}
-
-.card{
+.tabla-contenedor{
     background:white;
-    padding:25px;
     border-radius:20px;
     box-shadow:0 5px 15px rgba(0,0,0,.08);
-    border-left:8px solid #102b57;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#102b57;
+    color:white;
+}
+
+th{
+    padding:18px;
+    text-align:left;
+    font-size:15px;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f8f9fc;
 }
 
 .serial{
-    color:#102b57;
-    font-size:24px;
     font-weight:bold;
-    margin-bottom:15px;
-}
-
-.info{
-    margin-bottom:12px;
-    line-height:1.5;
-}
-
-.label{
     color:#102b57;
-    font-weight:bold;
 }
 
 .estado{
-    display:inline-block;
-    margin-top:10px;
-    padding:8px 15px;
     background:#e8f5e9;
     color:#2e7d32;
+    padding:5px 12px;
     border-radius:20px;
-    font-size:14px;
-}
-
-.vacio{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    text-align:center;
-    color:#888;
+    font-size:13px;
+    font-weight:bold;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -142,7 +140,7 @@ body{
 Consulta completa del inventario conectado a Google Sheets
 </div>
 
-<div class="buscador">
+<div class="panel">
 
 <input
 type="text"
@@ -156,11 +154,33 @@ Cargando inventario...
 
 </div>
 
-<div id="inventario" class="inventario">
+<div class="tabla-contenedor">
 
-<div class="vacio">
-Cargando información...
-</div>
+<table>
+
+<thead>
+
+<tr>
+<th>Serial</th>
+<th>Material</th>
+<th>Marca</th>
+<th>Ubicación</th>
+<th>Estado</th>
+</tr>
+
+</thead>
+
+<tbody id="tablaInventario">
+
+<tr>
+<td colspan="5">
+Cargando registros...
+</td>
+</tr>
+
+</tbody>
+
+</table>
 
 </div>
 
@@ -196,63 +216,77 @@ fetch("https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yq
 
 function renderizar(datos){
 
-    let html = "";
+    let filas = "";
 
     datos.forEach(function(item){
 
-        html += `
+        filas += `
 
-        <div class="card">
+        <tr>
 
-            <div class="serial">
+            <td class="serial">
                 ${item.serial}
-            </div>
+            </td>
 
-            <div class="info">
-                <span class="label">📦 Material:</span><br>
+            <td>
                 ${item.material}
-            </div>
+            </td>
 
-            <div class="info">
-                <span class="label">🏢 Marca:</span><br>
+            <td>
                 ${item.marca}
-            </div>
+            </td>
 
-            <div class="info">
-                <span class="label">📍 Ubicación:</span><br>
+            <td>
                 ${item.ubicacion}
-            </div>
+            </td>
 
-            <div class="estado">
-                Disponible
-            </div>
+            <td>
+                <span class="estado">
+                    Disponible
+                </span>
+            </td>
 
-        </div>
+        </tr>
 
         `;
 
     });
 
-    document.getElementById("inventario").innerHTML = html;
+    document.getElementById("tablaInventario").innerHTML =
+    filas;
 
 }
 
 function filtrar(){
 
-    let texto = document
-        .getElementById("buscar")
-        .value
-        .toLowerCase();
+    let texto =
+    document.getElementById("buscar")
+    .value
+    .toLowerCase();
 
     let resultado = inventario.filter(function(item){
 
-        return String(item.serial).toLowerCase().includes(texto) ||
+        return String(item.serial)
+            .toLowerCase()
+            .includes(texto)
 
-               String(item.material).toLowerCase().includes(texto) ||
+            ||
 
-               String(item.marca).toLowerCase().includes(texto) ||
+            String(item.material)
+            .toLowerCase()
+            .includes(texto)
 
-               String(item.ubicacion).toLowerCase().includes(texto);
+            ||
+
+            String(item.marca)
+            .toLowerCase()
+            .includes(texto)
+
+            ||
+
+            String(item.ubicacion)
+            .toLowerCase()
+            .includes(texto);
 
     });
 
@@ -266,4 +300,5 @@ function filtrar(){
 </script>
 
 </body>
+
 </html>
