@@ -954,22 +954,63 @@ data.length +
 
         if(imagenBase64){
 
-            const formato =
-            imagenBase64.includes("png")
-            ? "PNG"
-            : "JPEG";
+    const formato =
+    imagenBase64.includes("png")
+    ? "PNG"
+    : "JPEG";
 
-            pdf.addImage(
-                imagenBase64,
-                formato,
-                20,
-                190,
-                170,
-                80
-            );
+    const img = new Image();
 
-        }
+    img.src = imagenBase64;
 
+    const imgWidth = img.width;
+    const imgHeight = img.height;
+
+    const maxWidth = 170;
+    const maxHeight = 80;
+
+    let width = maxWidth;
+
+    let height =
+    (imgHeight * width) / imgWidth;
+
+    if(height > maxHeight){
+
+        height = maxHeight;
+
+        width =
+        (imgWidth * height) / imgHeight;
+
+    }
+
+    const posX =
+    (210 - width) / 2;
+
+    const posY = 190;
+
+    // Marco negro fino
+
+    pdf.setDrawColor(0,0,0);
+
+    pdf.setLineWidth(0.5);
+
+    pdf.rect(
+        posX - 2,
+        posY - 2,
+        width + 4,
+        height + 4
+    );
+
+    pdf.addImage(
+        imagenBase64,
+        formato,
+        posX,
+        posY,
+        width,
+        height
+    );
+
+}
         // ===== PIE =====
 
         pdf.line(
