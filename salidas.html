@@ -534,12 +534,19 @@ data.length +
     }
 
 }
-    function generarPDF(){
+   function generarPDF(){
 
     const { jsPDF } = window.jspdf;
 
-    const pdf =
-    new jsPDF();
+    const pdf = new jsPDF();
+
+    const fecha = new Date();
+
+    const fechaActual =
+    fecha.toLocaleDateString();
+
+    const horaActual =
+    fecha.toLocaleTimeString();
 
     const factura =
     document.getElementById("factura").value;
@@ -547,71 +554,283 @@ data.length +
     const serial =
     document.getElementById("serial").value;
 
-    pdf.setFontSize(16);
+    const material =
+    document.getElementById("material").value;
 
-    pdf.text(
-    "SALIDA DE INVENTARIO",
-    20,
-    20
-    );
+    const descripcion =
+    document.getElementById("descripcion").value;
 
-    pdf.setFontSize(11);
+    const marca =
+    document.getElementById("marca").value;
 
-    pdf.text(
-    "Factura: " + factura,
-    20,
-    40
-    );
+    const ubicacion =
+    document.getElementById("ubicacion").value;
 
-    pdf.text(
-    "Serial: " + serial,
-    20,
-    50
-    );
+    const usuario =
+    document.getElementById("usuario").value;
 
-    pdf.text(
-    "Descripcion: " +
-    document.getElementById("descripcion").value,
-    20,
-    60
-    );
+    const observacion =
+    document.getElementById("observacion").value;
 
-    pdf.text(
-    "Estado: No Disponible",
-    20,
-    70
-    );
+    const logo =
+    new Image();
 
-    pdf.text(
-    "Foto de evidencia adjunta",
-    20,
-    80
-    );
+    logo.src =
+    "LOGO IMC.png";
 
-    if(imagenBase64){
+    logo.onload = function(){
 
-       const formato =
-imagenBase64.includes("png")
-? "PNG"
-: "JPEG";
- 
-pdf.addImage(
-imagenBase64,
-formato,
-20,
-90,
-80,
-80
-);
+        // LOGO
 
-    }
+        pdf.addImage(
+            logo,
+            "PNG",
+            10,
+            8,
+            28,
+            28
+        );
 
-    pdf.save(
-      factura +
-      "_" +
-      serial +
-      ".pdf"
-    );
+        // ENCABEZADO
+
+        pdf.setFillColor(
+            15,
+            42,
+            84
+        );
+
+        pdf.rect(
+            42,
+            8,
+            158,
+            28,
+            "F"
+        );
+
+        pdf.setFontSize(16);
+        pdf.setTextColor(
+            255,
+            255,
+            255
+        );
+
+        pdf.text(
+            "CONTROL DE SALIDA DE INVENTARIO",
+            48,
+            20
+        );
+
+        pdf.setFontSize(10);
+
+        pdf.text(
+            "IMC CARGO INTERNATIONAL SAS",
+            48,
+            28
+        );
+
+        pdf.setTextColor(
+            0,
+            0,
+            0
+        );
+
+        pdf.line(
+            10,
+            42,
+            200,
+            42
+        );
+
+        // DATOS GENERALES
+
+        pdf.setFontSize(11);
+
+        pdf.text(
+            "Fecha de Generacion: " +
+            fechaActual,
+            10,
+            52
+        );
+
+        pdf.text(
+            "Hora: " +
+            horaActual,
+            120,
+            52
+        );
+
+        pdf.text(
+            "Factura: " +
+            factura,
+            10,
+            60
+        );
+
+        // ACTIVO
+
+        pdf.setFontSize(13);
+
+        pdf.text(
+            "INFORMACION DEL ACTIVO",
+            10,
+            75
+        );
+
+        pdf.setFontSize(11);
+
+        pdf.text(
+            "Material: " +
+            material,
+            10,
+            85
+        );
+
+        pdf.text(
+            "Descripcion: " +
+            descripcion,
+            10,
+            93
+        );
+
+        pdf.text(
+            "Marca: " +
+            marca,
+            10,
+            101
+        );
+
+        pdf.text(
+            "Serial: " +
+            serial,
+            10,
+            109
+        );
+
+        pdf.text(
+            "Ubicacion Anterior: " +
+            ubicacion,
+            10,
+            117
+        );
+
+        pdf.setTextColor(
+            220,
+            53,
+            69
+        );
+
+        pdf.text(
+            "Estado: NO DISPONIBLE",
+            10,
+            125
+        );
+
+        pdf.setTextColor(
+            0,
+            0,
+            0
+        );
+
+        // SALIDA
+
+        pdf.setFontSize(13);
+
+        pdf.text(
+            "INFORMACION DE SALIDA",
+            10,
+            140
+        );
+
+        pdf.setFontSize(11);
+
+        pdf.text(
+            "Usuario: " +
+            usuario,
+            10,
+            150
+        );
+
+        pdf.text(
+            "Observacion:",
+            10,
+            158
+        );
+
+        pdf.text(
+            observacion,
+            10,
+            166
+        );
+
+        // FOTO
+
+        pdf.setFontSize(13);
+
+        pdf.text(
+            "EVIDENCIA FOTOGRAFICA",
+            10,
+            180
+        );
+
+        if(imagenBase64){
+
+            const formato =
+            imagenBase64.includes("png")
+            ? "PNG"
+            : "JPEG";
+
+            pdf.addImage(
+                imagenBase64,
+                formato,
+                10,
+                185,
+                120,
+                75
+            );
+
+        }
+
+        // PIE
+
+        pdf.line(
+            10,
+            270,
+            200,
+            270
+        );
+
+        pdf.setFontSize(8);
+
+        pdf.text(
+            "Documento generado automaticamente por el Sistema de Control de Inventario",
+            10,
+            278
+        );
+
+        pdf.text(
+            "IMC Cargo International SAS",
+            10,
+            284
+        );
+
+        pdf.text(
+            fechaActual +
+            " " +
+            horaActual,
+            10,
+            290
+        );
+
+        pdf.save(
+            "SALIDA_" +
+            factura +
+            "_" +
+            serial +
+            ".pdf"
+        );
+
+    };
+
 }
 
 function cerrarModal(){
