@@ -8,8 +8,8 @@
 
 <title>Registro de Salida</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspf.umd.min.jsscript>
-
+<script src="https://cdnjsom/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><script>
+ 
 <style>
 
 *{
@@ -589,14 +589,19 @@ data.length +
 
     if(imagenBase64){
 
-        pdf.addImage(
-            imagenBase64,
-            "JPEG",
-            20,
-            90,
-            80,
-            80
-        );
+       const formato =
+imagenBase64.includes("png")
+? "PNG"
+: "JPEG";
+ 
+pdf.addImage(
+imagenBase64,
+formato,
+20,
+90,
+80,
+80
+);
 
     }
 
