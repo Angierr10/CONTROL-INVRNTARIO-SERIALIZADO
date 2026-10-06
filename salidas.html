@@ -652,82 +652,139 @@ data.length +
             0
         );
 
-        // ===== FECHA Y FACTURA =====
+// ===== INFORMACIÓN DE SALIDA =====
 
-        pdf.line(
-            10,
-            42,
-            200,
-            42
-        );
+pdf.line(
+    10,
+    42,
+    200,
+    42
+);
 
-        pdf.setFontSize(10);
+pdf.setFillColor(
+    230,
+    235,
+    245
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.rect(
+    10,
+    48,
+    190,
+    10,
+    "F"
+);
 
-        pdf.text(
-            "Fecha de generación:",
-            12,
-            52
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+pdf.setFontSize(13);
 
-        pdf.text(
-            fechaActual,
-            55,
-            52
-        );
+pdf.text(
+    "Información de Salida",
+    15,
+    55
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFontSize(11);
 
-        pdf.text(
-            "Hora:",
-            120,
-            52
-        );
+// FECHA
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.text(
-            horaActual,
-            133,
-            52
-        );
+pdf.text(
+    "Fecha:",
+    15,
+    70
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
 
-        pdf.text(
-            "Factura:",
-            12,
-            60
-        );
+pdf.text(
+    fechaActual,
+    45,
+    70
+);
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+// HORA
 
-        pdf.text(
-            factura,
-            32,
-            60
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Hora:",
+    115,
+    70
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    horaActual,
+    135,
+    70
+);
+
+// FACTURA
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Factura:",
+    15,
+    82
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    factura,
+    45,
+    82
+);
+
+// RESPONSABLE
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Responsable:",
+    15,
+    94
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    usuario,
+    45,
+    94
+);
 
         // ===== INFORMACIÓN DEL EQUIPO =====
 
@@ -737,12 +794,9 @@ data.length +
             245
         );
 
-        pdf.rect(
-            10,
-            70,
-            190,
-            10,
-            "F"
+       pdf.rect(
+           10,
+           108,
         );
 
         pdf.setFont(
@@ -755,7 +809,7 @@ data.length +
         pdf.text(
             "Información del Equipo",
             15,
-            77
+            115
         );
 
         pdf.setFontSize(11);
@@ -848,80 +902,47 @@ data.length +
             122
         );
 
-        // ===== INFORMACIÓN DE SALIDA =====
+// ===== OBSERVACIÓN =====
 
-        pdf.setFillColor(
-            230,
-            235,
-            245
-        );
+pdf.setFillColor(
+    230,
+    235,
+    245
+);
 
-        pdf.rect(
-            10,
-            132,
-            190,
-            10,
-            "F"
-        );
+pdf.rect(
+    10,
+    165,
+    190,
+    10,
+    "F"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.setFontSize(13);
+pdf.setFontSize(13);
 
-        pdf.text(
-            "Información de Salida",
-            15,
-            139
-        );
+pdf.text(
+    "Observación",
+    15,
+    172
+);
 
-        pdf.setFontSize(11);
+pdf.setFontSize(11);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
 
-        pdf.text(
-            "Responsable:",
-            15,
-            154
-        );
-
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
-
-        pdf.text(
-            usuario,
-            50,
-            154
-        );
-
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
-
-        pdf.text(
-            "Observación:",
-            15,
-            164
-        );
-
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
-
-        pdf.text(
-            observacion,
-            50,
-            164
-        );
+pdf.text(
+    observacion,
+    15,
+    185
+);
 
         // ===== FOTO =====
 
