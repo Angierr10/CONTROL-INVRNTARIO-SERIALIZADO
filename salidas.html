@@ -710,7 +710,7 @@ pdf.setFont(
 
 pdf.text(
     fechaActual,
-    45,
+    50,
     70
 );
 
@@ -723,7 +723,7 @@ pdf.setFont(
 
 pdf.text(
     "Hora:",
-    115,
+    120,
     70
 );
 
@@ -734,7 +734,7 @@ pdf.setFont(
 
 pdf.text(
     horaActual,
-    135,
+    138,
     70
 );
 
@@ -758,7 +758,7 @@ pdf.setFont(
 
 pdf.text(
     factura,
-    45,
+    50,
     82
 );
 
@@ -782,7 +782,7 @@ pdf.setFont(
 
 pdf.text(
     usuario,
-    45,
+    50,
     94
 );
 
@@ -923,7 +923,7 @@ pdf.setFillColor(
 
 pdf.rect(
     10,
-    178,
+    180,
     190,
     10,
     "F"
@@ -939,7 +939,7 @@ pdf.setFontSize(13);
 pdf.text(
     "Observación",
     15,
-    185
+    187
 );
 
 pdf.setFontSize(11);
@@ -955,34 +955,34 @@ pdf.text(
     198
 );
 
-        // ===== FOTO =====
+// ===== EVIDENCIA FOTOGRÁFICA =====
 
-        pdf.setFillColor(
-            230,
-            235,
-            245
-        );
+pdf.setFillColor(
+    230,
+    235,
+    245
+);
 
-        pdf.rect(
-            10,
-            175,
-            190,
-            10,
-            "F"
-        );
+pdf.rect(
+    10,
+    210,
+    190,
+    10,
+    "F"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.setFontSize(13);
+pdf.setFontSize(13);
 
-        pdf.text(
-            "Evidencia Fotográfica",
-            15,
-            182
-        );
+pdf.text(
+    "Evidencia Fotográfica",
+    15,
+    217
+);
 
         if(imagenBase64){
 
