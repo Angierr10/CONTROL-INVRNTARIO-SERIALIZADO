@@ -786,121 +786,132 @@ pdf.text(
     94
 );
 
-        // ===== INFORMACIÓN DEL EQUIPO =====
+// ===== INFORMACIÓN DEL EQUIPO =====
 
-        pdf.setFillColor(
-            230,
-            235,
-            245
-        );
+pdf.setFillColor(
+    230,
+    235,
+    245
+);
 
-       pdf.rect(
-           10,
-           108,
-        );
+pdf.rect(
+    10,
+    110,
+    190,
+    10,
+    "F"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.setFontSize(13);
+pdf.setFontSize(13);
 
-        pdf.text(
-            "Información del Equipo",
-            15,
-            115
-        );
+pdf.text(
+    "Información del Equipo",
+    15,
+    117
+);
 
-        pdf.setFontSize(11);
+pdf.setFontSize(11);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+// MATERIAL
 
-        pdf.text(
-            "Material:",
-            15,
-            92
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+pdf.text(
+    "Material:",
+    15,
+    132
+);
 
-        pdf.text(
-            material,
-            45,
-            92
-        );
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.text(
+    material,
+    50,
+    132
+);
 
-        pdf.text(
-            "Descripción:",
-            15,
-            102
-        );
+// DESCRIPCIÓN
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.text(
-            descripcion,
-            45,
-            102
-        );
+pdf.text(
+    "Descripción:",
+    15,
+    144
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
 
-        pdf.text(
-            "Marca:",
-            15,
-            112
-        );
+pdf.text(
+    descripcion,
+    50,
+    144
+);
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+// MARCA
 
-        pdf.text(
-            marca,
-            45,
-            112
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.text(
+    "Marca:",
+    15,
+    156
+);
 
-        pdf.text(
-            "Serial:",
-            15,
-            122
-        );
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+pdf.text(
+    marca,
+    50,
+    156
+);
 
-        pdf.text(
-            serial,
-            45,
-            122
-        );
+// SERIAL
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Serial:",
+    15,
+    168
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    serial,
+    50,
+    168
+);
 
 // ===== OBSERVACIÓN =====
 
@@ -912,7 +923,7 @@ pdf.setFillColor(
 
 pdf.rect(
     10,
-    165,
+    178,
     190,
     10,
     "F"
@@ -928,7 +939,7 @@ pdf.setFontSize(13);
 pdf.text(
     "Observación",
     15,
-    172
+    185
 );
 
 pdf.setFontSize(11);
@@ -939,9 +950,9 @@ pdf.setFont(
 );
 
 pdf.text(
-    observacion,
+    observacion || "Sin observaciones",
     15,
-    185
+    198
 );
 
         // ===== FOTO =====
