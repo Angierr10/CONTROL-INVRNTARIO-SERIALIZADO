@@ -543,10 +543,16 @@ data.length +
     const fecha = new Date();
 
     const fechaActual =
-    fecha.toLocaleDateString();
+    fecha.toLocaleDateString("es-CO");
 
     const horaActual =
-    fecha.toLocaleTimeString();
+    fecha.toLocaleTimeString(
+        "es-CO",
+        {
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
 
     const factura =
     document.getElementById("factura").value;
@@ -563,35 +569,30 @@ data.length +
     const marca =
     document.getElementById("marca").value;
 
-    const ubicacion =
-    document.getElementById("ubicacion").value;
-
     const usuario =
     document.getElementById("usuario").value;
 
     const observacion =
     document.getElementById("observacion").value;
 
-    const logo =
-    new Image();
+    const logo = new Image();
 
-    logo.src =
-    "LOGO IMC.png";
+    logo.src = "LOGO IMC.png";
 
     logo.onload = function(){
 
-        // LOGO
+        // ===== LOGO =====
 
         pdf.addImage(
             logo,
             "PNG",
+            12,
             10,
-            8,
-            28,
-            28
+            24,
+            24
         );
 
-        // ENCABEZADO
+        // ===== ENCABEZADO =====
 
         pdf.setFillColor(
             15,
@@ -601,18 +602,24 @@ data.length +
 
         pdf.rect(
             42,
-            8,
-            158,
-            28,
+            10,
+            155,
+            24,
             "F"
         );
 
-        pdf.setFontSize(16);
         pdf.setTextColor(
             255,
             255,
             255
         );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(17);
 
         pdf.text(
             "CONTROL DE SALIDA DE INVENTARIO",
@@ -620,12 +627,23 @@ data.length +
             20
         );
 
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
         pdf.setFontSize(10);
 
         pdf.text(
-            "IMC CARGO INTERNATIONAL SAS",
+            "IMC Cargo International SAS",
             48,
-            28
+            27
+        );
+
+        pdf.text(
+            "Multilogística Integral",
+            48,
+            32
         );
 
         pdf.setTextColor(
@@ -633,6 +651,8 @@ data.length +
             0,
             0
         );
+
+        // ===== FECHA Y FACTURA =====
 
         pdf.line(
             10,
@@ -641,135 +661,295 @@ data.length +
             42
         );
 
-        // DATOS GENERALES
+        pdf.setFontSize(10);
 
-        pdf.setFontSize(11);
-
-        pdf.text(
-            "Fecha de Generacion: " +
-            fechaActual,
-            10,
-            52
+        pdf.setFont(
+            "helvetica",
+            "bold"
         );
 
         pdf.text(
-            "Hora: " +
-            horaActual,
+            "Fecha de generación:",
+            12,
+            52
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            fechaActual,
+            55,
+            52
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Hora:",
             120,
             52
         );
 
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
         pdf.text(
-            "Factura: " +
-            factura,
-            10,
+            horaActual,
+            133,
+            52
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Factura:",
+            12,
             60
         );
 
-        // ACTIVO
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            factura,
+            32,
+            60
+        );
+
+        // ===== INFORMACIÓN DEL EQUIPO =====
+
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
+
+        pdf.rect(
+            10,
+            70,
+            190,
+            10,
+            "F"
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
 
         pdf.setFontSize(13);
 
         pdf.text(
-            "INFORMACION DEL ACTIVO",
-            10,
-            75
+            "Información del Equipo",
+            15,
+            77
         );
 
         pdf.setFontSize(11);
 
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
         pdf.text(
-            "Material: " +
+            "Material:",
+            15,
+            92
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
             material,
-            10,
-            85
+            45,
+            92
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
         );
 
         pdf.text(
-            "Descripcion: " +
+            "Descripción:",
+            15,
+            102
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
             descripcion,
-            10,
-            93
+            45,
+            102
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
         );
 
         pdf.text(
-            "Marca: " +
+            "Marca:",
+            15,
+            112
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
             marca,
-            10,
-            101
+            45,
+            112
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
         );
 
         pdf.text(
-            "Serial: " +
+            "Serial:",
+            15,
+            122
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
             serial,
+            45,
+            122
+        );
+
+        // ===== INFORMACIÓN DE SALIDA =====
+
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
+
+        pdf.rect(
             10,
-            109
-        );
-
-        pdf.text(
-            "Ubicacion Anterior: " +
-            ubicacion,
+            132,
+            190,
             10,
-            117
+            "F"
         );
 
-        pdf.setTextColor(
-            220,
-            53,
-            69
+        pdf.setFont(
+            "helvetica",
+            "bold"
         );
-
-        pdf.text(
-            "Estado: NO DISPONIBLE",
-            10,
-            125
-        );
-
-        pdf.setTextColor(
-            0,
-            0,
-            0
-        );
-
-        // SALIDA
 
         pdf.setFontSize(13);
 
         pdf.text(
-            "INFORMACION DE SALIDA",
-            10,
-            140
+            "Información de Salida",
+            15,
+            139
         );
 
         pdf.setFontSize(11);
 
-        pdf.text(
-            "Usuario: " +
-            usuario,
-            10,
-            150
+        pdf.setFont(
+            "helvetica",
+            "bold"
         );
 
         pdf.text(
-            "Observacion:",
-            10,
-            158
+            "Responsable:",
+            15,
+            154
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            usuario,
+            50,
+            154
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Observación:",
+            15,
+            164
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
         );
 
         pdf.text(
             observacion,
-            10,
-            166
+            50,
+            164
         );
 
-        // FOTO
+        // ===== FOTO =====
+
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
+
+        pdf.rect(
+            10,
+            175,
+            190,
+            10,
+            "F"
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
 
         pdf.setFontSize(13);
 
         pdf.text(
-            "EVIDENCIA FOTOGRAFICA",
-            10,
-            180
+            "Evidencia Fotográfica",
+            15,
+            182
         );
 
         if(imagenBase64){
@@ -782,41 +962,38 @@ data.length +
             pdf.addImage(
                 imagenBase64,
                 formato,
-                10,
-                185,
-                120,
-                75
+                20,
+                190,
+                170,
+                80
             );
 
         }
 
-        // PIE
+        // ===== PIE =====
 
         pdf.line(
             10,
-            270,
+            278,
             200,
-            270
+            278
         );
 
         pdf.setFontSize(8);
 
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
         pdf.text(
-            "Documento generado automaticamente por el Sistema de Control de Inventario",
+            "Documento generado automáticamente por el Sistema de Control de Inventario",
             10,
-            278
+            285
         );
 
         pdf.text(
             "IMC Cargo International SAS",
-            10,
-            284
-        );
-
-        pdf.text(
-            fechaActual +
-            " " +
-            horaActual,
             10,
             290
         );
@@ -832,7 +1009,6 @@ data.length +
     };
 
 }
-
 function cerrarModal(){
 
 location.reload();
