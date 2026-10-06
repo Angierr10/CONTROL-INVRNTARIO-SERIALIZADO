@@ -910,12 +910,17 @@ pdf.text(
     ? "PNG"
     : "JPEG";
 
-    const img = new Image();
+    const img =
+    new Image();
 
-    img.src = imagenBase64;
+    img.src =
+    imagenBase64;
 
-    const imgWidth = img.width;
-    const imgHeight = img.height;
+    const imgWidth =
+    img.width;
+
+    const imgHeight =
+    img.height;
 
     const maxWidth = 80;
     const maxHeight = 60;
@@ -923,24 +928,32 @@ pdf.text(
     let width = maxWidth;
 
     let height =
-    (imgHeight * width) / imgWidth;
+    (imgHeight * width)
+    / imgWidth;
 
     if(height > maxHeight){
 
         height = maxHeight;
 
         width =
-        (imgWidth * height) / imgHeight;
+        (imgWidth * height)
+        / imgHeight;
 
     }
 
-    pdf.setDrawColor(0,0,0);
+    pdf.setDrawColor(
+        0,
+        0,
+        0
+    );
 
-    pdf.setLineWidth(0.5);
+    pdf.setLineWidth(
+        0.5
+    );
 
     pdf.rect(
         15,
-        225,
+        205,
         width + 4,
         height + 4
     );
@@ -949,13 +962,12 @@ pdf.text(
         imagenBase64,
         formato,
         17,
-        227,
+        207,
         width,
         height
     );
 
 }
-
 // FOTO 2
 
 if(imagenBase642){
@@ -1049,8 +1061,6 @@ if(imagenBase642){
             serial +
             ".pdf"
         );
-
-    };
 
 }
 function cerrarModal(){
