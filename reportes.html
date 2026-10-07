@@ -1,1 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reporte de Movimientos</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:40px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:20px;
+}
+
+.home-btn{
+    text-decoration:none;
+    font-size:36px;
+}
+
+.titulo{
+    font-size:42px;
+    color:#102b57;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    color:#666;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.filtros{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+    color:#102b57;
+}
+
+input,
+select{
+
+    width:100%;
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+}
+
+.boton{
+
+    margin-top:24px;
+
+    background:#102b57;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 15px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+.boton:hover{
+    background:#183f80;
+}
+
+.info{
+
+    margin-bottom:15px;
+
+    color:#666;
+
+    font-weight:bold;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+}
+
+thead{
+
+    background:#102b57;
+
+    color:white;
+}
+
+th,td{
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    text-align:left;
+
+    font-size:14px;
+}
+
+tbody tr:hover{
+    background:#f5f7fb;
+}
+
+.badge{
+
+    color:white;
+
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.ingreso{
+    background:#198754;
+}
+
+.reingreso{
+    background:#0d6efd;
+}
+
+.salida{
+    background:#dc3545;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+<a href="dashboard.html" class="home-btn">🏠</a>
+</div>
+
+<div class="titulo">
+📊 REPORTE DE MOVIMIENTOS
+</div>
+
+<div class="subtitulo">
+Consulta de movimientos históricos del inventario
+</div>
+
+<div class="card">
+
+<div class="filtros">
+
+<div>
+
+<label>Fecha Inicial</label>
+
+<input
+type="date"
+id="fechaInicial">
+
+</div>
+
+<div>
+
+<label>Fecha Final</label>
+
+<input
+type="date"
+id="fechaFinal">
+
+</div>
+
+<div>
+
+<label>Serial</label>
+
+<input
+type="text"
+id="serial"
+placeholder="Buscar serial">
+
+</div>
+
+<div>
+
+<label>Tipo</label>
+
+<select id="tipo">
+
+<option value="">
+Todos
+</option>
+
+<option value="INGRESO">
+INGRESO
+</option>
+
+<option value="REINGRESO">
+REINGRESO
+</option>
+
+<option value="SALIDA">
+SALIDA
+</option>
+
+</select>
+
+</div>
+
+<div>
+
+<button
+class="boton"
+onclick="filtrarMovimientos()">
+
+Buscar
+
+</button>
+
+</div>
+
+</div>
+
+<div
+class="info"
+id="contador">
+
+0 registros encontrados
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Fecha</th>
+<th>Tipo</th>
+<th>Serial</th>
+<th>Ubicación Anterior</th>
+<th>Ubicación Nueva</th>
+<th>Usuario</th>
+<th>Observación</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tablaMovimientos">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbxhYkPMbOQJHrcSoxhFjOoo5zhspyW-yqdLVOsNmvhwQ7U-pxfgEjGAfqaAhP3Apa_qyw/exec?tabla=movimientos";
+
+let movimientos = [];
+
+async function cargarMovimientos(){
+
+    try{
+
+        const response =
+        await fetch(API);
+
+        movimientos =
+        await response.json();
+
+        pintarTabla(
+            movimientos
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+function pintarTabla(datos){
+
+    const tbody =
+    document.getElementById(
+    "tablaMovimientos"
+    );
+
+    tbody.innerHTML = "";
+
+    document
+    .getElementById(
+    "contador"
+    )
+    .innerHTML =
+    datos.length +
+    " registros encontrados";
+
+    datos.forEach(item => {
+
+        const tr =
+        document.createElement("tr");
+
+        let clase = "";
+
+        if(item.tipo === "INGRESO")
+            clase = "ingreso";
+
+        if(item.tipo === "REINGRESO")
+            clase = "reingreso";
+
+        if(item.tipo === "SALIDA")
+            clase = "salida";
+
+        tr.innerHTML = `
+
+            <td>${formatearFecha(item.fecha)}</td>
+
+            <td>
+                <span class="badge ${clase}">
+                ${item.tipo}
+                </span>
+            </td>
+
+            <td>${item.serial}</td>
+
+            <td>${item.ubicacionAnterior}</td>
+
+            <td>${item.ubicacionNueva}</td>
+
+            <td>${item.usuario}</td>
+
+            <td>${item.observacion}</td>
+
+        `;
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+function filtrarMovimientos(){
+
+    const tipo =
+    document
+    .getElementById("tipo")
+    .value;
+
+    const serial =
+    document
+    .getElementById("serial")
+    .value
+    .trim()
+    .toUpperCase();
+
+    const fechaInicial =
+    document
+    .getElementById("fechaInicial")
+    .value;
+
+    const fechaFinal =
+    document
+    .getElementById("fechaFinal")
+    .value;
+
+    let resultado =
+    movimientos.filter(item => {
+
+        let cumple = true;
+
+        if(tipo){
+
+            cumple =
+            cumple &&
+            item.tipo === tipo;
+
+        }
+
+        if(serial){
+
+            cumple =
+            cumple &&
+            String(item.serial)
+            .toUpperCase()
+            .includes(serial);
+
+        }
+
+        if(fechaInicial){
+
+            cumple =
+            cumple &&
+            new Date(item.fecha)
+            >=
+            new Date(fechaInicial);
+
+        }
+
+        if(fechaFinal){
+
+            const fechaMax =
+            new Date(
+                fechaFinal
+            );
+
+            fechaMax.setHours(
+                23,59,59
+            );
+
+            cumple =
+            cumple &&
+            new Date(item.fecha)
+            <=
+            fechaMax;
+
+        }
+
+        return cumple;
+
+    });
+
+    pintarTabla(
+        resultado
+    );
+
+}
+
+function formatearFecha(fecha){
+
+    try{
+
+        return new Date(fecha)
+        .toLocaleString(
+            "es-CO"
+        );
+
+    }
+
+    catch{
+
+        return fecha;
+
+    }
+
+}
+
+cargarMovimientos();
+
+</script>
+
+</body>
+</html>
