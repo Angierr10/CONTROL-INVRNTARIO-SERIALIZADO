@@ -533,20 +533,19 @@ data.length +
     boton.disabled = true;
     boton.innerHTML = "Procesando...";
 
-    const datos = {
+  const datos = {
 
-        accion:"SALIDA",
+    accion:"SALIDA",
 
-        serial:serial.value,
+    serial:serial.value,
 
-        usuario:usuario.value,
+    usuario:usuario.value,
 
-        observacion:
-        factura.value +
-        " | " +
-        observacion.value
+    factura:factura.value,
 
-    };
+    observacion:observacion.value
+
+};
 
     try{
 
