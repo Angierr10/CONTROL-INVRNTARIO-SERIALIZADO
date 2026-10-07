@@ -641,76 +641,101 @@ data.length +
 
     logo.onload = function(){
 
-        // LOGO
+// ===== LOGO =====
 
-        pdf.addImage(
-            logo,
-            "PNG",
-            12,
-            10,
-            24,
-            24
-        );
+pdf.addImage(
+    logo,
+    "PNG",
+    10,
+    8,
+    30,
+    30
+);
 
-        // ENCABEZADO
+// ===== ENCABEZADO =====
 
-        pdf.setFillColor(
-            15,
-            42,
-            84
-        );
+pdf.setFillColor(
+    15,
+    42,
+    84
+);
 
-        pdf.rect(
-            42,
-            10,
-            155,
-            24,
-            "F"
-        );
+pdf.rect(
+    45,
+    8,
+    150,
+    30,
+    "F"
+);
 
-        pdf.setTextColor(
-            255,
-            255,
-            255
-        );
+// TÍTULO
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setTextColor(
+    255,
+    255,
+    255
+);
 
-        pdf.setFontSize(17);
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.text(
-            "CONTROL DE SALIDA DE INVENTARIO",
-            48,
-            20
-        );
+pdf.setFontSize(19);
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+pdf.text(
+    "CONTROL DE SALIDA DE INVENTARIO",
+    120,
+    20,
+    {
+        align: "center"
+    }
+);
 
-        pdf.setFontSize(10);
+// SUBTÍTULOS
 
-        pdf.text(
-            "IMC Cargo International SAS",
-            48,
-            27
-        );
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
 
-        pdf.text(
-            "Multilogística Integral",
-            48,
-            32
-        );
+pdf.setFontSize(9);
 
-        pdf.setTextColor(
-            0,
-            0,
-            0
-        );
+pdf.text(
+    "IMC Cargo International SAS",
+    120,
+    28,
+    {
+        align: "center"
+    }
+);
+
+pdf.text(
+    "Multilogística Integral",
+    120,
+    33,
+    {
+        align: "center"
+    }
+);
+
+// VOLVER A NEGRO
+
+pdf.setTextColor(
+    0,
+    0,
+    0
+);
+
+// LÍNEA DIVISORIA
+
+pdf.line(
+    10,
+    45,
+    200,
+    45
+);
+
 
         // INFORMACIÓN DE SALIDA
 
