@@ -307,6 +307,8 @@ let movimientos = [];
 
 async function cargarMovimientos(){
 
+ async function cargarMovimientos(){
+
     try{
 
         const response =
@@ -314,6 +316,12 @@ async function cargarMovimientos(){
 
         movimientos =
         await response.json();
+
+        movimientos.sort(
+            (a,b) =>
+            new Date(b.fecha) -
+            new Date(a.fecha)
+        );
 
         pintarTabla(
             movimientos
@@ -327,7 +335,7 @@ async function cargarMovimientos(){
     }
 
 }
-
+    
 function pintarTabla(datos){
 
     const tbody =
