@@ -587,7 +587,7 @@ data.length +
 
     logo.onload = function(){
 
-        // ===== LOGO =====
+        // LOGO
 
         pdf.addImage(
             logo,
@@ -598,7 +598,7 @@ data.length +
             24
         );
 
-        // ===== ENCABEZADO =====
+        // ENCABEZADO
 
         pdf.setFillColor(
             15,
@@ -658,375 +658,263 @@ data.length +
             0
         );
 
-// ===== INFORMACIÓN DE SALIDA =====
+        // INFORMACIÓN DE SALIDA
 
-pdf.line(
-    10,
-    42,
-    200,
-    42
-);
+        pdf.line(
+            10,
+            42,
+            200,
+            42
+        );
 
-pdf.setFillColor(
-    230,
-    235,
-    245
-);
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
 
-pdf.rect(
-    10,
-    48,
-    190,
-    10,
-    "F"
-);
+        pdf.rect(
+            10,
+            48,
+            190,
+            10,
+            "F"
+        );
 
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
 
-pdf.setFontSize(13);
+        pdf.setFontSize(13);
 
-pdf.text(
-    "Información de Salida",
-    15,
-    55
-);
+        pdf.text(
+            "Información de Salida",
+            15,
+            55
+        );
 
-pdf.setFontSize(11);
+        pdf.setFontSize(11);
 
-// COLUMNA IZQUIERDA
+        // IZQUIERDA
 
-pdf.setFont("helvetica","bold");
-pdf.text("Fecha:",15,72);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Fecha:",15,72);
 
-pdf.setFont("helvetica","normal");
-pdf.text(fechaActual,45,72);
+        pdf.setFont("helvetica","normal");
+        pdf.text(fechaActual,45,72);
 
-pdf.setFont("helvetica","bold");
-pdf.text("Factura:",15,84);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Factura:",15,84);
 
-pdf.setFont("helvetica","normal");
-pdf.text(factura,45,84);
+        pdf.setFont("helvetica","normal");
+        pdf.text(factura,45,84);
 
-// COLUMNA DERECHA
+        // DERECHA
 
-pdf.setFont("helvetica","bold");
-pdf.text("Hora:",110,72);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Hora:",110,72);
 
-pdf.setFont("helvetica","normal");
-pdf.text(horaActual,130,72);
+        pdf.setFont("helvetica","normal");
+        pdf.text(horaActual,130,72);
 
-pdf.setFont("helvetica","bold");
-pdf.text("Responsable:",110,84);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Responsable:",110,84);
 
-pdf.setFont("helvetica","normal");
-pdf.text(usuario,150,84);
+        pdf.setFont("helvetica","normal");
+        pdf.text(usuario,150,84);
 
-// ===== INFORMACIÓN DEL EQUIPO =====
+        // INFORMACIÓN DEL EQUIPO
 
-pdf.setFillColor(
-    230,
-    235,
-    245
-);
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
 
-pdf.rect(
-    10,
-    110,
-    190,
-    10,
-    "F"
-);
+        pdf.rect(
+            10,
+            100,
+            190,
+            10,
+            "F"
+        );
 
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
 
-pdf.setFontSize(13);
+        pdf.setFontSize(13);
 
-pdf.text(
-    "Información del Equipo",
-    15,
-    117
-);
+        pdf.text(
+            "Información del Equipo",
+            15,
+            107
+        );
 
-pdf.setFontSize(11);
+        pdf.setFontSize(11);
 
-// COLUMNA IZQUIERDA
+        // IZQUIERDA
 
-pdf.setFont("helvetica","bold");
-pdf.text("Material:",15,132);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Material:",15,122);
 
-pdf.setFont("helvetica","normal");
-pdf.text(material,50,132);
+        pdf.setFont("helvetica","normal");
+        pdf.text(material,50,122);
 
-pdf.setFont("helvetica","bold");
-pdf.text("Marca:",15,146);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Marca:",15,136);
 
-pdf.setFont("helvetica","normal");
-pdf.text(marca,50,146);
+        pdf.setFont("helvetica","normal");
+        pdf.text(marca,50,136);
 
-// COLUMNA DERECHA
+        // DERECHA
 
-pdf.setFont("helvetica","bold");
-pdf.text("Serial:",110,132);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Serial:",110,122);
 
-pdf.setFont("helvetica","normal");
-pdf.text(serial,145,132);
+        pdf.setFont("helvetica","normal");
+        pdf.text(serial,145,122);
 
-pdf.setFont("helvetica","bold");
-pdf.text("Descripción:",110,146);
+        pdf.setFont("helvetica","bold");
+        pdf.text("Descripción:",110,136);
 
-pdf.setFont("helvetica","normal");
-pdf.text(descripcion,145,146);
+        pdf.setFont("helvetica","normal");
+        pdf.text(descripcion,145,136);
 
-// ===== OBSERVACIÓN =====
+        // OBSERVACIÓN
 
-pdf.setFillColor(
-    230,
-    235,
-    245
-);
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
 
-pdf.rect(
-    10,
-    160,
-    190,
-    10,
-    "F"
-);
+        pdf.rect(
+            10,
+            150,
+            190,
+            10,
+            "F"
+        );
 
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
 
-pdf.setFontSize(13);
+        pdf.setFontSize(13);
 
-pdf.text(
-    "Observación",
-    15,
-    167
-);
+        pdf.text(
+            "Observación",
+            15,
+            157
+        );
 
-pdf.setFontSize(11);
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
 
-pdf.setFont(
-    "helvetica",
-    "normal"
-);
+        pdf.setFontSize(11);
 
-pdf.text(
-    observacion || "Sin observaciones",
-    15,
-    180
-);
+        pdf.text(
+            observacion || "Sin observaciones",
+            15,
+            170
+        );
 
-// ===== EVIDENCIA FOTOGRÁFICA =====
+        // EVIDENCIA FOTOGRÁFICA
 
-pdf.setFillColor(
-    230,
-    235,
-    245
-);
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
 
-pdf.rect(
-    10,
-    190,
-    190,
-    10,
-    "F"
-);
+        pdf.rect(
+            10,
+            182,
+            190,
+            10,
+            "F"
+        );
 
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
 
-pdf.setFontSize(13);
+        pdf.setFontSize(13);
 
-pdf.text(
-    "Evidencia Fotográfica",
-    15,
-    197
-);
+        pdf.text(
+            "Evidencia Fotográfica",
+            15,
+            189
+        );
+
+        // FOTO 1
 
         if(imagenBase64){
 
-    const formato =
-    imagenBase64.includes("png")
-    ? "PNG"
-    : "JPEG";
+            const formato =
+            imagenBase64.includes("png")
+            ? "PNG"
+            : "JPEG";
 
-    const img = new Image();
+            pdf.setDrawColor(0,0,0);
+            pdf.setLineWidth(0.5);
 
-    img.src = imagenBase64;
+            pdf.rect(
+                15,
+                198,
+                84,
+                64
+            );
 
-    const imgWidth = img.width;
-    const imgHeight = img.height;
+            pdf.addImage(
+                imagenBase64,
+                formato,
+                17,
+                200,
+                80,
+                60
+            );
 
-    const maxWidth = 170;
-    const maxHeight = 80;
+        }
 
-    let width = maxWidth;
+        // FOTO 2
 
-    let height =
-    (imgHeight * width) / imgWidth;
+        if(imagenBase642){
 
-    if(height > maxHeight){
+            const formato2 =
+            imagenBase642.includes("png")
+            ? "PNG"
+            : "JPEG";
 
-        height = maxHeight;
+            pdf.setDrawColor(0,0,0);
+            pdf.setLineWidth(0.5);
 
-        width =
-        (imgWidth * height) / imgHeight;
+            pdf.rect(
+                105,
+                198,
+                84,
+                64
+            );
 
-    }
+            pdf.addImage(
+                imagenBase642,
+                formato2,
+                107,
+                200,
+                80,
+                60
+            );
 
-    const posX =
-    (210 - width) / 2;
+        }
 
-    const posY = 190;
-
-    // Marco negro fino
-
-    pdf.setDrawColor(0,0,0);
-
-    pdf.setLineWidth(0.5);
-
-    pdf.rect(
-        posX - 2,
-        posY - 2,
-        width + 4,
-        height + 4
-    );
-
- if(imagenBase64){
-
-    const formato =
-    imagenBase64.includes("png")
-    ? "PNG"
-    : "JPEG";
-
-    const img =
-    new Image();
-
-    img.src =
-    imagenBase64;
-
-    const imgWidth =
-    img.width;
-
-    const imgHeight =
-    img.height;
-
-    const maxWidth = 80;
-    const maxHeight = 60;
-
-    let width = maxWidth;
-
-    let height =
-    (imgHeight * width)
-    / imgWidth;
-
-    if(height > maxHeight){
-
-        height = maxHeight;
-
-        width =
-        (imgWidth * height)
-        / imgHeight;
-
-    }
-
-    pdf.setDrawColor(
-        0,
-        0,
-        0
-    );
-
-    pdf.setLineWidth(
-        0.5
-    );
-
-    pdf.rect(
-        15,
-        205,
-        width + 4,
-        height + 4
-    );
-
-    pdf.addImage(
-        imagenBase64,
-        formato,
-        17,
-        207,
-        width,
-        height
-    );
-
-}
-// FOTO 2
-
-if(imagenBase642){
-
-    const formato2 =
-    imagenBase642.includes("png")
-    ? "PNG"
-    : "JPEG";
-
-    const img2 =
-    new Image();
-
-    img2.src =
-    imagenBase642;
-
-    const imgWidth2 =
-    img2.width;
-
-    const imgHeight2 =
-    img2.height;
-
-    const maxWidth2 = 80;
-    const maxHeight2 = 60;
-
-    let width2 = maxWidth2;
-
-    let height2 =
-    (imgHeight2 * width2)
-    / imgWidth2;
-
-    if(height2 > maxHeight2){
-
-        height2 =
-        maxHeight2;
-
-        width2 =
-        (imgWidth2 * height2)
-        / imgHeight2;
-
-    }
-
-    pdf.rect(
-        105,
-        225,
-        width2 + 4,
-        height2 + 4
-    );
-
-    pdf.addImage(
-        imagenBase642,
-        formato2,
-        107,
-        227,
-        width2,
-        height2
-    );
-
-}
-        // ===== PIE =====
+        // PIE
 
         pdf.line(
             10,
@@ -1054,16 +942,16 @@ if(imagenBase642){
             290
         );
 
-pdf.save(
-"SALIDA_" +
-factura +
-"_" +
-serial +
-".pdf"
-);
- 
-};
- 
+        pdf.save(
+            "SALIDA_" +
+            factura +
+            "_" +
+            serial +
+            ".pdf"
+        );
+
+    };
+
 }
  
 function cerrarModal(){
