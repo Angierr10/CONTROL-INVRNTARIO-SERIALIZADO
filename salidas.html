@@ -381,10 +381,65 @@ data.length +
     ){
 
         mostrarError(
-        "La fotografía supera 5MB."
+            "La fotografía supera 5MB."
         );
 
         return;
+
+    }
+
+    const reader =
+    new FileReader();
+
+    reader.onload =
+    function(e){
+
+        imagenBase64 =
+        e.target.result;
+
+    };
+
+    reader.readAsDataURL(
+        archivo
+    );
+
+}
+      function mostrarPreview2(event){
+
+    const archivo =
+    event.target.files[0];
+
+    if(!archivo) return;
+
+    if(
+        archivo.size >
+        5 * 1024 * 1024
+    ){
+
+        mostrarError(
+            "La fotografía supera 5MB."
+        );
+
+        return;
+
+    }
+
+    const reader =
+    new FileReader();
+
+    reader.onload =
+    function(e){
+
+        imagenBase642 =
+        e.target.result;
+
+    };
+
+    reader.readAsDataURL(
+        archivo
+    );
+
+}
     }
 
     const reader =
@@ -703,13 +758,13 @@ data.length +
         pdf.text("Fecha:",15,72);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(fechaActual,45,72);
+        pdf.text(fechaActual,32,72);
 
         pdf.setFont("helvetica","bold");
         pdf.text("Factura:",15,84);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(factura,45,84);
+        pdf.text(factura,32,84);
 
         // DERECHA
 
@@ -717,13 +772,13 @@ data.length +
         pdf.text("Hora:",110,72);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(horaActual,130,72);
+        pdf.text(horaActual,123,72);
 
         pdf.setFont("helvetica","bold");
         pdf.text("Responsable:",110,84);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(usuario,150,84);
+        pdf.text(usuario,142,84);
 
         // INFORMACIÓN DEL EQUIPO
 
@@ -762,13 +817,13 @@ data.length +
         pdf.text("Material:",15,122);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(material,50,122);
+        pdf.text(material,37,122);
 
         pdf.setFont("helvetica","bold");
         pdf.text("Marca:",15,136);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(marca,50,136);
+        pdf.text(marca,33,136);
 
         // DERECHA
 
@@ -776,13 +831,13 @@ data.length +
         pdf.text("Serial:",110,122);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(serial,145,122);
+        pdf.text(serial,128,122);
 
         pdf.setFont("helvetica","bold");
         pdf.text("Descripción:",110,136);
 
         pdf.setFont("helvetica","normal");
-        pdf.text(descripcion,145,136);
+        pdf.text(descripcion,138,136);
 
         // OBSERVACIÓN
 
