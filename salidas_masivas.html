@@ -666,6 +666,14 @@ async function registrarSalidaMasiva(){
             return;
         }
 
+        await generarPDFMasivo(
+    seriales,
+    factura.value,
+    cliente.value,
+    usuario.value,
+    observacion.value
+);
+
         document
         .getElementById(
         "modalExito"
@@ -687,7 +695,481 @@ async function registrarSalidaMasiva(){
     }
 
 }
+async function generarPDFMasivo(
+    seriales,
+    factura,
+    cliente,
+    usuario,
+    observacion
+){
 
+    const { jsPDF } =
+    window.jspdf;
+
+    const pdf =
+    new jsPDF();
+
+    const fecha =
+    new Date();
+
+    const fechaActual =
+    fecha.toLocaleDateString(
+        "es-CO"
+    );
+
+    const equipos =
+    inventario.filter(item =>
+
+        seriales.includes(
+            String(item.serial)
+        )
+
+    );
+
+    const logo =
+    new Image();
+
+    logo.src =
+    "LOGO IMC.png";
+
+    logo.onload = function(){
+
+        // LOGO
+
+        pdf.addImage(
+            logo,
+            "PNG",
+            10,
+            8,
+            28,
+            28
+        );
+
+        // ENCABEZADO
+
+        pdf.setFillColor(
+            15,
+            42,
+            84
+        );
+
+        pdf.rect(
+            45,
+            8,
+            150,
+            28,
+            "F"
+        );
+
+        pdf.setTextColor(
+            255,
+            255,
+            255
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(18);
+
+        pdf.text(
+            "CONTROL DE SALIDA MASIVA",
+            120,
+            20,
+            {align:"center"}
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.setFontSize(9);
+
+        pdf.text(
+            "IMC Cargo International SAS",
+            120,
+            28,
+            {align:"center"}
+        );
+
+        pdf.text(
+            "Multilogística Integral",
+            120,
+            33,
+            {align:"center"}
+        );
+
+        pdf.setTextColor(
+            0,
+            0,
+            0
+        );
+
+        pdf.line(
+            10,
+            42,
+            200,
+            42
+        );
+
+        // INFORMACIÓN GENERAL
+
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
+
+        pdf.rect(
+            10,
+            48,
+            190,
+            10,
+            "F"
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(13);
+
+        pdf.text(
+            "Información General",
+            15,
+            55
+        );
+
+        pdf.setFontSize(11);
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Factura:",
+            15,
+            70
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            factura,
+            45,
+            70
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Cliente:",
+            15,
+            82
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            cliente,
+            45,
+            82
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Salida generada por:",
+            15,
+            94
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            usuario,
+            60,
+            94
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Fecha:",
+            120,
+            70
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            fechaActual,
+            140,
+            70
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Cantidad:",
+            120,
+            82
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            String(
+                equipos.length
+            ),
+            145,
+            82
+        );
+
+        // TABLA
+
+        pdf.setFillColor(
+            230,
+            235,
+            245
+        );
+
+        pdf.rect(
+            10,
+            108,
+            190,
+            10,
+            "F"
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Equipos Despachados",
+            15,
+            115
+        );
+
+        let y = 128;
+
+        pdf.setFontSize(10);
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Material",
+            15,
+            y
+        );
+
+        pdf.text(
+            "Descripción",
+            60,
+            y
+        );
+
+        pdf.text(
+            "Serial",
+            165,
+            y
+        );
+
+        y += 8;
+
+        pdf.line(
+            10,
+            y - 4,
+            200,
+            y - 4
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        equipos.forEach(item => {
+
+            if(y > 250){
+
+                pdf.addPage();
+
+                y = 20;
+
+            }
+
+            pdf.text(
+                String(item.material),
+                15,
+                y
+            );
+
+            pdf.text(
+                String(item.descripcion)
+                .substring(0,50),
+                60,
+                y
+            );
+
+            pdf.text(
+                String(item.serial),
+                165,
+                y
+            );
+
+            y += 8;
+
+        });
+
+        // OBSERVACIÓN
+
+        y += 10;
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "Observación",
+            15,
+            y
+        );
+
+        y += 8;
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            observacion || "-",
+            15,
+            y
+        );
+
+        y += 15;
+
+        // FOTO 1
+
+        if(imagenBase64){
+
+            pdf.setDrawColor(
+                0,
+                0,
+                0
+            );
+
+            pdf.rect(
+                15,
+                y,
+                80,
+                60
+            );
+
+            pdf.addImage(
+                imagenBase64,
+                "JPEG",
+                17,
+                y + 2,
+                76,
+                56
+            );
+
+        }
+
+        // FOTO 2
+
+        if(imagenBase642){
+
+            pdf.rect(
+                110,
+                y,
+                80,
+                60
+            );
+
+            pdf.addImage(
+                imagenBase642,
+                "JPEG",
+                112,
+                y + 2,
+                76,
+                56
+            );
+
+        }
+
+        // PIE
+
+        pdf.setFontSize(8);
+
+        pdf.text(
+            "Documento generado automáticamente",
+            15,
+            285
+        );
+
+        pdf.text(
+            "Sistema de Control de Inventario",
+            15,
+            290
+        );
+
+        pdf.text(
+            "IMC Cargo International SAS",
+            15,
+            295
+        );
+
+        pdf.save(
+            "SALIDA_" +
+            factura +
+            ".pdf"
+        );
+
+    };
+
+}
 </script>
 
 </body>
