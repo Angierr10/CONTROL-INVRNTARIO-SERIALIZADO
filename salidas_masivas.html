@@ -819,32 +819,61 @@ async function generarPDFMasivo(
 
         // INFORMACIÓN GENERAL
 
-        pdf.setFillColor(
-            230,
-            235,
-            245
-        );
+// ===== INFORMACIÓN GENERAL =====
 
-        pdf.rect(
-            10,
-            48,
-            190,
-            10,
-            "F"
-        );
+pdf.setFillColor(
+    15,
+    42,
+    84
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.rect(
+    10,
+    48,
+    190,
+    10,
+    "F"
+);
 
-        pdf.setFontSize(13);
+pdf.setTextColor(
+    255,
+    255,
+    255
+);
 
-        pdf.text(
-            "Información General",
-            15,
-            55
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.setFontSize(13);
+
+pdf.text(
+    "INFORMACIÓN GENERAL",
+    15,
+    55
+);
+
+pdf.setTextColor(
+    0,
+    0,
+    0
+);
+
+// Tarjeta
+
+pdf.setDrawColor(
+    180,
+    180,
+    180
+);
+
+pdf.rect(
+    10,
+    58,
+    190,
+    48
+);
 
         pdf.setFontSize(11);
 
@@ -962,31 +991,42 @@ async function generarPDFMasivo(
 
         // TABLA
 
-        pdf.setFillColor(
-            230,
-            235,
-            245
-        );
+   pdf.setFillColor(
+    15,
+    42,
+    84
+);
 
-        pdf.rect(
-            10,
-            108,
-            190,
-            10,
-            "F"
-        );
+pdf.rect(
+    10,
+    115,
+    190,
+    10,
+    "F"
+);
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setTextColor(
+    255,
+    255,
+    255
+);
 
-        pdf.text(
-            "Equipos Despachados",
-            15,
-            115
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
+pdf.text(
+    "EQUIPOS DESPACHADOS",
+    15,
+    122
+);
+
+pdf.setTextColor(
+    0,
+    0,
+    0
+);
         let y = 128;
 
         pdf.setFontSize(10);
@@ -1002,19 +1042,69 @@ async function generarPDFMasivo(
             y
         );
 
-        pdf.text(
-            "Descripción",
-            60,
-            y
-        );
+y = 135;
 
-        pdf.text(
-            "Serial",
-            165,
-            y
-        );
+// CABECERA TABLA
 
-        y += 8;
+pdf.setFillColor(
+    230,
+    235,
+    245
+);
+
+pdf.rect(
+    10,
+    y - 6,
+    190,
+    8,
+    "F"
+);
+
+pdf.rect(
+    10,
+    y - 6,
+    40,
+    8
+);
+
+pdf.rect(
+    50,
+    y - 6,
+    100,
+    8
+);
+
+pdf.rect(
+    150,
+    y - 6,
+    50,
+    8
+);
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Material",
+    15,
+    y
+);
+
+pdf.text(
+    "Descripción",
+    55,
+    y
+);
+
+pdf.text(
+    "Serial",
+    160,
+    y
+);
+
+y += 10;
 
         pdf.line(
             10,
