@@ -742,7 +742,7 @@ async function generarPDFMasivo(
     logo.onload = function(){
 
 // =====================================================
-// ENCABEZADO
+// ENCABEZADO FORMATO ALMACÉN
 // =====================================================
 
 pdf.addImage(
@@ -750,8 +750,8 @@ pdf.addImage(
     "PNG",
     12,
     8,
-    26,
-    26
+    25,
+    25
 );
 
 pdf.setFillColor(
@@ -764,7 +764,7 @@ pdf.rect(
     42,
     8,
     155,
-    26,
+    25,
     "F"
 );
 
@@ -779,33 +779,33 @@ pdf.setFont(
     "bold"
 );
 
-pdf.setFontSize(18);
+pdf.setFontSize(17);
 
 pdf.text(
     "FORMATO DE SALIDA DE ALMACÉN",
     120,
-    18,
+    19,
     {align:"center"}
 );
-
-pdf.setFontSize(10);
 
 pdf.setFont(
     "helvetica",
     "normal"
 );
 
+pdf.setFontSize(9);
+
 pdf.text(
     "IMC Cargo International SAS",
     120,
-    25,
+    26,
     {align:"center"}
 );
 
 pdf.text(
     "Multilogística Integral",
     120,
-    30,
+    31,
     {align:"center"}
 );
 
@@ -822,6 +822,45 @@ pdf.line(
     40
 );
 
+// CONSECUTIVO
+
+pdf.setDrawColor(
+    120,
+    120,
+    120
+);
+
+pdf.rect(
+    10,
+    45,
+    190,
+    12
+);
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.setFontSize(11);
+
+pdf.text(
+    "CONSECUTIVO DE SALIDA:",
+    15,
+    53
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    consecutivo,
+    75,
+    53
+);
+
 // =====================================================
 // INFORMACIÓN GENERAL
 // =====================================================
@@ -834,7 +873,7 @@ pdf.setFillColor(
 
 pdf.rect(
     10,
-    46,
+    65,
     190,
     10,
     "F"
@@ -851,12 +890,12 @@ pdf.setFont(
     "bold"
 );
 
-pdf.setFontSize(13);
+pdf.setFontSize(12);
 
 pdf.text(
     "INFORMACIÓN GENERAL",
     15,
-    53
+    72
 );
 
 pdf.setTextColor(
@@ -865,48 +904,14 @@ pdf.setTextColor(
     0
 );
 
-// TARJETA
-
-pdf.setDrawColor(
-    180,
-    180,
-    180
-);
-
 pdf.rect(
     10,
-    56,
+    75,
     190,
-    58
+    42
 );
 
-pdf.setFontSize(11);
-
-// CONSECUTIVO
-
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
-
-pdf.text(
-    "Consecutivo:",
-    15,
-    66
-);
-
-pdf.setFont(
-    "helvetica",
-    "normal"
-);
-
-pdf.text(
-    consecutivo,
-    55,
-    66
-);
-
-// FACTURA
+pdf.setFontSize(10);
 
 pdf.setFont(
     "helvetica",
@@ -916,7 +921,31 @@ pdf.setFont(
 pdf.text(
     "Factura:",
     15,
-    78
+    87
+);
+
+pdf.text(
+    "Cliente:",
+    15,
+    97
+);
+
+pdf.text(
+    "Generado por:",
+    15,
+    107
+);
+
+pdf.text(
+    "Fecha:",
+    115,
+    87
+);
+
+pdf.text(
+    "Cantidad Equipos:",
+    115,
+    97
 );
 
 pdf.setFont(
@@ -926,110 +955,37 @@ pdf.setFont(
 
 pdf.text(
     factura,
-    55,
-    78
-);
-
-// CLIENTE
-
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
-
-pdf.text(
-    "Cliente:",
-    15,
-    90
-);
-
-pdf.setFont(
-    "helvetica",
-    "normal"
+    40,
+    87
 );
 
 pdf.text(
     cliente,
-    55,
-    90
-);
-
-// USUARIO
-
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
-
-pdf.text(
-    "Salida Generada Por:",
-    15,
-    102
-);
-
-pdf.setFont(
-    "helvetica",
-    "normal"
+    40,
+    97
 );
 
 pdf.text(
     usuario,
-    65,
-    102
-);
-
-// FECHA
-
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
-
-pdf.text(
-    "Fecha:",
-    120,
-    66
-);
-
-pdf.setFont(
-    "helvetica",
-    "normal"
+    40,
+    107
 );
 
 pdf.text(
     fechaActual,
     145,
-    66
-);
-
-// CANTIDAD
-
-pdf.setFont(
-    "helvetica",
-    "bold"
+    87
 );
 
 pdf.text(
-    "Cantidad Equipos:",
-    120,
-    78
-);
-
-pdf.setFont(
-    "helvetica",
-    "normal"
-);
-
-pdf.text(
-    String(equipos.length),
+    String(
+        equipos.length
+    ),
     165,
-    78
+    97
 );
 
-// POSICIÓN INICIAL DE LA TABLA
-
- y = 128;
-
+y = 130;
         // TABLA
 
    pdf.setFillColor(
