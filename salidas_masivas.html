@@ -832,107 +832,88 @@ async function generarPDFMasivo_backup(
             48
         );
 
-        // ==================================
-        // DATOS DEL DESPACHO
-        // ==================================
+        // =====================================================
+// DATOS DEL DESPACHO
+// =====================================================
 
-        pdf.setFont(
-            "helvetica",
-            "bold"
-        );
+pdf.setFontSize(11);
 
-        pdf.text(
-            "DATOS DEL DESPACHO",
-            10,
-            65
-        );
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
 
-        pdf.rect(
-            10,
-            70,
-            190,
-            40
-        );
+pdf.text(
+    "DATOS DEL DESPACHO",
+    10,
+    65
+);
 
-        pdf.line(
-            70,
-            70,
-            70,
-            110
-        );
+let y = 72;
 
-        pdf.text(
-            "Factura",
-            15,
-            80
-        );
+const datosDespacho = [
 
-        pdf.text(
-            "Cliente",
-            15,
-            90
-        );
+    ["Consecutivo", consecutivo],
 
-        pdf.text(
-            "Responsable",
-            15,
-            100
-        );
+    ["Factura", factura],
 
-        pdf.text(
-            "Fecha",
-            110,
-            80
-        );
+    ["Cliente", cliente],
 
-        pdf.text(
-            "Cantidad Equipos",
-            110,
-            90
-        );
+    ["Responsable", usuario],
 
-        pdf.setFont(
-            "helvetica",
-            "normal"
-        );
+    ["Fecha", fechaActual],
 
-        pdf.text(
-            factura,
-            40,
-            80
-        );
+    ["Cantidad Equipos", String(equipos.length)]
 
-        pdf.text(
-            cliente,
-            40,
-            90
-        );
+];
 
-        pdf.text(
-            usuario,
-            40,
-            100
-        );
+datosDespacho.forEach(fila => {
 
-        pdf.text(
-            fechaActual,
-            145,
-            80
-        );
+    pdf.rect(
+        10,
+        y,
+        55,
+        10
+    );
 
-        pdf.text(
-            String(
-                equipos.length
-            ),
-            145,
-            90
-        );
+    pdf.rect(
+        65,
+        y,
+        135,
+        10
+    );
 
-        let y = 125;
+    pdf.setFont(
+        "helvetica",
+        "bold"
+    );
 
-     // ==================================
-// DETALLE DE EQUIPOS DESPACHADOS
-// ==================================
+    pdf.text(
+        fila[0],
+        14,
+        y + 7
+    );
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.text(
+        fila[1],
+        70,
+        y + 7
+    );
+
+    y += 10;
+
+});
+
+// =====================================================
+// DETALLE DE EQUIPOS
+// =====================================================
+
+y += 8;
 
 pdf.setFont(
     "helvetica",
@@ -947,9 +928,9 @@ pdf.text(
     y
 );
 
-y += 8;
+y += 6;
 
-// ENCABEZADO TABLA
+// CABECERA
 
 pdf.setFillColor(
     15,
@@ -960,7 +941,31 @@ pdf.setFillColor(
 pdf.rect(
     10,
     y,
-    190,
+    10,
+    8,
+    "F"
+);
+
+pdf.rect(
+    20,
+    y,
+    35,
+    8,
+    "F"
+);
+
+pdf.rect(
+    55,
+    y,
+    90,
+    8,
+    "F"
+);
+
+pdf.rect(
+    145,
+    y,
+    55,
     8,
     "F"
 );
@@ -971,26 +976,28 @@ pdf.setTextColor(
     255
 );
 
-pdf.setFontSize(9);
-
-pdf.text("#",15,y+5);
+pdf.text(
+    "#",
+    13,
+    y + 5
+);
 
 pdf.text(
     "Material",
     25,
-    y+5
+    y + 5
 );
 
 pdf.text(
     "Descripción",
-    70,
-    y+5
+    60,
+    y + 5
 );
 
 pdf.text(
     "Serial",
-    165,
-    y+5
+    155,
+    y + 5
 );
 
 pdf.setTextColor(
@@ -1001,16 +1008,9 @@ pdf.setTextColor(
 
 y += 8;
 
-// FILAS
+let item = 1;
 
-pdf.setFont(
-    "helvetica",
-    "normal"
-);
-
-let itemNo = 1;
-
-equipos.forEach(item => {
+equipos.forEach(eq => {
 
     pdf.rect(
         10,
@@ -1022,67 +1022,65 @@ equipos.forEach(item => {
     pdf.rect(
         20,
         y,
-        40,
+        35,
         8
     );
 
     pdf.rect(
-        60,
+        55,
         y,
-        95,
+        90,
         8
     );
 
     pdf.rect(
-        155,
+        145,
         y,
-        45,
+        55,
         8
     );
 
     pdf.text(
-        String(itemNo),
-        14,
+        String(item),
+        13,
         y + 5
     );
 
     pdf.text(
-        String(item.material),
-        25,
+        String(eq.material),
+        23,
         y + 5
     );
 
     pdf.text(
-        String(item.descripcion)
+        String(eq.descripcion)
         .substring(0,35),
-        63,
+        58,
         y + 5
     );
 
     pdf.text(
-        String(item.serial),
-        160,
+        String(eq.serial),
+        150,
         y + 5
     );
 
-    itemNo++;
+    item++;
 
     y += 8;
 
 });
 
-// ==================================
+// =====================================================
 // OBSERVACIONES
-// ==================================
+// =====================================================
 
-y += 8;
+y += 10;
 
 pdf.setFont(
     "helvetica",
     "bold"
 );
-
-pdf.setFontSize(11);
 
 pdf.text(
     "OBSERVACIONES",
@@ -1105,22 +1103,21 @@ pdf.setFont(
 );
 
 pdf.text(
-    observacion || "SIN OBSERVACIONES",
+    observacion || "NINGUNA",
     15,
     y + 10
 );
 
-y += 28;
-// ==================================
+y += 30;
+
+// =====================================================
 // REGISTRO FOTOGRÁFICO
-// ==================================
+// =====================================================
 
 pdf.setFont(
     "helvetica",
     "bold"
 );
-
-pdf.setFontSize(11);
 
 pdf.text(
     "REGISTRO FOTOGRÁFICO",
@@ -1132,14 +1129,14 @@ y += 5;
 
 // FOTO 1
 
-if(imagenBase64){
+pdf.rect(
+    10,
+    y,
+    90,
+    45
+);
 
-    pdf.rect(
-        10,
-        y,
-        90,
-        45
-    );
+if(imagenBase64){
 
     pdf.addImage(
         imagenBase64,
@@ -1154,14 +1151,14 @@ if(imagenBase64){
 
 // FOTO 2
 
-if(imagenBase642){
+pdf.rect(
+    110,
+    y,
+    90,
+    45
+);
 
-    pdf.rect(
-        110,
-        y,
-        90,
-        45
-    );
+if(imagenBase642){
 
     pdf.addImage(
         imagenBase642,
@@ -1176,16 +1173,9 @@ if(imagenBase642){
 
 y += 60;
 
-// ==================================
+// =====================================================
 // FIRMAS
-// ==================================
-
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
-
-pdf.setFontSize(10);
+// =====================================================
 
 pdf.line(
     20,
@@ -1201,21 +1191,26 @@ pdf.line(
     y
 );
 
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
 pdf.text(
     "ENTREGA",
-    40,
+    38,
     y + 8
 );
 
 pdf.text(
     "RECIBE",
-    143,
+    140,
     y + 8
 );
 
-// ==================================
+// =====================================================
 // PIE
-// ==================================
+// =====================================================
 
 pdf.line(
     10,
@@ -1251,7 +1246,7 @@ pdf.text(
     288,
     {align:"center"}
 );
-
+        
 // ==================================
 // DESCARGA
 // ==================================
