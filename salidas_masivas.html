@@ -701,7 +701,7 @@ async function registrarSalidaMasiva(){
     }
 
 }
-async function generarPDFMasivo(
+async function generarPDFMasivo_backup(
     consecutivo,
     seriales,
     factura,
@@ -1256,6 +1256,570 @@ y += 10;
             ".pdf"
         );
 
+    };
+
+}
+      async function generarPDFMasivo(
+    consecutivo,
+    seriales,
+    factura,
+    cliente,
+    usuario,
+    observacion
+){
+
+    // BLOQUE A
+
+    const { jsPDF } =
+    window.jspdf;
+
+    const pdf =
+    new jsPDF();
+
+    const fecha =
+    new Date();
+
+    const fechaActual =
+    fecha.toLocaleDateString(
+        "es-CO"
+    );
+
+    const equipos =
+    inventario.filter(item =>
+
+        seriales.includes(
+            String(item.serial)
+        )
+
+    );
+
+    const logo =
+    new Image();
+
+    logo.src =
+    "LOGO IMC.png";
+
+    logo.onload = function(){
+
+        // ==================================
+        // LOGO
+        // ==================================
+
+        pdf.addImage(
+            logo,
+            "PNG",
+            10,
+            8,
+            22,
+            22
+        );
+
+        // ==================================
+        // TITULO
+        // ==================================
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(16);
+
+        pdf.text(
+            "FORMATO DE SALIDA DE ALMACÉN",
+            105,
+            18,
+            {align:"center"}
+        );
+
+        pdf.setFontSize(10);
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            "IMC Cargo International SAS",
+            105,
+            25,
+            {align:"center"}
+        );
+
+        pdf.line(
+            10,
+            35,
+            200,
+            35
+        );
+
+        // ==================================
+        // CONSECUTIVO
+        // ==================================
+
+        pdf.setDrawColor(
+            0,
+            0,
+            0
+        );
+
+        pdf.rect(
+            10,
+            40,
+            190,
+            12
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "CONSECUTIVO:",
+            15,
+            48
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            consecutivo,
+            55,
+            48
+        );
+
+        // ==================================
+        // DATOS DEL DESPACHO
+        // ==================================
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.text(
+            "DATOS DEL DESPACHO",
+            10,
+            65
+        );
+
+        pdf.rect(
+            10,
+            70,
+            190,
+            40
+        );
+
+        pdf.line(
+            70,
+            70,
+            70,
+            110
+        );
+
+        pdf.text(
+            "Factura",
+            15,
+            80
+        );
+
+        pdf.text(
+            "Cliente",
+            15,
+            90
+        );
+
+        pdf.text(
+            "Responsable",
+            15,
+            100
+        );
+
+        pdf.text(
+            "Fecha",
+            110,
+            80
+        );
+
+        pdf.text(
+            "Cantidad Equipos",
+            110,
+            90
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            factura,
+            40,
+            80
+        );
+
+        pdf.text(
+            cliente,
+            40,
+            90
+        );
+
+        pdf.text(
+            usuario,
+            40,
+            100
+        );
+
+        pdf.text(
+            fechaActual,
+            145,
+            80
+        );
+
+        pdf.text(
+            String(
+                equipos.length
+            ),
+            145,
+            90
+        );
+
+        let y = 125;
+
+     // ==================================
+// DETALLE DE EQUIPOS DESPACHADOS
+// ==================================
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.setFontSize(11);
+
+pdf.text(
+    "DETALLE DE EQUIPOS DESPACHADOS",
+    10,
+    y
+);
+
+y += 8;
+
+// ENCABEZADO TABLA
+
+pdf.setFillColor(
+    15,
+    42,
+    84
+);
+
+pdf.rect(
+    10,
+    y,
+    190,
+    8,
+    "F"
+);
+
+pdf.setTextColor(
+    255,
+    255,
+    255
+);
+
+pdf.setFontSize(9);
+
+pdf.text("#",15,y+5);
+
+pdf.text(
+    "Material",
+    25,
+    y+5
+);
+
+pdf.text(
+    "Descripción",
+    70,
+    y+5
+);
+
+pdf.text(
+    "Serial",
+    165,
+    y+5
+);
+
+pdf.setTextColor(
+    0,
+    0,
+    0
+);
+
+y += 8;
+
+// FILAS
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+let itemNo = 1;
+
+equipos.forEach(item => {
+
+    pdf.rect(
+        10,
+        y,
+        10,
+        8
+    );
+
+    pdf.rect(
+        20,
+        y,
+        40,
+        8
+    );
+
+    pdf.rect(
+        60,
+        y,
+        95,
+        8
+    );
+
+    pdf.rect(
+        155,
+        y,
+        45,
+        8
+    );
+
+    pdf.text(
+        String(itemNo),
+        14,
+        y + 5
+    );
+
+    pdf.text(
+        String(item.material),
+        25,
+        y + 5
+    );
+
+    pdf.text(
+        String(item.descripcion)
+        .substring(0,35),
+        63,
+        y + 5
+    );
+
+    pdf.text(
+        String(item.serial),
+        160,
+        y + 5
+    );
+
+    itemNo++;
+
+    y += 8;
+
+});
+
+// ==================================
+// OBSERVACIONES
+// ==================================
+
+y += 8;
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.setFontSize(11);
+
+pdf.text(
+    "OBSERVACIONES",
+    10,
+    y
+);
+
+y += 5;
+
+pdf.rect(
+    10,
+    y,
+    190,
+    18
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    observacion || "SIN OBSERVACIONES",
+    15,
+    y + 10
+);
+
+y += 28;
+// ==================================
+// REGISTRO FOTOGRÁFICO
+// ==================================
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.setFontSize(11);
+
+pdf.text(
+    "REGISTRO FOTOGRÁFICO",
+    10,
+    y
+);
+
+y += 5;
+
+// FOTO 1
+
+if(imagenBase64){
+
+    pdf.rect(
+        10,
+        y,
+        90,
+        45
+    );
+
+    pdf.addImage(
+        imagenBase64,
+        "JPEG",
+        12,
+        y + 2,
+        86,
+        41
+    );
+
+}
+
+// FOTO 2
+
+if(imagenBase642){
+
+    pdf.rect(
+        110,
+        y,
+        90,
+        45
+    );
+
+    pdf.addImage(
+        imagenBase642,
+        "JPEG",
+        112,
+        y + 2,
+        86,
+        41
+    );
+
+}
+
+y += 60;
+
+// ==================================
+// FIRMAS
+// ==================================
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.setFontSize(10);
+
+pdf.line(
+    20,
+    y,
+    80,
+    y
+);
+
+pdf.line(
+    120,
+    y,
+    180,
+    y
+);
+
+pdf.text(
+    "ENTREGA",
+    40,
+    y + 8
+);
+
+pdf.text(
+    "RECIBE",
+    143,
+    y + 8
+);
+
+// ==================================
+// PIE
+// ==================================
+
+pdf.line(
+    10,
+    272,
+    200,
+    272
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.setFontSize(8);
+
+pdf.text(
+    "Documento generado automáticamente",
+    105,
+    278,
+    {align:"center"}
+);
+
+pdf.text(
+    "Sistema de Control de Inventario",
+    105,
+    283,
+    {align:"center"}
+);
+
+pdf.text(
+    "IMC Cargo International SAS",
+    105,
+    288,
+    {align:"center"}
+);
+
+// ==================================
+// DESCARGA
+// ==================================
+
+pdf.save(
+    consecutivo +
+    ".pdf"
+);
     };
 
 }
