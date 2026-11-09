@@ -844,7 +844,7 @@ pdf.setFont(
 );
 
 pdf.text(
-    "DATOS DEL DESPACHO",
+    "INFORMACIÓN DE DESPACHO",
     10,
     65
 );
@@ -872,15 +872,15 @@ datosDespacho.forEach(fila => {
     pdf.rect(
         10,
         y,
-        55,
-        10
+        50,
+        8
     );
 
     pdf.rect(
-        65,
+        60,
         y,
-        135,
-        10
+        140,
+        8
     );
 
     pdf.setFont(
@@ -905,7 +905,7 @@ datosDespacho.forEach(fila => {
         y + 7
     );
 
-    y += 10;
+    y += 8;
 
 });
 
@@ -949,7 +949,7 @@ pdf.rect(
 pdf.rect(
     20,
     y,
-    35,
+    30,
     8,
     "F"
 );
@@ -957,15 +957,15 @@ pdf.rect(
 pdf.rect(
     55,
     y,
-    90,
+    100,
     8,
     "F"
 );
 
 pdf.rect(
-    145,
+    150,
     y,
-    55,
+    50,
     8,
     "F"
 );
@@ -1022,21 +1022,21 @@ equipos.forEach(eq => {
     pdf.rect(
         20,
         y,
-        35,
+        30,
         8
     );
 
     pdf.rect(
-        55,
+        50,
         y,
-        90,
+        100,
         8
     );
 
     pdf.rect(
-        145,
+        150,
         y,
-        55,
+        50,
         8
     );
 
@@ -1048,20 +1048,20 @@ equipos.forEach(eq => {
 
     pdf.text(
         String(eq.material),
-        23,
+        22,
         y + 5
     );
 
     pdf.text(
         String(eq.descripcion)
         .substring(0,35),
-        58,
+        53,
         y + 5
     );
 
     pdf.text(
         String(eq.serial),
-        150,
+        155,
         y + 5
     );
 
@@ -1114,6 +1114,26 @@ y += 30;
 // REGISTRO FOTOGRÁFICO
 // =====================================================
 
+pdf.setFillColor(
+    15,
+    42,
+    84
+);
+
+pdf.rect(
+    10,
+    y,
+    190,
+    8,
+    "F"
+);
+
+pdf.setTextColor(
+    255,
+    255,
+    255
+);
+        
 pdf.setFont(
     "helvetica",
     "bold"
@@ -1133,7 +1153,7 @@ pdf.rect(
     10,
     y,
     90,
-    45
+    35
 );
 
 if(imagenBase64){
@@ -1144,7 +1164,7 @@ if(imagenBase64){
         12,
         y + 2,
         86,
-        41
+        31
     );
 
 }
@@ -1155,7 +1175,7 @@ pdf.rect(
     110,
     y,
     90,
-    45
+    35
 );
 
 if(imagenBase642){
@@ -1166,7 +1186,7 @@ if(imagenBase642){
         112,
         y + 2,
         86,
-        41
+        31
     );
 
 }
@@ -1198,14 +1218,26 @@ pdf.setFont(
 
 pdf.text(
     "ENTREGA",
-    38,
+    35,
     y + 8
+);
+
+pdf.text(
+    "Nombre:",
+    30,
+    y + 15
 );
 
 pdf.text(
     "RECIBE",
     140,
     y + 8
+);
+
+pdf.text(
+    "Nombre:",
+    135,
+    y + 15
 );
 
 // =====================================================
@@ -1224,26 +1256,26 @@ pdf.setFont(
     "normal"
 );
 
-pdf.setFontSize(8);
+pdf.setFontSize(9);
 
 pdf.text(
     "Documento generado automáticamente",
     105,
-    278,
+    275,
     {align:"center"}
 );
 
 pdf.text(
     "Sistema de Control de Inventario",
     105,
-    283,
+    280,
     {align:"center"}
 );
 
 pdf.text(
     "IMC Cargo International SAS",
     105,
-    288,
+    285,
     {align:"center"}
 );
         
