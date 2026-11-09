@@ -844,7 +844,7 @@ pdf.setFillColor(
 
 pdf.rect(
     10,
-    60,
+    54,
     190,
     8,
     "F"
@@ -864,7 +864,7 @@ pdf.setFont(
 pdf.text(
     "INFORMACIÓN DE DESPACHO",
     105,
-    65,
+    59,
     {align:"center"}
 );
 
@@ -881,24 +881,6 @@ pdf.rect(
     68,
     190,
     24
-);
-
-// DIVISIÓN VERTICAL CENTRAL
-
-pdf.line(
-    105,
-    68,
-    105,
-    92
-);
-
-// DIVISIÓN HORIZONTAL
-
-pdf.line(
-    10,
-    80,
-    200,
-    80
 );
 
 // FILA SUPERIOR
@@ -927,13 +909,13 @@ pdf.setFont(
 
 pdf.text(
     factura,
-    34,
+    28,
     76
 );
 
 pdf.text(
     fechaActual,
-    126,
+    122,
     76
 );
 
@@ -958,7 +940,7 @@ pdf.text(
 
 pdf.text(
     "Generado por:",
-    14,
+    40,
     96
 );
 
@@ -985,7 +967,7 @@ pdf.text(
     96
 );
 
-let y = 108;
+let y = 98;
 
 // =====================================================
 // DETALLE DE EQUIPOS DEPACHADOS
