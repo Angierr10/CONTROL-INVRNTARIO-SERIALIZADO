@@ -874,58 +874,34 @@ pdf.setTextColor(
     0
 );
 
-// TABLA
-
-const yInfo = 68;
-
-// FILA 1
-
-pdf.rect(10,yInfo,95,10);
-pdf.rect(105,yInfo,95,10);
-
-pdf.setFont("helvetica","bold");
-
-pdf.text(
-    "Factura",
-    14,
-    yInfo + 6
-);
-
-pdf.text(
-    "Fecha",
-    109,
-    yInfo + 6
-);
-
-pdf.setFont("helvetica","normal");
-
-pdf.text(
-    factura,
-    40,
-    yInfo + 6
-);
-
-pdf.text(
-    fechaActual,
-    135,
-    yInfo + 6
-);
-
-// FILA 2
+// SOLO BORDE EXTERNO
 
 pdf.rect(
     10,
-    yInfo + 10,
-    95,
-    10
+    68,
+    190,
+    24
 );
 
-pdf.rect(
+// DIVISIÓN VERTICAL CENTRAL
+
+pdf.line(
     105,
-    yInfo + 10,
-    95,
-    10
+    68,
+    105,
+    92
 );
+
+// DIVISIÓN HORIZONTAL
+
+pdf.line(
+    10,
+    80,
+    200,
+    80
+);
+
+// FILA SUPERIOR
 
 pdf.setFont(
     "helvetica",
@@ -933,15 +909,57 @@ pdf.setFont(
 );
 
 pdf.text(
-    "Cliente",
+    "Factura:",
     14,
-    yInfo + 16
+    76
 );
 
 pdf.text(
-    "Cantidad Equipos",
+    "Fecha:",
     109,
-    yInfo + 16
+    76
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    factura,
+    34,
+    76
+);
+
+pdf.text(
+    fechaActual,
+    126,
+    76
+);
+
+// FILA INFERIOR
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Cliente:",
+    14,
+    88
+);
+
+pdf.text(
+    "Cantidad Equipos:",
+    109,
+    88
+);
+
+pdf.text(
+    "Generado por:",
+    14,
+    96
 );
 
 pdf.setFont(
@@ -951,48 +969,23 @@ pdf.setFont(
 
 pdf.text(
     cliente,
-    40,
-    yInfo + 16
+    34,
+    88
 );
 
 pdf.text(
     String(equipos.length),
-    155,
-    yInfo + 16
-);
-
-// FILA 3
-
-pdf.rect(
-    10,
-    yInfo + 20,
-    190,
-    10
-);
-
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
-
-pdf.text(
-    "Generado por",
-    14,
-    yInfo + 26
-);
-
-pdf.setFont(
-    "helvetica",
-    "normal"
+    147,
+    88
 );
 
 pdf.text(
     usuario,
-    55,
-    yInfo + 26
+    42,
+    96
 );
 
-let y = 110;
+let y = 108;
 
 // =====================================================
 // DETALLE DE EQUIPOS DEPACHADOS
