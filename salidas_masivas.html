@@ -832,11 +832,29 @@ async function generarPDFMasivo(
             48
         );
 
-        // =====================================================
-// DATOS DEL DESPACHO
+// =====================================================
+// INFORMACIÓN DE DESPACHO
 // =====================================================
 
-pdf.setFontSize(11);
+pdf.setFillColor(
+    15,
+    42,
+    84
+);
+
+pdf.rect(
+    10,
+    60,
+    190,
+    8,
+    "F"
+);
+
+pdf.setTextColor(
+    255,
+    255,
+    255
+);
 
 pdf.setFont(
     "helvetica",
@@ -845,90 +863,175 @@ pdf.setFont(
 
 pdf.text(
     "INFORMACIÓN DE DESPACHO",
-    10,
-    65
+    105,
+    65,
+    {align:"center"}
 );
 
-let y = 72;
+pdf.setTextColor(
+    0,
+    0,
+    0
+);
 
-const datosDespacho = [
+// TABLA
 
-    ["Consecutivo", consecutivo],
+const yInfo = 68;
 
-    ["Factura", factura],
+// FILA 1
 
-    ["Cliente", cliente],
+pdf.rect(10,yInfo,95,10);
+pdf.rect(105,yInfo,95,10);
 
-    ["Responsable", usuario],
+pdf.setFont("helvetica","bold");
 
-    ["Fecha", fechaActual],
+pdf.text(
+    "Factura",
+    14,
+    yInfo + 6
+);
 
-    ["Cantidad Equipos", String(equipos.length)]
+pdf.text(
+    "Fecha",
+    109,
+    yInfo + 6
+);
 
-];
+pdf.setFont("helvetica","normal");
 
-datosDespacho.forEach(fila => {
+pdf.text(
+    factura,
+    40,
+    yInfo + 6
+);
 
-    pdf.rect(
-        10,
-        y,
-        50,
-        8
-    );
+pdf.text(
+    fechaActual,
+    135,
+    yInfo + 6
+);
 
-    pdf.rect(
-        60,
-        y,
-        140,
-        8
-    );
+// FILA 2
 
-    pdf.setFont(
-        "helvetica",
-        "bold"
-    );
+pdf.rect(
+    10,
+    yInfo + 10,
+    95,
+    10
+);
 
-    pdf.text(
-        fila[0],
-        14,
-        y + 7
-    );
-
-    pdf.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    pdf.text(
-        fila[1],
-        70,
-        y + 7
-    );
-
-    y += 8;
-
-});
-
-// =====================================================
-// DETALLE DE EQUIPOS
-// =====================================================
-
-y += 8;
+pdf.rect(
+    105,
+    yInfo + 10,
+    95,
+    10
+);
 
 pdf.setFont(
     "helvetica",
     "bold"
 );
 
-pdf.setFontSize(11);
+pdf.text(
+    "Cliente",
+    14,
+    yInfo + 16
+);
+
+pdf.text(
+    "Cantidad Equipos",
+    109,
+    yInfo + 16
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    cliente,
+    40,
+    yInfo + 16
+);
+
+pdf.text(
+    String(equipos.length),
+    155,
+    yInfo + 16
+);
+
+// FILA 3
+
+pdf.rect(
+    10,
+    yInfo + 20,
+    190,
+    10
+);
+
+pdf.setFont(
+    "helvetica",
+    "bold"
+);
+
+pdf.text(
+    "Generado por",
+    14,
+    yInfo + 26
+);
+
+pdf.setFont(
+    "helvetica",
+    "normal"
+);
+
+pdf.text(
+    usuario,
+    55,
+    yInfo + 26
+);
+
+let y = 110;
+
+// =====================================================
+// DETALLE DE EQUIPOS DEPACHADOS
+// =====================================================
+
+pdf.setFillColor(
+    15,
+    42,
+    84
+);
+
+pdf.rect(
+    10,
+    y,
+    190,
+    8,
+    "F"
+);
+
+pdf.setTextColor(
+    255,
+    255,
+    255
+);
 
 pdf.text(
     "DETALLE DE EQUIPOS DESPACHADOS",
-    10,
-    y
+    105,
+    y + 5,
+    {align:"center"}
 );
 
-y += 6;
+pdf.setTextColor(
+    0,
+    0,
+    0
+);
+
+y += 8;
 
 // CABECERA
 
@@ -1133,20 +1236,21 @@ pdf.setTextColor(
     255,
     255
 );
-        
-pdf.setFont(
-    "helvetica",
-    "bold"
-);
 
 pdf.text(
     "REGISTRO FOTOGRÁFICO",
-    10,
-    y
+    105,
+    y + 5,
+    {align:"center"}
 );
 
-y += 5;
+pdf.setTextColor(
+    0,
+    0,
+    0
+);
 
+y += 8;
 // FOTO 1
 
 pdf.rect(
