@@ -880,7 +880,7 @@ pdf.rect(
     10,
     68,
     190,
-    18
+    30
 );
 
 // FILA SUPERIOR
@@ -893,13 +893,13 @@ pdf.setFont(
 pdf.text(
     "Factura:",
     14,
-    74
+    72
 );
 
 pdf.text(
     "Fecha:",
     109,
-    74
+    72
 );
 
 pdf.setFont(
@@ -909,14 +909,14 @@ pdf.setFont(
 
 pdf.text(
     factura,
-    42,
-    74
+    33,
+    72
 );
 
 pdf.text(
     fechaActual,
-    135,
-    74
+    122,
+    72
 );
 
 // FILA INFERIOR
@@ -929,19 +929,19 @@ pdf.setFont(
 pdf.text(
     "Cliente:",
     14,
-    84
+    82
 );
 
 pdf.text(
     "Cantidad Equipos:",
     109,
-    84
+    82
 );
 
 pdf.text(
     "Generado por:",
     14,
-    92
+    90
 );
 
 pdf.setFont(
@@ -951,23 +951,23 @@ pdf.setFont(
 
 pdf.text(
     cliente,
-    40,
-    84
+    33,
+    82
 );
 
 pdf.text(
     String(equipos.length),
-    160,
-    84
+    148,
+    82
 );
 
 pdf.text(
     usuario,
-    50,
-    92
+    42,
+    90
 );
 
-let y = 98;
+let y = 106;
 
 // =====================================================
 // DETALLE DE EQUIPOS DEPACHADOS
