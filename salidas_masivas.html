@@ -993,7 +993,7 @@ pdf.setFillColor(230, 235, 245);
 
 pdf.rect(10, y, 20, 8, "FD");   // ITEM
 pdf.rect(30, y, 45, 8, "FD");   // MATERIAL
-pdf.rect(75, y, 65, 8, "FD");   // REFERENCIA
+pdf.rect(75, y, 65, 8, "FD");   // DESCRIPCIÓN
 pdf.rect(140, y, 25, 8, "FD");  // SERIAL
 pdf.rect(165, y, 35, 8, "FD");  // ESTADO
 
@@ -1001,11 +1001,10 @@ pdf.setTextColor(0, 0, 0);
 pdf.setFont("helvetica", "bold");
 pdf.setFontSize(8);
 
-pdf.text("ITEM", 20, y + 5, { align: "center" });
-pdf.text("MATERIAL", 52, y + 5, { align: "center" });
-pdf.text("REFERENCIA", 107, y + 5, { align: "center" });
-pdf.text("SERIAL", 152, y + 5, { align: "center" });
-pdf.text("ESTADO", 182, y + 5, { align: "center" });
+pdf.text("ITEM", 15, y + 5, { align: "center" });
+pdf.text("MATERIAL", 35, y + 5, { align: "center" });
+pdf.text("DESCRIPCIÓN", 80, y + 5, { align: "center" });
+pdf.text("SERIAL", 155, y + 5, { align: "center" });
 
 y += 8;
 
@@ -1022,35 +1021,28 @@ equipos.forEach((equipo, index) => {
 
     pdf.text(
         String(index + 1),
-        20,
+        15,
+        y + 5,
+        { align: "center" }
+    );
+
+    pdf.text(
+        String(equipo.material || ""),
+        35,
+        y + 5,
+        { align: "center" }
+    );
+
+    pdf.text(
+        String(equipo.descripción || ""),
+        80,
         y + 5,
         { align: "center" }
     );
 
     pdf.text(
         String(equipo.serial || ""),
-        52,
-        y + 5,
-        { align: "center" }
-    );
-
-    pdf.text(
-        String(equipo.referencia || ""),
-        107,
-        y + 5,
-        { align: "center" }
-    );
-
-    pdf.text(
-        String(equipo.marca || ""),
-        152,
-        y + 5,
-        { align: "center" }
-    );
-
-    pdf.text(
-        "DESPACHADO",
-        182,
+        155,
         y + 5,
         { align: "center" }
     );
