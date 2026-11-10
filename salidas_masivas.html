@@ -967,186 +967,97 @@ pdf.text(
 
 let y = 85;
 
-// =====================================================
-// DETALLE DE EQUIPOS DEPACHADOS
-// =====================================================
+// ========================================
+// DETALLE DE EQUIPOS DESPACHADOS
+// ========================================
 
-pdf.setFillColor(
-    15,
-    42,
-    84
-);
+pdf.setFillColor(15, 42, 84);
+pdf.rect(10, y, 190, 8, "F");
 
-pdf.rect(
-    10,
-    y,
-    190,
-    8,
-    "F"
-);
-
-pdf.setTextColor(
-    255,
-    255,
-    255
-);
+pdf.setTextColor(255, 255, 255);
+pdf.setFont("helvetica", "bold");
+pdf.setFontSize(10);
 
 pdf.text(
     "DETALLE DE EQUIPOS DESPACHADOS",
     105,
     y + 5,
-    {align:"center"}
+    { align: "center" }
 );
 
-pdf.setTextColor(
-    0,
-    0,
-    0
-);
-
-y += 8;
+y += 10;
 
 // CABECERA
 
-pdf.setFillColor(
-    15,
-    42,
-    84
-);
+pdf.setFillColor(230, 235, 245);
 
-pdf.rect(
-    10,
-    y,
-    10,
-    8,
-    "F"
-);
+pdf.rect(10, y, 20, 8, "FD");   // ITEM
+pdf.rect(30, y, 45, 8, "FD");   // SERIAL
+pdf.rect(75, y, 65, 8, "FD");   // REFERENCIA
+pdf.rect(140, y, 25, 8, "FD");  // MARCA
+pdf.rect(165, y, 35, 8, "FD");  // ESTADO
 
-pdf.rect(
-    20,
-    y,
-    30,
-    8,
-    "F"
-);
+pdf.setTextColor(0, 0, 0);
+pdf.setFont("helvetica", "bold");
+pdf.setFontSize(8);
 
-pdf.rect(
-    55,
-    y,
-    100,
-    8,
-    "F"
-);
-
-pdf.rect(
-    150,
-    y,
-    50,
-    8,
-    "F"
-);
-
-pdf.setTextColor(
-    255,
-    255,
-    255
-);
-
-pdf.text(
-    "#",
-    13,
-    y + 5
-);
-
-pdf.text(
-    "Material",
-    25,
-    y + 5
-);
-
-pdf.text(
-    "Descripción",
-    60,
-    y + 5
-);
-
-pdf.text(
-    "Serial",
-    155,
-    y + 5
-);
-
-pdf.setTextColor(
-    0,
-    0,
-    0
-);
+pdf.text("ITEM", 20, y + 5, { align: "center" });
+pdf.text("SERIAL", 52, y + 5, { align: "center" });
+pdf.text("REFERENCIA", 107, y + 5, { align: "center" });
+pdf.text("MARCA", 152, y + 5, { align: "center" });
+pdf.text("ESTADO", 182, y + 5, { align: "center" });
 
 y += 8;
 
-let item = 1;
+pdf.setFont("helvetica", "normal");
+pdf.setFontSize(8);
 
-equipos.forEach(eq => {
+equipos.forEach((equipo, index) => {
 
-    pdf.rect(
-        10,
-        y,
-        10,
-        8
-    );
+    pdf.rect(10, y, 20, 7);
+    pdf.rect(30, y, 45, 7);
+    pdf.rect(75, y, 65, 7);
+    pdf.rect(140, y, 25, 7);
+    pdf.rect(165, y, 35, 7);
 
-    pdf.rect(
+    pdf.text(
+        String(index + 1),
         20,
-        y,
-        30,
-        8
-    );
-
-    pdf.rect(
-        50,
-        y,
-        100,
-        8
-    );
-
-    pdf.rect(
-        150,
-        y,
-        50,
-        8
+        y + 5,
+        { align: "center" }
     );
 
     pdf.text(
-        String(item),
-        13,
-        y + 5
+        String(equipo.serial || ""),
+        52,
+        y + 5,
+        { align: "center" }
     );
 
     pdf.text(
-        String(eq.material),
-        22,
-        y + 5
+        String(equipo.referencia || ""),
+        107,
+        y + 5,
+        { align: "center" }
     );
 
     pdf.text(
-        String(eq.descripcion)
-        .substring(0,35),
-        53,
-        y + 5
+        String(equipo.marca || ""),
+        152,
+        y + 5,
+        { align: "center" }
     );
 
     pdf.text(
-        String(eq.serial),
-        155,
-        y + 5
+        "DESPACHADO",
+        182,
+        y + 5,
+        { align: "center" }
     );
 
-    item++;
-
-    y += 8;
-
+    y += 7;
 });
-
+        
 // =====================================================
 // OBSERVACIONES
 // =====================================================
