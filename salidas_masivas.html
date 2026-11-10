@@ -1012,9 +1012,9 @@ pdf.setFontSize(8);
 
 equipos.forEach((equipo, index) => {
 
-    pdf.rect(10, y, 10, 8);
-    pdf.rect(20, y, 30, 8);
-    pdf.rect(50, y, 100, 8);
+    pdf.rect(10, y, 15, 8);
+    pdf.rect(25, y, 35, 8);
+    pdf.rect(60, y, 90, 8);
     pdf.rect(150, y, 50, 8);
     
     pdf.text(
@@ -1032,7 +1032,7 @@ equipos.forEach((equipo, index) => {
     );
 
     pdf.text(
-        String(equipo.descripción || ""),
+        String(equipo.descripcion || ""),
         105,
         y + 5,
         { align: "center" }
@@ -1045,7 +1045,7 @@ equipos.forEach((equipo, index) => {
         { align: "center" }
     );
 
-    y += 7;
+    y += 8;
 });
         
 // =====================================================
