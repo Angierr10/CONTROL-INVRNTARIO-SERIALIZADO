@@ -991,20 +991,19 @@ y += 10;
 
 pdf.setFillColor(230, 235, 245);
 
-pdf.rect(10, y, 20, 8, "FD");   // ITEM
-pdf.rect(30, y, 45, 8, "FD");   // MATERIAL
-pdf.rect(75, y, 65, 8, "FD");   // DESCRIPCIÓN
-pdf.rect(140, y, 25, 8, "FD");  // SERIAL
-pdf.rect(165, y, 35, 8, "FD");  // ESTADO
+pdf.rect(10, y, 15, 8, "FD");   // ITEM
+pdf.rect(25, y, 35, 8, "FD");   // MATERIAL
+pdf.rect(60, y, 90, 8, "FD");   // DESCRIPCIÓN
+pdf.rect(150, y, 50, 8, "FD");  // SERIAL
 
 pdf.setTextColor(0, 0, 0);
 pdf.setFont("helvetica", "bold");
 pdf.setFontSize(8);
 
-pdf.text("ITEM", 15, y + 5, { align: "center" });
-pdf.text("MATERIAL", 35, y + 5, { align: "center" });
-pdf.text("DESCRIPCIÓN", 80, y + 5, { align: "center" });
-pdf.text("SERIAL", 155, y + 5, { align: "center" });
+pdf.text("ITEM", 17.5, y + 5, { align: "center" });
+pdf.text("MATERIAL", 42.5, y + 5, { align: "center" });
+pdf.text("DESCRIPCIÓN", 105, y + 5, { align: "center" });
+pdf.text("SERIAL", 175, y + 5, { align: "center" });
 
 y += 8;
 
@@ -1013,36 +1012,35 @@ pdf.setFontSize(8);
 
 equipos.forEach((equipo, index) => {
 
-    pdf.rect(10, y, 20, 7);
-    pdf.rect(30, y, 45, 7);
-    pdf.rect(75, y, 65, 7);
-    pdf.rect(140, y, 25, 7);
-    pdf.rect(165, y, 35, 7);
-
+    pdf.rect(10, y, 10, 8);
+    pdf.rect(20, y, 30, 8);
+    pdf.rect(50, y, 100, 8);
+    pdf.rect(150, y, 50, 8);
+    
     pdf.text(
         String(index + 1),
-        15,
+        17.5,
         y + 5,
         { align: "center" }
     );
 
     pdf.text(
         String(equipo.material || ""),
-        35,
+        42.5,
         y + 5,
         { align: "center" }
     );
 
     pdf.text(
         String(equipo.descripción || ""),
-        80,
+        105,
         y + 5,
         { align: "center" }
     );
 
     pdf.text(
         String(equipo.serial || ""),
-        155,
+        175,
         y + 5,
         { align: "center" }
     );
