@@ -892,15 +892,19 @@ pdf.setFont(
 
 pdf.text(
     "Fecha:",
-    14,
+    15,
     65
 );
 
 pdf.text(
     "Factura:",
-    109,
+    60,
     65
 );
+pdf.text(
+    "Cliente:",
+    120,
+    65
 
 pdf.setFont(
     "helvetica",
@@ -909,13 +913,18 @@ pdf.setFont(
 
 pdf.text(
     fechaActual,
-    42,
+    33,
     65
 );
 
 pdf.text(
     factura,
-    122,
+    85,
+    65
+);
+pdf.text(
+    "Cliente:",
+    140,
     65
 );
 
@@ -927,21 +936,15 @@ pdf.setFont(
 );
 
 pdf.text(
-    "Cliente:",
-    14,
-    70
-);
-
-pdf.text(
     "Cantidad Equipos:",
-    109,
-    70
+    14,
+    72
 );
 
 pdf.text(
     "Generado por:",
-    14,
-    70
+    50,
+    72
 );
 
 pdf.setFont(
@@ -950,21 +953,15 @@ pdf.setFont(
 );
 
 pdf.text(
-    cliente,
-    33,
-    70
-);
-
-pdf.text(
     String(equipos.length),
-    148,
-    70
+    35,
+    72
 );
 
 pdf.text(
     usuario,
-    42,
-    70
+    65,
+    72
 );
 
 let y = 85;
